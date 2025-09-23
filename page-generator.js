@@ -23,6 +23,7 @@ class PageGenerator {
         this.publicDir = path.join(__dirname, 'public');
         this.templatesDir = path.join(__dirname, 'templates');
         this.pagesDir = path.join(__dirname, 'pages');
+        this.systemPagesDir = path.join(this.pagesDir, 'system');
         this.config = config;
     }
 
@@ -50,13 +51,14 @@ class PageGenerator {
      * 生成单个页面
      * @param {string} filePath - Markdown文件路径
      */
-    generatePage(filePath) {
+    generatePage(filePath, options = {}) {
+        const { baseDir = this.pagesDir, outputSubDir = '' } = options;
         // 解析Markdown文件
         const parsed = this.parser.parseFile(filePath);
         
         // 计算相对路径和输出路径
-        const relativePath = path.relative(this.pagesDir, filePath);
-        const outputPath = this.getOutputPath(relativePath);
+        const relativePath = path.relative(baseDir, filePath);
+        const outputPath = this.getOutputPath(relativePath, outputSubDir);
         
         // 确保输出目录存在
         const outputDir = path.dirname(outputPath);
@@ -92,10 +94,17 @@ class PageGenerator {
      * @param {string} relativePath - 相对于pages目录的路径
      * @returns {string} 输出文件路径
      */
-    getOutputPath(relativePath) {
+    getOutputPath(relativePath, outputSubDir = '') {
         const dir = path.dirname(relativePath);
         const name = path.basename(relativePath, '.md');
-        return path.join(this.publicDir, dir, `${name}.html`);
+        const segments = [this.publicDir];
+        if (outputSubDir) {
+            segments.push(outputSubDir);
+        }
+        if (dir && dir !== '.' && dir !== path.sep) {
+            segments.push(dir);
+        }
+        return path.join(...segments, `${name}.html`);
     }
 
     /**
@@ -104,7 +113,7 @@ class PageGenerator {
      * @param {number} page - 当前页码，默认为1
      * @param {number} pageSize - 每页文章数量，默认为5
      */
-    generateIndex(posts, page = 1, pageSize = 5) {
+    generateIndex(posts, page = 1, pageSize = 5, availableTags = []) {
         // 按日期排序，最新的在前面
         const sortedPosts = posts.sort((a, b) => {
             const dateA = new Date(a.attributes.date || 0);
@@ -142,6 +151,7 @@ class PageGenerator {
                 nextPage: page + 1,
                 prevPage: page - 1
             },
+            availableTags,
             site: this.config.site // 添加站点配置信息
         };
         
@@ -188,6 +198,42 @@ class PageGenerator {
         return path.join('/', dir, `${name}.html`).replace(/\\/g, '/');
     }
 
+    collectTags(posts) {
+        const tagSet = new Set();
+        posts.forEach(post => {
+            const tags = Array.isArray(post.attributes.tags) ? post.attributes.tags : [];
+            tags.forEach(tag => {
+                if (typeof tag === 'string' && tag.trim()) {
+                    tagSet.add(tag.trim());
+                }
+            });
+        });
+        return Array.from(tagSet).sort((a, b) => a.localeCompare(b, 'zh-CN'));
+    }
+
+    generateSearchIndex(posts) {
+        const indexItems = posts.map(post => {
+            const { formatted: dateFormatted, iso: dateISO } = this.formatDate(post.attributes.date);
+            const tags = Array.isArray(post.attributes.tags) ? post.attributes.tags : [];
+            const plainText = post.html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+            return {
+                title: post.attributes.title || '无标题',
+                url: this.getRelativeUrl(post.filePath),
+                excerpt: this.getExcerpt(post.html, 220),
+                tags,
+                date: post.attributes.date || '',
+                dateFormatted,
+                dateISO,
+                coverImage: post.attributes.coverImage || '',
+                content: plainText
+            };
+        });
+
+        const searchPath = path.join(this.publicDir, 'search.json');
+        fs.writeFileSync(searchPath, JSON.stringify({ generatedAt: new Date().toISOString(), posts: indexItems }, null, 2));
+        console.log(`Generated search index: ${searchPath}`);
+    }
+
     /**
      * 生成所有页面
      */
@@ -197,19 +243,29 @@ class PageGenerator {
         
         // 获取所有Markdown文件
         const markdownFiles = this.parser.getMarkdownFiles(this.pagesDir);
-        
-        // 存储文章信息用于生成首页
+
+        const systemDirExists = fs.existsSync(this.systemPagesDir) && fs.statSync(this.systemPagesDir).isDirectory();
         const posts = [];
-        
-        // 生成每个页面
+        const systemPages = [];
+
         markdownFiles.forEach(filePath => {
+            const isSystemPage = systemDirExists && !path.relative(this.systemPagesDir, filePath).startsWith('..');
+            if (isSystemPage) {
+                systemPages.push(filePath);
+                return;
+            }
+
             const parsed = this.parser.parseFile(filePath);
             posts.push({
                 filePath: filePath,
                 attributes: parsed.attributes,
                 html: parsed.html
             });
-            this.generatePage(filePath);
+            this.generatePage(filePath, { baseDir: this.pagesDir });
+        });
+
+        systemPages.forEach(filePath => {
+            this.generatePage(filePath, { baseDir: this.systemPagesDir });
         });
         
         // 设置每页文章数量
@@ -218,12 +274,17 @@ class PageGenerator {
         const totalPages = Math.ceil(totalPosts / pageSize);
         
         // 生成所有分页页面
+        const availableTags = this.collectTags(posts);
+
         for (let page = 1; page <= totalPages; page++) {
-            this.generateIndex(posts, page, pageSize);
+            this.generateIndex(posts, page, pageSize, availableTags);
         }
         
         // 生成RSS文件
         this.generateRSS(posts);
+
+        // 生成搜索索引
+        this.generateSearchIndex(posts);
         
         // 复制静态资源
         this.copyAssets();
