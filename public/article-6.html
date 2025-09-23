@@ -4,32 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>现代Web开发框架对比：React vs Vue vs Angular</title>
-    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/modern.css">
+    <link rel="alternate" type="application/rss+xml" title="人人链向未来 RSS Feed" href="/rss.xml">
+    <!-- Highlight.js theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+                        colors: {
+                            primary: { 600: '#FECE00', 700: '#e6b900' },
+                            accent: { 400: '#FECE00', 500: '#ffdb4d' }
+                        }
+          }
+        }
+      }
+    </script>
 </head>
-<body>
-    <header>
-        <div class="container header-content">
-            <h1><a href="/">人人链向未来</a></h1>
-            <nav>
-                <ul>
-                    <li><a href="/">首页</a></li>
-                    <li><a href="/about.html">关于</a></li>
-                </ul>
+<body class="bg-gray-50">
+    <header class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <a href="/" class="navbar-logo">人人链向未来</a>
+            </div>
+            <nav class="navbar-menu" id="navbar-menu">
+                <div class="navbar-nav">
+                    <a href="/" class="nav-item">
+                        <span class="nav-text">首页</span>
+                    </a>
+                    <a href="/about.html" class="nav-item">
+                        <span class="nav-text">关于</span>
+                    </a>
+                    <a href="/rss.xml" class="nav-item nav-item-special" target="_blank" rel="noopener noreferrer">
+                        <span class="nav-text">RSS</span>
+                    </a>
+                </div>
             </nav>
+            <button class="navbar-toggle" id="navbar-toggle" aria-label="切换导航菜单">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
-    <main class="container">
-        <article class="post">
-            <h1>现代Web开发框架对比：React vs Vue vs Angular</h1>
-            <div class="post-meta post-meta-detail">
-                <time>Sun Jun 18 2023 08:00:00 GMT+0800 (China Standard Time)</time>
-                <div class="tags">
-                    <span class="tag">web-development</span>
-                    <span class="tag">javascript</span>
-                    <span class="tag">frameworks</span>
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <article class="article-container">
+            <div class="article-header">
+                <h1 class="article-title">现代Web开发框架对比：React vs Vue vs Angular</h1>
+                <div class="article-meta">
+                    <div class="flex items-center space-x-2">
+                        <time datetime="2023-06-18T00:00:00.000Z">2023年6月18日</time>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="post-tag">web-development</span>
+                        <span class="post-tag">javascript</span>
+                        <span class="post-tag">frameworks</span>
+                    </div>
                 </div>
             </div>
-            <div class="post-content">
+            <div class="article-content">
                 <p>在现代前端开发中，选择合适的框架对于项目的成功至关重要。本文将对三大主流前端框架——React、Vue和Angular进行详细对比，帮助开发者做出明智的选择。</p>
 <h2>React：由Facebook维护的库</h2>
 <p>React是Facebook开发的用于构建用户界面的JavaScript库。它采用组件化架构，专注于视图层。</p>
@@ -46,24 +80,23 @@
 <li><strong>JSX语法</strong>：HTML和JavaScript混合编写，可能让初学者困惑</li>
 </ol>
 <h3>示例代码</h3>
-<pre><code class="language-jsx">import React, { useState } from 'react';
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-jsx"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, { useState } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;
 
-function Counter() {
-  const [count, setCount] = useState(0);
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">Counter</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">const</span> [count, setCount] = <span class="hljs-title function_">useState</span>(<span class="hljs-number">0</span>);
 
-  return (
-    &lt;div&gt;
-      &lt;p&gt;Count: {count}&lt;/p&gt;
-      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Count: {count}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setCount(count + 1)}&gt;
         Increment
-      &lt;/button&gt;
-    &lt;/div&gt;
+      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
   );
 }
 
-export default Counter;
-</code></pre>
-<h2>Vue：渐进式框架</h2>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">Counter</span>;
+</code></pre></div><h2>Vue：渐进式框架</h2>
 <p>Vue由尤雨溪开发，是一个渐进式的JavaScript框架，易于学习和集成。</p>
 <h3>优势</h3>
 <ol>
@@ -78,7 +111,7 @@ export default Counter;
 <li><strong>企业级应用经验较少</strong>：大规模项目案例相对较少</li>
 </ol>
 <h3>示例代码</h3>
-<pre><code class="language-vue">&lt;template&gt;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-vue">&lt;template&gt;
   &lt;div&gt;
     &lt;p&gt;Count: {{ count }}&lt;/p&gt;
     &lt;button @click=&quot;increment&quot;&gt;Increment&lt;/button&gt;
@@ -99,8 +132,7 @@ export default {
   }
 }
 &lt;/script&gt;
-</code></pre>
-<h2>Angular：由Google维护的完整框架</h2>
+</code></pre></div><h2>Angular：由Google维护的完整框架</h2>
 <p>Angular是Google开发的完整前端框架，提供了构建复杂应用所需的一切。</p>
 <h3>优势</h3>
 <ol>
@@ -116,26 +148,25 @@ export default {
 <li><strong>版本更新频繁</strong>：需要持续学习新特性</li>
 </ol>
 <h3>示例代码</h3>
-<pre><code class="language-typescript">import { Component } from '@angular/core';
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-typescript"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Component</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@angular/core&#x27;</span>;
 
-@Component({
-  selector: 'app-counter',
-  template: `
+<span class="hljs-meta">@Component</span>({
+  <span class="hljs-attr">selector</span>: <span class="hljs-string">&#x27;app-counter&#x27;</span>,
+  <span class="hljs-attr">template</span>: <span class="hljs-string">`
     &lt;div&gt;
       &lt;p&gt;Count: {{ count }}&lt;/p&gt;
       &lt;button (click)=&quot;increment()&quot;&gt;Increment&lt;/button&gt;
     &lt;/div&gt;
-  `
+  `</span>
 })
-export class CounterComponent {
-  count = 0;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CounterComponent</span> {
+  count = <span class="hljs-number">0</span>;
 
-  increment() {
-    this.count++;
+  <span class="hljs-title function_">increment</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">count</span>++;
   }
 }
-</code></pre>
-<h2>详细对比</h2>
+</code></pre></div><h2>详细对比</h2>
 <h3>学习曲线</h3>
 <table>
 <thead>
@@ -232,10 +263,87 @@ export class CounterComponent {
             </div>
         </article>
     </main>
-    <footer>
-        <div class="container">
+    <footer class="footer">
+        <div class="max-w-6xl mx-auto px-4">
             <p>&copy; 2025 人人链向未来. All rights reserved.</p>
+            <p class="mt-2"><a href="/rss.xml" class="text-accent-400 hover:text-accent-500">📡 订阅 RSS</a></p>
         </div>
     </footer>
+    <script>
+        // 移动端导航菜单切换 + 代码复制按钮
+        document.addEventListener('DOMContentLoaded', function() {
+                // 图片加载失败占位符
+                document.querySelectorAll('img').forEach(img => {
+                    img.addEventListener('error', function() {
+                        if (this.dataset.fallbackApplied) return;
+                        this.dataset.fallbackApplied = '1';
+                        this.src = '/assets/placeholder.png';
+                        this.classList.add('placeholder');
+                    }, { once: true });
+                });
+            const navbarToggle = document.getElementById('navbar-toggle');
+            const navbarMenu = document.getElementById('navbar-menu');
+            
+            if (navbarToggle && navbarMenu) {
+                navbarToggle.addEventListener('click', function() {
+                    navbarToggle.classList.toggle('open');
+                    navbarMenu.classList.toggle('open');
+                });
+                
+                // 点击菜单项后关闭菜单
+                const navItems = navbarMenu.querySelectorAll('.nav-item');
+                navItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        navbarToggle.classList.remove('open');
+                        navbarMenu.classList.remove('open');
+                    });
+                });
+                
+                // 点击菜单外部关闭菜单
+                document.addEventListener('click', function(e) {
+                    if (!navbarToggle.contains(e.target) && !navbarMenu.contains(e.target)) {
+                        navbarToggle.classList.remove('open');
+                        navbarMenu.classList.remove('open');
+                    }
+                });
+            }
+
+            // 复制代码：事件委托
+            document.body.addEventListener('click', async (e) => {
+                const btn = e.target.closest('.copy-code-btn');
+                if (!btn) return;
+                const container = btn.closest('.code-block');
+                if (!container) return;
+                const codeEl = container.querySelector('pre code');
+                if (!codeEl) return;
+                const text = codeEl.innerText;
+                try {
+                    await navigator.clipboard.writeText(text);
+                    const original = btn.textContent;
+                    btn.textContent = '已复制';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = original;
+                        btn.classList.remove('copied');
+                    }, 1200);
+                } catch (err) {
+                    // 回退方案
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    try { document.execCommand('copy'); } catch {}
+                    document.body.removeChild(textarea);
+                    const original = btn.textContent;
+                    btn.textContent = '已复制';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = original;
+                        btn.classList.remove('copied');
+                    }, 1200);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

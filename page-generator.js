@@ -26,6 +26,16 @@ class PageGenerator {
         this.config = config;
     }
 
+    formatDate(dateStr) {
+        if (!dateStr) return { formatted: '', iso: '' };
+        const d = new Date(dateStr);
+        if (isNaN(d.getTime())) return { formatted: '', iso: '' };
+        const formatted = d.toLocaleDateString('zh-CN', {
+            year: 'numeric', month: 'long', day: 'numeric'
+        });
+        return { formatted, iso: d.toISOString() };
+    }
+
     /**
      * 读取模板文件
      * @param {string} templateName - 模板文件名
@@ -56,9 +66,12 @@ class PageGenerator {
         const template = compile(this.getTemplate('post.html'));
         
         // 准备模板数据
+        const { formatted: dateFormatted, iso: dateISO } = this.formatDate(parsed.attributes.date);
         const data = {
             title: parsed.attributes.title || '无标题',
             date: parsed.attributes.date || '',
+            dateFormatted,
+            dateISO,
             tags: parsed.attributes.tags || [],
             coverImage: parsed.attributes.coverImage || '', // 添加封面图属性
             content: parsed.html,
@@ -114,6 +127,8 @@ class PageGenerator {
             posts: pagePosts.map(post => ({
                 title: post.attributes.title || '无标题',
                 date: post.attributes.date || '',
+                dateFormatted: this.formatDate(post.attributes.date).formatted,
+                dateISO: this.formatDate(post.attributes.date).iso,
                 tags: post.attributes.tags || [],
                 coverImage: post.attributes.coverImage || '', // 添加封面图属性
                 url: this.getRelativeUrl(post.filePath),
@@ -152,12 +167,13 @@ class PageGenerator {
     /**
      * 获取文章摘要
      * @param {string} html - HTML内容
+     * @param {number} maxLength - 最大长度，默认200字符
      * @returns {string} 摘要文本
      */
-    getExcerpt(html) {
-        // 移除HTML标签并截取前200个字符
+    getExcerpt(html, maxLength = 200) {
+        // 移除HTML标签并截取指定长度的字符
         const text = html.replace(/<[^>]*>/g, '').trim();
-        return text.length > 200 ? text.substring(0, 200) + '...' : text;
+        return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
     }
 
     /**
@@ -206,10 +222,88 @@ class PageGenerator {
             this.generateIndex(posts, page, pageSize);
         }
         
+        // 生成RSS文件
+        this.generateRSS(posts);
+        
         // 复制静态资源
         this.copyAssets();
         
         console.log('All pages generated successfully!');
+    }
+
+    /**
+     * 生成RSS文件
+     * @param {Array} posts - 文章信息数组
+     */
+    generateRSS(posts) {
+        // 按日期排序，最新的在前面，只取最新的20篇文章
+        const sortedPosts = posts.sort((a, b) => {
+            const dateA = new Date(a.attributes.date || 0);
+            const dateB = new Date(b.attributes.date || 0);
+            return dateB - dateA;
+        }).slice(0, 20);
+
+        // 准备RSS数据
+        const rssData = {
+            title: this.config.site.title,
+            description: this.config.site.description || '一个基于Markdown的静态博客',
+            link: this.config.site.url || 'http://localhost:8080',
+            language: 'zh-cn',
+            lastBuildDate: new Date().toUTCString(),
+            pubDate: new Date().toUTCString(),
+            items: sortedPosts.map(post => {
+                const postUrl = `${this.config.site.url || 'http://localhost:8080'}${this.getRelativeUrl(post.filePath)}`;
+                return {
+                    title: post.attributes.title || '无标题',
+                    description: this.getExcerpt(post.html, 200),
+                    link: postUrl,
+                    guid: postUrl,
+                    pubDate: post.attributes.date ? new Date(post.attributes.date).toUTCString() : new Date().toUTCString(),
+                    author: this.config.site.author || 'Anonymous'
+                };
+            })
+        };
+
+        // 生成RSS XML
+        const rssTemplate = this.getRSSTemplate();
+        const template = compile(rssTemplate);
+        const rssXml = template(rssData);
+
+        // 写入RSS文件
+        const rssPath = path.join(this.publicDir, 'rss.xml');
+        fs.writeFileSync(rssPath, rssXml);
+        
+        console.log(`Generated RSS: ${rssPath}`);
+    }
+
+    /**
+     * 获取RSS模板
+     * @returns {string} RSS模板内容
+     */
+    getRSSTemplate() {
+        return `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{title}}</title>
+    <description>{{description}}</description>
+    <link>{{link}}</link>
+    <atom:link href="{{link}}/rss.xml" rel="self" type="application/rss+xml" />
+    <language>{{language}}</language>
+    <lastBuildDate>{{lastBuildDate}}</lastBuildDate>
+    <pubDate>{{pubDate}}</pubDate>
+    <ttl>1440</ttl>
+    {{#each items}}
+    <item>
+      <title><![CDATA[{{title}}]]></title>
+      <description><![CDATA[{{description}}]]></description>
+      <link>{{link}}</link>
+      <guid isPermaLink="true">{{guid}}</guid>
+      <pubDate>{{pubDate}}</pubDate>
+      <author>{{author}}</author>
+    </item>
+    {{/each}}
+  </channel>
+</rss>`;
     }
 
     /**

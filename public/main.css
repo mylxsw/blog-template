@@ -89,6 +89,20 @@ nav ul li a:hover {
   color: white;
 }
 
+/* RSS链接特殊样式 */
+nav ul li a[href="/rss.xml"] {
+  background-color: var(--accent-color);
+  color: white;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 0.4rem 0.8rem;
+}
+
+nav ul li a[href="/rss.xml"]:hover {
+  background-color: rgba(76, 201, 240, 0.8);
+  transform: scale(1.05);
+}
+
 /* 主要内容区域 */
 main {
   padding: 3rem 0 0 0; /* 调整padding，只保留顶部padding */

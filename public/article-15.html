@@ -4,32 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>摄影技巧进阶：从入门到专业的大师之路</title>
-    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/modern.css">
+    <link rel="alternate" type="application/rss+xml" title="人人链向未来 RSS Feed" href="/rss.xml">
+    <!-- Highlight.js theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+                        colors: {
+                            primary: { 600: '#FECE00', 700: '#e6b900' },
+                            accent: { 400: '#FECE00', 500: '#ffdb4d' }
+                        }
+          }
+        }
+      }
+    </script>
 </head>
-<body>
-    <header>
-        <div class="container header-content">
-            <h1><a href="/">人人链向未来</a></h1>
-            <nav>
-                <ul>
-                    <li><a href="/">首页</a></li>
-                    <li><a href="/about.html">关于</a></li>
-                </ul>
+<body class="bg-gray-50">
+    <header class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <a href="/" class="navbar-logo">人人链向未来</a>
+            </div>
+            <nav class="navbar-menu" id="navbar-menu">
+                <div class="navbar-nav">
+                    <a href="/" class="nav-item">
+                        <span class="nav-text">首页</span>
+                    </a>
+                    <a href="/about.html" class="nav-item">
+                        <span class="nav-text">关于</span>
+                    </a>
+                    <a href="/rss.xml" class="nav-item nav-item-special" target="_blank" rel="noopener noreferrer">
+                        <span class="nav-text">RSS</span>
+                    </a>
+                </div>
             </nav>
+            <button class="navbar-toggle" id="navbar-toggle" aria-label="切换导航菜单">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
-    <main class="container">
-        <article class="post">
-            <h1>摄影技巧进阶：从入门到专业的大师之路</h1>
-            <div class="post-meta post-meta-detail">
-                <time>Mon Mar 27 2023 08:00:00 GMT+0800 (China Standard Time)</time>
-                <div class="tags">
-                    <span class="tag">photography</span>
-                    <span class="tag">art</span>
-                    <span class="tag">technique</span>
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <article class="article-container">
+            <div class="article-header">
+                <h1 class="article-title">摄影技巧进阶：从入门到专业的大师之路</h1>
+                <div class="article-meta">
+                    <div class="flex items-center space-x-2">
+                        <time datetime="2023-03-27T00:00:00.000Z">2023年3月27日</time>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="post-tag">photography</span>
+                        <span class="post-tag">art</span>
+                        <span class="post-tag">technique</span>
+                    </div>
                 </div>
             </div>
-            <div class="post-content">
+            <div class="article-content">
                 <p>摄影是一门融合技术与艺术的视觉表达方式。从按下快门的那一刻起，我们就在用光线、构图和情感讲述故事。本文将带你从摄影基础开始，逐步深入到专业技巧，帮助你在摄影之路上不断进步。</p>
 <h2>摄影基础回顾</h2>
 <h3>三大曝光要素</h3>
@@ -59,19 +93,18 @@
 </ul>
 <h3>曝光三角平衡</h3>
 <p>优秀的照片需要在光圈、快门速度和ISO之间找到平衡：</p>
-<pre><code class="language-javascript">// 曝光值计算示例
-function calculateExposure(aperture, shutterSpeed, iso) {
-  // EV = log2(N²/t) + log2(ISO/100)
-  const ev = Math.log2(Math.pow(aperture, 2) / shutterSpeed) + 
-             Math.log2(iso / 100);
-  return ev;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 曝光值计算示例</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">calculateExposure</span>(<span class="hljs-params">aperture, shutterSpeed, iso</span>) {
+  <span class="hljs-comment">// EV = log2(N²/t) + log2(ISO/100)</span>
+  <span class="hljs-keyword">const</span> ev = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">log2</span>(<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">pow</span>(aperture, <span class="hljs-number">2</span>) / shutterSpeed) + 
+             <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">log2</span>(iso / <span class="hljs-number">100</span>);
+  <span class="hljs-keyword">return</span> ev;
 }
 
-// 示例：f/2.8, 1/125s, ISO 200
-const ev = calculateExposure(2.8, 1/125, 200);
-console.log(`曝光值: ${ev.toFixed(2)}`);
-</code></pre>
-<h2>构图技巧深化</h2>
+<span class="hljs-comment">// 示例：f/2.8, 1/125s, ISO 200</span>
+<span class="hljs-keyword">const</span> ev = <span class="hljs-title function_">calculateExposure</span>(<span class="hljs-number">2.8</span>, <span class="hljs-number">1</span>/<span class="hljs-number">125</span>, <span class="hljs-number">200</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`曝光值: <span class="hljs-subst">${ev.toFixed(<span class="hljs-number">2</span>)}</span>`</span>);
+</code></pre></div><h2>构图技巧深化</h2>
 <h3>经典构图法则</h3>
 <h4>1. 三分法则</h4>
 <p>将画面用两条水平线和两条垂直线分为九等份，将主体放在交叉点上。</p>
@@ -82,14 +115,13 @@ console.log(`曝光值: ${ev.toFixed(2)}`);
 <h3>高级构图技巧</h3>
 <h4>1. 负空间运用</h4>
 <p>留白艺术，通过大量空白突出主体：</p>
-<pre><code class="language-css">/* 视觉构图示例 */
-.photo-composition {
-  /* 主体占据画面30% */
-  /* 负空间占据70% */
-  /* 创造视觉呼吸感 */
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-css"><span class="hljs-comment">/* 视觉构图示例 */</span>
+<span class="hljs-selector-class">.photo-composition</span> {
+  <span class="hljs-comment">/* 主体占据画面30% */</span>
+  <span class="hljs-comment">/* 负空间占据70% */</span>
+  <span class="hljs-comment">/* 创造视觉呼吸感 */</span>
 }
-</code></pre>
-<h4>2. 框架构图</h4>
+</code></pre></div><h4>2. 框架构图</h4>
 <p>利用门窗、树枝等自然框架突出主体。</p>
 <h4>3. 对称与不对称</h4>
 <ul>
@@ -98,23 +130,22 @@ console.log(`曝光值: ${ev.toFixed(2)}`);
 </ul>
 <h4>4. 前景、中景、背景</h4>
 <p>营造画面层次感，增加照片的深度：</p>
-<pre><code class="language-javascript">// 构图层次分析
-const compositionLayers = {
-  foreground: {
-    purpose: &quot;引导视线&quot;,
-    techniques: [&quot;框架&quot;, &quot;前景元素&quot;, &quot;纹理&quot;]
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 构图层次分析</span>
+<span class="hljs-keyword">const</span> compositionLayers = {
+  <span class="hljs-attr">foreground</span>: {
+    <span class="hljs-attr">purpose</span>: <span class="hljs-string">&quot;引导视线&quot;</span>,
+    <span class="hljs-attr">techniques</span>: [<span class="hljs-string">&quot;框架&quot;</span>, <span class="hljs-string">&quot;前景元素&quot;</span>, <span class="hljs-string">&quot;纹理&quot;</span>]
   },
-  middleGround: {
-    purpose: &quot;主体位置&quot;,
-    techniques: [&quot;三分点&quot;, &quot;黄金比例&quot;]
+  <span class="hljs-attr">middleGround</span>: {
+    <span class="hljs-attr">purpose</span>: <span class="hljs-string">&quot;主体位置&quot;</span>,
+    <span class="hljs-attr">techniques</span>: [<span class="hljs-string">&quot;三分点&quot;</span>, <span class="hljs-string">&quot;黄金比例&quot;</span>]
   },
-  background: {
-    purpose: &quot;氛围营造&quot;,
-    techniques: [&quot;虚化&quot;, &quot;色彩对比&quot;, &quot;延伸线&quot;]
+  <span class="hljs-attr">background</span>: {
+    <span class="hljs-attr">purpose</span>: <span class="hljs-string">&quot;氛围营造&quot;</span>,
+    <span class="hljs-attr">techniques</span>: [<span class="hljs-string">&quot;虚化&quot;</span>, <span class="hljs-string">&quot;色彩对比&quot;</span>, <span class="hljs-string">&quot;延伸线&quot;</span>]
   }
 };
-</code></pre>
-<h2>光线运用艺术</h2>
+</code></pre></div><h2>光线运用艺术</h2>
 <h3>自然光摄影</h3>
 <h4>1. 黄金时段</h4>
 <p>日出后和日落前一小时，光线柔和温暖：</p>
@@ -181,27 +212,26 @@ const compositionLayers = {
 <li><strong>中性色</strong>（黑、白、灰、棕）：平衡、稳定</li>
 </ul>
 <h3>色彩搭配技巧</h3>
-<pre><code class="language-javascript">// 色彩搭配方案
-const colorSchemes = {
-  monochromatic: {
-    description: &quot;单一色相的不同明度和饱和度&quot;,
-    effect: &quot;和谐统一，优雅简洁&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 色彩搭配方案</span>
+<span class="hljs-keyword">const</span> colorSchemes = {
+  <span class="hljs-attr">monochromatic</span>: {
+    <span class="hljs-attr">description</span>: <span class="hljs-string">&quot;单一色相的不同明度和饱和度&quot;</span>,
+    <span class="hljs-attr">effect</span>: <span class="hljs-string">&quot;和谐统一，优雅简洁&quot;</span>
   },
-  analogous: {
-    description: &quot;色轮上相邻的三种颜色&quot;,
-    effect: &quot;自然流畅，视觉舒适&quot;
+  <span class="hljs-attr">analogous</span>: {
+    <span class="hljs-attr">description</span>: <span class="hljs-string">&quot;色轮上相邻的三种颜色&quot;</span>,
+    <span class="hljs-attr">effect</span>: <span class="hljs-string">&quot;自然流畅，视觉舒适&quot;</span>
   },
-  complementary: {
-    description: &quot;色轮上相对的两种颜色&quot;,
-    effect: &quot;强烈对比，视觉冲击&quot;
+  <span class="hljs-attr">complementary</span>: {
+    <span class="hljs-attr">description</span>: <span class="hljs-string">&quot;色轮上相对的两种颜色&quot;</span>,
+    <span class="hljs-attr">effect</span>: <span class="hljs-string">&quot;强烈对比，视觉冲击&quot;</span>
   },
-  triadic: {
-    description: &quot;色轮上等距的三种颜色&quot;,
-    effect: &quot;丰富多彩，视觉平衡&quot;
+  <span class="hljs-attr">triadic</span>: {
+    <span class="hljs-attr">description</span>: <span class="hljs-string">&quot;色轮上等距的三种颜色&quot;</span>,
+    <span class="hljs-attr">effect</span>: <span class="hljs-string">&quot;丰富多彩，视觉平衡&quot;</span>
   }
 };
-</code></pre>
-<h3>色彩后期处理</h3>
+</code></pre></div><h3>色彩后期处理</h3>
 <h4>1. 色温调整</h4>
 <ul>
 <li><strong>冷色调</strong>：K值较低（3000K-5000K）</li>
@@ -227,19 +257,18 @@ const colorSchemes = {
 <li><strong>嘴唇对焦</strong>：突出表情细节</li>
 </ul>
 <h4>3. 姿势引导</h4>
-<pre><code class="language-javascript">// 人像姿势技巧
-const portraitPoses = {
-  standing: {
-    tips: [&quot;重心放在后腿&quot;, &quot;肩膀自然放松&quot;, &quot;下巴微微抬起&quot;],
-    angles: [&quot;侧面45度&quot;, &quot;三分侧面&quot;, &quot;正面&quot;]
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 人像姿势技巧</span>
+<span class="hljs-keyword">const</span> portraitPoses = {
+  <span class="hljs-attr">standing</span>: {
+    <span class="hljs-attr">tips</span>: [<span class="hljs-string">&quot;重心放在后腿&quot;</span>, <span class="hljs-string">&quot;肩膀自然放松&quot;</span>, <span class="hljs-string">&quot;下巴微微抬起&quot;</span>],
+    <span class="hljs-attr">angles</span>: [<span class="hljs-string">&quot;侧面45度&quot;</span>, <span class="hljs-string">&quot;三分侧面&quot;</span>, <span class="hljs-string">&quot;正面&quot;</span>]
   },
-  sitting: {
-    tips: [&quot;保持背部挺直&quot;, &quot;手部自然摆放&quot;, &quot;腿部姿态优雅&quot;],
-    variations: [&quot;侧面坐姿&quot;, &quot;正面坐姿&quot;, &quot;斜靠坐姿&quot;]
+  <span class="hljs-attr">sitting</span>: {
+    <span class="hljs-attr">tips</span>: [<span class="hljs-string">&quot;保持背部挺直&quot;</span>, <span class="hljs-string">&quot;手部自然摆放&quot;</span>, <span class="hljs-string">&quot;腿部姿态优雅&quot;</span>],
+    <span class="hljs-attr">variations</span>: [<span class="hljs-string">&quot;侧面坐姿&quot;</span>, <span class="hljs-string">&quot;正面坐姿&quot;</span>, <span class="hljs-string">&quot;斜靠坐姿&quot;</span>]
   }
 };
-</code></pre>
-<h3>风景摄影</h3>
+</code></pre></div><h3>风景摄影</h3>
 <h4>1. 广角风景</h4>
 <ul>
 <li><strong>前景元素</strong>：岩石、花朵、树枝</li>
@@ -253,10 +282,9 @@ const portraitPoses = {
 <li><strong>虚化背景</strong>：创造油画效果</li>
 </ul>
 <h4>3. 延时摄影</h4>
-<pre><code class="language-bash"># 使用ffmpeg制作延时视频
-ffmpeg -r 24 -pattern_type glob -i '*.jpg' -c:v libx264 timelapse.mp4
-</code></pre>
-<h3>街头摄影</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-bash"><span class="hljs-comment"># 使用ffmpeg制作延时视频</span>
+ffmpeg -r 24 -pattern_type glob -i <span class="hljs-string">&#x27;*.jpg&#x27;</span> -c:v libx264 timelapse.mp4
+</code></pre></div><h3>街头摄影</h3>
 <h4>1. 捕捉决定性瞬间</h4>
 <ul>
 <li><strong>观察等待</strong>：预判即将发生的有趣场景</li>
@@ -291,14 +319,13 @@ ffmpeg -r 24 -pattern_type glob -i '*.jpg' -c:v libx264 timelapse.mp4
 <li><strong>对比度调整</strong>：增强画面层次</li>
 </ul>
 <h4>2. 色彩处理</h4>
-<pre><code class="language-javascript">// 色彩调整示例
-const colorAdjustment = {
-  hue: 0,      // 色相调整 (-100 to +100)
-  saturation: 0, // 饱和度调整 (-100 to +100)
-  luminance: 0   // 明度调整 (-100 to +100)
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 色彩调整示例</span>
+<span class="hljs-keyword">const</span> colorAdjustment = {
+  <span class="hljs-attr">hue</span>: <span class="hljs-number">0</span>,      <span class="hljs-comment">// 色相调整 (-100 to +100)</span>
+  <span class="hljs-attr">saturation</span>: <span class="hljs-number">0</span>, <span class="hljs-comment">// 饱和度调整 (-100 to +100)</span>
+  <span class="hljs-attr">luminance</span>: <span class="hljs-number">0</span>   <span class="hljs-comment">// 明度调整 (-100 to +100)</span>
 };
-</code></pre>
-<h3>高级后期技巧</h3>
+</code></pre></div><h3>高级后期技巧</h3>
 <h4>1. 局部调整</h4>
 <ul>
 <li><strong>渐变滤镜</strong>：调整天空或地面曝光</li>
@@ -319,20 +346,19 @@ const colorAdjustment = {
 <li><strong>伊尔福Delta</strong>：高对比度，颗粒感</li>
 </ul>
 <h4>2. 自定义预设</h4>
-<pre><code class="language-javascript">// Lightroom预设参数示例
-const filmPreset = {
-  exposure: 0.15,
-  contrast: 25,
-  highlights: -30,
-  shadows: 15,
-  whites: 5,
-  blacks: -10,
-  clarity: 20,
-  vibrance: 15,
-  saturation: 5
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// Lightroom预设参数示例</span>
+<span class="hljs-keyword">const</span> filmPreset = {
+  <span class="hljs-attr">exposure</span>: <span class="hljs-number">0.15</span>,
+  <span class="hljs-attr">contrast</span>: <span class="hljs-number">25</span>,
+  <span class="hljs-attr">highlights</span>: -<span class="hljs-number">30</span>,
+  <span class="hljs-attr">shadows</span>: <span class="hljs-number">15</span>,
+  <span class="hljs-attr">whites</span>: <span class="hljs-number">5</span>,
+  <span class="hljs-attr">blacks</span>: -<span class="hljs-number">10</span>,
+  <span class="hljs-attr">clarity</span>: <span class="hljs-number">20</span>,
+  <span class="hljs-attr">vibrance</span>: <span class="hljs-number">15</span>,
+  <span class="hljs-attr">saturation</span>: <span class="hljs-number">5</span>
 };
-</code></pre>
-<h2>创意摄影技巧</h2>
+</code></pre></div><h2>创意摄影技巧</h2>
 <h3>1. 长时间曝光</h3>
 <h4>拍摄题材</h4>
 <ul>
@@ -341,16 +367,15 @@ const filmPreset = {
 <li><strong>星空</strong>：星轨轨迹</li>
 </ul>
 <h4>技术要点</h4>
-<pre><code class="language-javascript">// 长曝光计算
-function calculateExposure(stops, baseShutterSpeed) {
-  return baseShutterSpeed * Math.pow(2, stops);
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 长曝光计算</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">calculateExposure</span>(<span class="hljs-params">stops, baseShutterSpeed</span>) {
+  <span class="hljs-keyword">return</span> baseShutterSpeed * <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">pow</span>(<span class="hljs-number">2</span>, stops);
 }
 
-// 10档减光镜，基础快门1/4秒
-const longExposure = calculateExposure(10, 1/4);
-console.log(`长曝光时间: ${longExposure}s`);
-</code></pre>
-<h3>2. 多重曝光</h3>
+<span class="hljs-comment">// 10档减光镜，基础快门1/4秒</span>
+<span class="hljs-keyword">const</span> longExposure = <span class="hljs-title function_">calculateExposure</span>(<span class="hljs-number">10</span>, <span class="hljs-number">1</span>/<span class="hljs-number">4</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`长曝光时间: <span class="hljs-subst">${longExposure}</span>s`</span>);
+</code></pre></div><h3>2. 多重曝光</h3>
 <h4>实现方式</h4>
 <ul>
 <li><strong>相机内置</strong>：自动叠加多张照片</li>
@@ -374,21 +399,20 @@ console.log(`长曝光时间: ${longExposure}s`);
 <h2>设备进阶选择</h2>
 <h3>相机系统选择</h3>
 <h4>1. 全画幅 vs APS-C</h4>
-<pre><code class="language-javascript">// 传感器尺寸对比
-const sensorSizes = {
-  fullFrame: {
-    size: &quot;36×24mm&quot;,
-    advantages: [&quot;更好的低光性能&quot;, &quot;更浅的景深&quot;, &quot;更广的视角&quot;],
-    disadvantages: [&quot;体积重量大&quot;, &quot;价格较高&quot;]
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 传感器尺寸对比</span>
+<span class="hljs-keyword">const</span> sensorSizes = {
+  <span class="hljs-attr">fullFrame</span>: {
+    <span class="hljs-attr">size</span>: <span class="hljs-string">&quot;36×24mm&quot;</span>,
+    <span class="hljs-attr">advantages</span>: [<span class="hljs-string">&quot;更好的低光性能&quot;</span>, <span class="hljs-string">&quot;更浅的景深&quot;</span>, <span class="hljs-string">&quot;更广的视角&quot;</span>],
+    <span class="hljs-attr">disadvantages</span>: [<span class="hljs-string">&quot;体积重量大&quot;</span>, <span class="hljs-string">&quot;价格较高&quot;</span>]
   },
-  apsC: {
-    size: &quot;23.6×15.6mm&quot;,
-    advantages: [&quot;轻便小巧&quot;, &quot;价格适中&quot;, &quot;镜头选择丰富&quot;],
-    disadvantages: [&quot;裁切系数&quot;, &quot;高ISO噪点较多&quot;]
+  <span class="hljs-attr">apsC</span>: {
+    <span class="hljs-attr">size</span>: <span class="hljs-string">&quot;23.6×15.6mm&quot;</span>,
+    <span class="hljs-attr">advantages</span>: [<span class="hljs-string">&quot;轻便小巧&quot;</span>, <span class="hljs-string">&quot;价格适中&quot;</span>, <span class="hljs-string">&quot;镜头选择丰富&quot;</span>],
+    <span class="hljs-attr">disadvantages</span>: [<span class="hljs-string">&quot;裁切系数&quot;</span>, <span class="hljs-string">&quot;高ISO噪点较多&quot;</span>]
   }
 };
-</code></pre>
-<h4>2. 无反 vs 单反</h4>
+</code></pre></div><h4>2. 无反 vs 单反</h4>
 <ul>
 <li><strong>无反相机</strong>：静音、轻便、实时取景</li>
 <li><strong>单反相机</strong>：电池续航长、光学取景器</li>
@@ -438,18 +462,17 @@ const sensorSizes = {
 </ul>
 <h2>摄影实践建议</h2>
 <h3>1. 日常练习计划</h3>
-<pre><code class="language-javascript">// 每日摄影练习
-const dailyPractice = {
-  monday: &quot;人像摄影练习&quot;,
-  tuesday: &quot;街拍训练&quot;,
-  wednesday: &quot;风景构图&quot;,
-  thursday: &quot;静物布光&quot;,
-  friday: &quot;后期处理&quot;,
-  saturday: &quot;主题创作&quot;,
-  sunday: &quot;作品回顾与总结&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 每日摄影练习</span>
+<span class="hljs-keyword">const</span> dailyPractice = {
+  <span class="hljs-attr">monday</span>: <span class="hljs-string">&quot;人像摄影练习&quot;</span>,
+  <span class="hljs-attr">tuesday</span>: <span class="hljs-string">&quot;街拍训练&quot;</span>,
+  <span class="hljs-attr">wednesday</span>: <span class="hljs-string">&quot;风景构图&quot;</span>,
+  <span class="hljs-attr">thursday</span>: <span class="hljs-string">&quot;静物布光&quot;</span>,
+  <span class="hljs-attr">friday</span>: <span class="hljs-string">&quot;后期处理&quot;</span>,
+  <span class="hljs-attr">saturday</span>: <span class="hljs-string">&quot;主题创作&quot;</span>,
+  <span class="hljs-attr">sunday</span>: <span class="hljs-string">&quot;作品回顾与总结&quot;</span>
 };
-</code></pre>
-<h3>2. 作品分析方法</h3>
+</code></pre></div><h3>2. 作品分析方法</h3>
 <ul>
 <li><strong>技术分析</strong>：曝光、对焦、构图</li>
 <li><strong>创意分析</strong>：主题表达、情感传达</li>
@@ -469,10 +492,87 @@ const dailyPractice = {
             </div>
         </article>
     </main>
-    <footer>
-        <div class="container">
+    <footer class="footer">
+        <div class="max-w-6xl mx-auto px-4">
             <p>&copy; 2025 人人链向未来. All rights reserved.</p>
+            <p class="mt-2"><a href="/rss.xml" class="text-accent-400 hover:text-accent-500">📡 订阅 RSS</a></p>
         </div>
     </footer>
+    <script>
+        // 移动端导航菜单切换 + 代码复制按钮
+        document.addEventListener('DOMContentLoaded', function() {
+                // 图片加载失败占位符
+                document.querySelectorAll('img').forEach(img => {
+                    img.addEventListener('error', function() {
+                        if (this.dataset.fallbackApplied) return;
+                        this.dataset.fallbackApplied = '1';
+                        this.src = '/assets/placeholder.png';
+                        this.classList.add('placeholder');
+                    }, { once: true });
+                });
+            const navbarToggle = document.getElementById('navbar-toggle');
+            const navbarMenu = document.getElementById('navbar-menu');
+            
+            if (navbarToggle && navbarMenu) {
+                navbarToggle.addEventListener('click', function() {
+                    navbarToggle.classList.toggle('open');
+                    navbarMenu.classList.toggle('open');
+                });
+                
+                // 点击菜单项后关闭菜单
+                const navItems = navbarMenu.querySelectorAll('.nav-item');
+                navItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        navbarToggle.classList.remove('open');
+                        navbarMenu.classList.remove('open');
+                    });
+                });
+                
+                // 点击菜单外部关闭菜单
+                document.addEventListener('click', function(e) {
+                    if (!navbarToggle.contains(e.target) && !navbarMenu.contains(e.target)) {
+                        navbarToggle.classList.remove('open');
+                        navbarMenu.classList.remove('open');
+                    }
+                });
+            }
+
+            // 复制代码：事件委托
+            document.body.addEventListener('click', async (e) => {
+                const btn = e.target.closest('.copy-code-btn');
+                if (!btn) return;
+                const container = btn.closest('.code-block');
+                if (!container) return;
+                const codeEl = container.querySelector('pre code');
+                if (!codeEl) return;
+                const text = codeEl.innerText;
+                try {
+                    await navigator.clipboard.writeText(text);
+                    const original = btn.textContent;
+                    btn.textContent = '已复制';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = original;
+                        btn.classList.remove('copied');
+                    }, 1200);
+                } catch (err) {
+                    // 回退方案
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    try { document.execCommand('copy'); } catch {}
+                    document.body.removeChild(textarea);
+                    const original = btn.textContent;
+                    btn.textContent = '已复制';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = original;
+                        btn.classList.remove('copied');
+                    }, 1200);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

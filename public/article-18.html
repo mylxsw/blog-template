@@ -4,55 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>家居设计灵感：打造舒适生活空间的实用指南</title>
-    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/modern.css">
+    <link rel="alternate" type="application/rss+xml" title="人人链向未来 RSS Feed" href="/rss.xml">
+    <!-- Highlight.js theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+                        colors: {
+                            primary: { 600: '#FECE00', 700: '#e6b900' },
+                            accent: { 400: '#FECE00', 500: '#ffdb4d' }
+                        }
+          }
+        }
+      }
+    </script>
 </head>
-<body>
-    <header>
-        <div class="container header-content">
-            <h1><a href="/">人人链向未来</a></h1>
-            <nav>
-                <ul>
-                    <li><a href="/">首页</a></li>
-                    <li><a href="/about.html">关于</a></li>
-                </ul>
+<body class="bg-gray-50">
+    <header class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <a href="/" class="navbar-logo">人人链向未来</a>
+            </div>
+            <nav class="navbar-menu" id="navbar-menu">
+                <div class="navbar-nav">
+                    <a href="/" class="nav-item">
+                        <span class="nav-text">首页</span>
+                    </a>
+                    <a href="/about.html" class="nav-item">
+                        <span class="nav-text">关于</span>
+                    </a>
+                    <a href="/rss.xml" class="nav-item nav-item-special" target="_blank" rel="noopener noreferrer">
+                        <span class="nav-text">RSS</span>
+                    </a>
+                </div>
             </nav>
+            <button class="navbar-toggle" id="navbar-toggle" aria-label="切换导航菜单">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
-    <main class="container">
-        <article class="post">
-            <h1>家居设计灵感：打造舒适生活空间的实用指南</h1>
-            <div class="post-meta post-meta-detail">
-                <time>Fri Jun 30 2023 08:00:00 GMT+0800 (China Standard Time)</time>
-                <div class="tags">
-                    <span class="tag">interior-design</span>
-                    <span class="tag">home</span>
-                    <span class="tag">lifestyle</span>
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <article class="article-container">
+            <div class="article-header">
+                <h1 class="article-title">家居设计灵感：打造舒适生活空间的实用指南</h1>
+                <div class="article-meta">
+                    <div class="flex items-center space-x-2">
+                        <time datetime="2023-06-30T00:00:00.000Z">2023年6月30日</time>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="post-tag">interior-design</span>
+                        <span class="post-tag">home</span>
+                        <span class="post-tag">lifestyle</span>
+                    </div>
                 </div>
             </div>
-            <div class="post-content">
+            <div class="article-content">
                 <p>家不仅仅是一个居住的场所，更是我们表达个性、放松身心、与家人共度时光的重要空间。一个精心设计的家居环境能够提升生活品质，创造愉悦的心情。本文将为你提供全面的家居设计指南，帮助你打造既美观又实用的生活空间。</p>
 <h2>家居设计基本原则</h2>
 <h3>1. 功能性优先</h3>
 <p>家居设计的首要原则是满足居住者的实际需求。每个空间都应该有明确的功能定位，并围绕这个功能进行设计。</p>
 <h4>功能分区</h4>
-<pre><code class="language-javascript">// 家居功能分区规划
-const homeZoning = {
-  privateAreas: {
-    bedrooms: &quot;休息、睡眠&quot;,
-    bathrooms: &quot;个人卫生、放松&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 家居功能分区规划</span>
+<span class="hljs-keyword">const</span> homeZoning = {
+  <span class="hljs-attr">privateAreas</span>: {
+    <span class="hljs-attr">bedrooms</span>: <span class="hljs-string">&quot;休息、睡眠&quot;</span>,
+    <span class="hljs-attr">bathrooms</span>: <span class="hljs-string">&quot;个人卫生、放松&quot;</span>
   },
-  socialAreas: {
-    livingRoom: &quot;接待客人、家庭聚会&quot;,
-    diningRoom: &quot;用餐、社交&quot;
+  <span class="hljs-attr">socialAreas</span>: {
+    <span class="hljs-attr">livingRoom</span>: <span class="hljs-string">&quot;接待客人、家庭聚会&quot;</span>,
+    <span class="hljs-attr">diningRoom</span>: <span class="hljs-string">&quot;用餐、社交&quot;</span>
   },
-  functionalAreas: {
-    kitchen: &quot;烹饪、准备食物&quot;,
-    study: &quot;工作、学习&quot;,
-    storage: &quot;物品收纳&quot;
+  <span class="hljs-attr">functionalAreas</span>: {
+    <span class="hljs-attr">kitchen</span>: <span class="hljs-string">&quot;烹饪、准备食物&quot;</span>,
+    <span class="hljs-attr">study</span>: <span class="hljs-string">&quot;工作、学习&quot;</span>,
+    <span class="hljs-attr">storage</span>: <span class="hljs-string">&quot;物品收纳&quot;</span>
   }
 };
-</code></pre>
-<h3>2. 流线设计</h3>
+</code></pre></div><h3>2. 流线设计</h3>
 <p>合理的动线设计能够提高生活效率，减少不必要的走动。</p>
 <h4>常见流线优化</h4>
 <ul>
@@ -63,14 +96,13 @@ const homeZoning = {
 <h3>3. 比例与尺度</h3>
 <p>空间中各个元素的大小关系直接影响视觉效果和使用体验。</p>
 <h4>黄金比例应用</h4>
-<pre><code class="language-css">/* 黄金比例在家居设计中的应用 */
-.golden-ratio {
-  /* 1:1.618 的比例关系 */
-  width: 61.8%;
-  height: 38.2%;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-css"><span class="hljs-comment">/* 黄金比例在家居设计中的应用 */</span>
+<span class="hljs-selector-class">.golden-ratio</span> {
+  <span class="hljs-comment">/* 1:1.618 的比例关系 */</span>
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">61.8%</span>;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">38.2%</span>;
 }
-</code></pre>
-<h2>色彩搭配艺术</h2>
+</code></pre></div><h2>色彩搭配艺术</h2>
 <h3>色彩心理学</h3>
 <p>不同的颜色会对人的情绪和行为产生不同的影响：</p>
 <h4>主要颜色的心理效应</h4>
@@ -83,31 +115,30 @@ const homeZoning = {
 </ul>
 <h3>色彩搭配方案</h3>
 <h4>经典配色法则</h4>
-<pre><code class="language-javascript">// 色彩搭配方案
-const colorSchemes = {
-  monochromatic: {
-    description: &quot;同一色相的不同明度和饱和度&quot;,
-    effect: &quot;和谐统一，优雅简洁&quot;,
-    application: &quot;适合简约风格&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 色彩搭配方案</span>
+<span class="hljs-keyword">const</span> colorSchemes = {
+  <span class="hljs-attr">monochromatic</span>: {
+    <span class="hljs-attr">description</span>: <span class="hljs-string">&quot;同一色相的不同明度和饱和度&quot;</span>,
+    <span class="hljs-attr">effect</span>: <span class="hljs-string">&quot;和谐统一，优雅简洁&quot;</span>,
+    <span class="hljs-attr">application</span>: <span class="hljs-string">&quot;适合简约风格&quot;</span>
   },
-  analogous: {
-    description: &quot;色轮上相邻的三种颜色&quot;,
-    effect: &quot;自然流畅，视觉舒适&quot;,
-    application: &quot;适合北欧、日式风格&quot;
+  <span class="hljs-attr">analogous</span>: {
+    <span class="hljs-attr">description</span>: <span class="hljs-string">&quot;色轮上相邻的三种颜色&quot;</span>,
+    <span class="hljs-attr">effect</span>: <span class="hljs-string">&quot;自然流畅，视觉舒适&quot;</span>,
+    <span class="hljs-attr">application</span>: <span class="hljs-string">&quot;适合北欧、日式风格&quot;</span>
   },
-  complementary: {
-    description: &quot;色轮上相对的两种颜色&quot;,
-    effect: &quot;强烈对比，视觉冲击&quot;,
-    application: &quot;适合现代、工业风格&quot;
+  <span class="hljs-attr">complementary</span>: {
+    <span class="hljs-attr">description</span>: <span class="hljs-string">&quot;色轮上相对的两种颜色&quot;</span>,
+    <span class="hljs-attr">effect</span>: <span class="hljs-string">&quot;强烈对比，视觉冲击&quot;</span>,
+    <span class="hljs-attr">application</span>: <span class="hljs-string">&quot;适合现代、工业风格&quot;</span>
   },
-  triadic: {
-    description: &quot;色轮上等距的三种颜色&quot;,
-    effect: &quot;丰富多彩，视觉平衡&quot;,
-    application: &quot;适合活泼、创意空间&quot;
+  <span class="hljs-attr">triadic</span>: {
+    <span class="hljs-attr">description</span>: <span class="hljs-string">&quot;色轮上等距的三种颜色&quot;</span>,
+    <span class="hljs-attr">effect</span>: <span class="hljs-string">&quot;丰富多彩，视觉平衡&quot;</span>,
+    <span class="hljs-attr">application</span>: <span class="hljs-string">&quot;适合活泼、创意空间&quot;</span>
   }
 };
-</code></pre>
-<h3>不同空间的色彩建议</h3>
+</code></pre></div><h3>不同空间的色彩建议</h3>
 <h4>客厅</h4>
 <ul>
 <li><strong>主色调</strong>：中性色为主，营造温馨氛围</li>
@@ -136,27 +167,26 @@ const colorSchemes = {
 <li><strong>浅色调</strong>：浅色能够反射更多光线，让空间显得更大</li>
 </ol>
 <h4>多功能家具</h4>
-<pre><code class="language-javascript">// 多功能家具推荐
-const multifunctionalFurniture = {
-  sofaBed: {
-    function: &quot;白天是沙发，晚上是床&quot;,
-    spaceSaving: &quot;适合小户型客厅&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 多功能家具推荐</span>
+<span class="hljs-keyword">const</span> multifunctionalFurniture = {
+  <span class="hljs-attr">sofaBed</span>: {
+    <span class="hljs-attr">function</span>: <span class="hljs-string">&quot;白天是沙发，晚上是床&quot;</span>,
+    <span class="hljs-attr">spaceSaving</span>: <span class="hljs-string">&quot;适合小户型客厅&quot;</span>
   },
-  storageOttoman: {
-    function: &quot;座椅+储物&quot;,
-    spaceSaving: &quot;适合客厅、卧室&quot;
+  <span class="hljs-attr">storageOttoman</span>: {
+    <span class="hljs-attr">function</span>: <span class="hljs-string">&quot;座椅+储物&quot;</span>,
+    <span class="hljs-attr">spaceSaving</span>: <span class="hljs-string">&quot;适合客厅、卧室&quot;</span>
   },
-  foldingTable: {
-    function: &quot;可折叠餐桌&quot;,
-    spaceSaving: &quot;适合小户型餐厅&quot;
+  <span class="hljs-attr">foldingTable</span>: {
+    <span class="hljs-attr">function</span>: <span class="hljs-string">&quot;可折叠餐桌&quot;</span>,
+    <span class="hljs-attr">spaceSaving</span>: <span class="hljs-string">&quot;适合小户型餐厅&quot;</span>
   },
-  wallMountedDesk: {
-    function: &quot;可折叠工作台&quot;,
-    spaceSaving: &quot;适合小空间办公&quot;
+  <span class="hljs-attr">wallMountedDesk</span>: {
+    <span class="hljs-attr">function</span>: <span class="hljs-string">&quot;可折叠工作台&quot;</span>,
+    <span class="hljs-attr">spaceSaving</span>: <span class="hljs-string">&quot;适合小空间办公&quot;</span>
   }
 };
-</code></pre>
-<h3>大空间设计</h3>
+</code></pre></div><h3>大空间设计</h3>
 <h4>区域划分</h4>
 <ul>
 <li><strong>地毯分区</strong>：不同区域使用不同地毯</li>
@@ -172,30 +202,29 @@ const multifunctionalFurniture = {
 <h2>家具选择与搭配</h2>
 <h3>家具尺寸选择</h3>
 <h4>常见家具尺寸参考</h4>
-<pre><code class="language-javascript">// 家具尺寸指南
-const furnitureDimensions = {
-  sofa: {
-    twoSeater: &quot;140-180cm长&quot;,
-    threeSeater: &quot;180-240cm长&quot;,
-    depth: &quot;80-100cm&quot;,
-    height: &quot;70-90cm&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 家具尺寸指南</span>
+<span class="hljs-keyword">const</span> furnitureDimensions = {
+  <span class="hljs-attr">sofa</span>: {
+    <span class="hljs-attr">twoSeater</span>: <span class="hljs-string">&quot;140-180cm长&quot;</span>,
+    <span class="hljs-attr">threeSeater</span>: <span class="hljs-string">&quot;180-240cm长&quot;</span>,
+    <span class="hljs-attr">depth</span>: <span class="hljs-string">&quot;80-100cm&quot;</span>,
+    <span class="hljs-attr">height</span>: <span class="hljs-string">&quot;70-90cm&quot;</span>
   },
-  diningTable: {
-    forTwo: &quot;120cm长&quot;,
-    forFour: &quot;150cm长&quot;,
-    forSix: &quot;180cm长&quot;,
-    width: &quot;80-100cm&quot;,
-    height: &quot;75cm&quot;
+  <span class="hljs-attr">diningTable</span>: {
+    <span class="hljs-attr">forTwo</span>: <span class="hljs-string">&quot;120cm长&quot;</span>,
+    <span class="hljs-attr">forFour</span>: <span class="hljs-string">&quot;150cm长&quot;</span>,
+    <span class="hljs-attr">forSix</span>: <span class="hljs-string">&quot;180cm长&quot;</span>,
+    <span class="hljs-attr">width</span>: <span class="hljs-string">&quot;80-100cm&quot;</span>,
+    <span class="hljs-attr">height</span>: <span class="hljs-string">&quot;75cm&quot;</span>
   },
-  bed: {
-    single: &quot;90×190cm&quot;,
-    double: &quot;150×190cm&quot;,
-    queen: &quot;180×200cm&quot;,
-    king: &quot;200×200cm&quot;
+  <span class="hljs-attr">bed</span>: {
+    <span class="hljs-attr">single</span>: <span class="hljs-string">&quot;90×190cm&quot;</span>,
+    <span class="hljs-attr">double</span>: <span class="hljs-string">&quot;150×190cm&quot;</span>,
+    <span class="hljs-attr">queen</span>: <span class="hljs-string">&quot;180×200cm&quot;</span>,
+    <span class="hljs-attr">king</span>: <span class="hljs-string">&quot;200×200cm&quot;</span>
   }
 };
-</code></pre>
-<h3>风格统一性</h3>
+</code></pre></div><h3>风格统一性</h3>
 <h4>家具风格匹配</h4>
 <ul>
 <li><strong>现代简约</strong>：线条简洁，色彩单一</li>
@@ -214,26 +243,25 @@ const furnitureDimensions = {
 <h2>照明设计</h2>
 <h3>照明层次</h3>
 <h4>三种基本照明类型</h4>
-<pre><code class="language-javascript">// 照明层次设计
-const lightingLayers = {
-  ambient: {
-    purpose: &quot;提供基础照明&quot;,
-    examples: [&quot;吸顶灯&quot;, &quot;吊灯&quot;, &quot;筒灯&quot;],
-    coverage: &quot;整个空间&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 照明层次设计</span>
+<span class="hljs-keyword">const</span> lightingLayers = {
+  <span class="hljs-attr">ambient</span>: {
+    <span class="hljs-attr">purpose</span>: <span class="hljs-string">&quot;提供基础照明&quot;</span>,
+    <span class="hljs-attr">examples</span>: [<span class="hljs-string">&quot;吸顶灯&quot;</span>, <span class="hljs-string">&quot;吊灯&quot;</span>, <span class="hljs-string">&quot;筒灯&quot;</span>],
+    <span class="hljs-attr">coverage</span>: <span class="hljs-string">&quot;整个空间&quot;</span>
   },
-  task: {
-    purpose: &quot;特定活动照明&quot;,
-    examples: [&quot;台灯&quot;, &quot;阅读灯&quot;, &quot;厨房操作台灯&quot;],
-    coverage: &quot;工作区域&quot;
+  <span class="hljs-attr">task</span>: {
+    <span class="hljs-attr">purpose</span>: <span class="hljs-string">&quot;特定活动照明&quot;</span>,
+    <span class="hljs-attr">examples</span>: [<span class="hljs-string">&quot;台灯&quot;</span>, <span class="hljs-string">&quot;阅读灯&quot;</span>, <span class="hljs-string">&quot;厨房操作台灯&quot;</span>],
+    <span class="hljs-attr">coverage</span>: <span class="hljs-string">&quot;工作区域&quot;</span>
   },
-  accent: {
-    purpose: &quot;突出装饰元素&quot;,
-    examples: [&quot;射灯&quot;, &quot;壁灯&quot;, &quot;灯带&quot;],
-    coverage: &quot;艺术品、墙面装饰&quot;
+  <span class="hljs-attr">accent</span>: {
+    <span class="hljs-attr">purpose</span>: <span class="hljs-string">&quot;突出装饰元素&quot;</span>,
+    <span class="hljs-attr">examples</span>: [<span class="hljs-string">&quot;射灯&quot;</span>, <span class="hljs-string">&quot;壁灯&quot;</span>, <span class="hljs-string">&quot;灯带&quot;</span>],
+    <span class="hljs-attr">coverage</span>: <span class="hljs-string">&quot;艺术品、墙面装饰&quot;</span>
   }
 };
-</code></pre>
-<h3>不同空间照明需求</h3>
+</code></pre></div><h3>不同空间照明需求</h3>
 <h4>客厅照明</h4>
 <ul>
 <li><strong>主照明</strong>：吊灯或吸顶灯提供基础照明</li>
@@ -261,19 +289,18 @@ const lightingLayers = {
 <li><strong>墙面处理</strong>：壁纸、涂料、文化石</li>
 </ul>
 <h4>装饰布局原则</h4>
-<pre><code class="language-css">/* 装饰布局黄金法则 */
-.wall-decoration {
-  /* 遵循三分法则 */
-  top-third: &quot;重要装饰元素&quot;;
-  middle-third: &quot;次要装饰元素&quot;;
-  bottom-third: &quot;辅助装饰元素&quot;;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-css"><span class="hljs-comment">/* 装饰布局黄金法则 */</span>
+<span class="hljs-selector-class">.wall-decoration</span> {
+  <span class="hljs-comment">/* 遵循三分法则 */</span>
+  <span class="hljs-attribute">top</span>-third: <span class="hljs-string">&quot;重要装饰元素&quot;</span>;
+  middle-third: <span class="hljs-string">&quot;次要装饰元素&quot;</span>;
+  <span class="hljs-attribute">bottom</span>-third: <span class="hljs-string">&quot;辅助装饰元素&quot;</span>;
   
-  /* 高度参考 */
-  eye-level: &quot;150-160cm&quot;;
-  hanging-height: &quot;装饰品中心距离地面150cm&quot;;
+  <span class="hljs-comment">/* 高度参考 */</span>
+  eye-level: <span class="hljs-string">&quot;150-160cm&quot;</span>;
+  hanging-<span class="hljs-attribute">height</span>: <span class="hljs-string">&quot;装饰品中心距离地面150cm&quot;</span>;
 }
-</code></pre>
-<h3>软装配饰</h3>
+</code></pre></div><h3>软装配饰</h3>
 <h4>软装元素</h4>
 <ul>
 <li><strong>窗帘</strong>：调节光线，增加私密性</li>
@@ -290,26 +317,25 @@ const lightingLayers = {
 <h2>储物空间设计</h2>
 <h3>储物原则</h3>
 <h4>收纳设计要点</h4>
-<pre><code class="language-javascript">// 储物空间设计原则
-const storagePrinciples = {
-  accessibility: {
-    frequentlyUsed: &quot;易取放的位置&quot;,
-    occasionallyUsed: &quot;中等便利的位置&quot;,
-    rarelyUsed: &quot;较高或较低的位置&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 储物空间设计原则</span>
+<span class="hljs-keyword">const</span> storagePrinciples = {
+  <span class="hljs-attr">accessibility</span>: {
+    <span class="hljs-attr">frequentlyUsed</span>: <span class="hljs-string">&quot;易取放的位置&quot;</span>,
+    <span class="hljs-attr">occasionallyUsed</span>: <span class="hljs-string">&quot;中等便利的位置&quot;</span>,
+    <span class="hljs-attr">rarelyUsed</span>: <span class="hljs-string">&quot;较高或较低的位置&quot;</span>
   },
-  categorization: {
-    byFunction: &quot;按使用功能分类&quot;,
-    byFrequency: &quot;按使用频率分类&quot;,
-    bySeason: &quot;按季节分类&quot;
+  <span class="hljs-attr">categorization</span>: {
+    <span class="hljs-attr">byFunction</span>: <span class="hljs-string">&quot;按使用功能分类&quot;</span>,
+    <span class="hljs-attr">byFrequency</span>: <span class="hljs-string">&quot;按使用频率分类&quot;</span>,
+    <span class="hljs-attr">bySeason</span>: <span class="hljs-string">&quot;按季节分类&quot;</span>
   },
-  maximization: {
-    verticalSpace: &quot;充分利用墙面和顶部空间&quot;,
-    hiddenStorage: &quot;利用床下、楼梯下等隐蔽空间&quot;,
-    multiPurpose: &quot;家具兼具储物功能&quot;
+  <span class="hljs-attr">maximization</span>: {
+    <span class="hljs-attr">verticalSpace</span>: <span class="hljs-string">&quot;充分利用墙面和顶部空间&quot;</span>,
+    <span class="hljs-attr">hiddenStorage</span>: <span class="hljs-string">&quot;利用床下、楼梯下等隐蔽空间&quot;</span>,
+    <span class="hljs-attr">multiPurpose</span>: <span class="hljs-string">&quot;家具兼具储物功能&quot;</span>
   }
 };
-</code></pre>
-<h3>创意储物方案</h3>
+</code></pre></div><h3>创意储物方案</h3>
 <h4>空间利用技巧</h4>
 <ul>
 <li><strong>楼梯下空间</strong>：改造成储物柜或小型工作区</li>
@@ -326,15 +352,14 @@ const storagePrinciples = {
 <li><strong>功能至上</strong>：每件物品都有明确功能</li>
 </ul>
 <h4>实施要点</h4>
-<pre><code class="language-css">/* 现代简约风格要素 */
-.modern-minimalist {
-  color-palette: &quot;黑白灰 + 1个强调色&quot;;
-  materials: &quot;金属、玻璃、光滑表面&quot;;
-  furniture: &quot;简洁几何形状&quot;;
-  decor: &quot;少而精，注重品质&quot;;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-css"><span class="hljs-comment">/* 现代简约风格要素 */</span>
+<span class="hljs-selector-class">.modern-minimalist</span> {
+  <span class="hljs-attribute">color</span>-palette: <span class="hljs-string">&quot;黑白灰 + 1个强调色&quot;</span>;
+  materials: <span class="hljs-string">&quot;金属、玻璃、光滑表面&quot;</span>;
+  furniture: <span class="hljs-string">&quot;简洁几何形状&quot;</span>;
+  decor: <span class="hljs-string">&quot;少而精，注重品质&quot;</span>;
 }
-</code></pre>
-<h3>北欧风格</h3>
+</code></pre></div><h3>北欧风格</h3>
 <h4>特点</h4>
 <ul>
 <li><strong>自然材质</strong>：大量使用木材</li>
@@ -342,15 +367,14 @@ const storagePrinciples = {
 <li><strong>功能设计</strong>：注重实用性和舒适性</li>
 </ul>
 <h4>实施要点</h4>
-<pre><code class="language-css">/* 北欧风格要素 */
-.scandinavian {
-  color-palette: &quot;白色 + 木色 + 柔和彩色&quot;;
-  materials: &quot;原木、棉麻、羊毛&quot;;
-  furniture: &quot;简洁实用，注重人体工学&quot;;
-  decor: &quot;绿植、手工制品、自然元素&quot;;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-css"><span class="hljs-comment">/* 北欧风格要素 */</span>
+<span class="hljs-selector-class">.scandinavian</span> {
+  <span class="hljs-attribute">color</span>-palette: <span class="hljs-string">&quot;白色 + 木色 + 柔和彩色&quot;</span>;
+  materials: <span class="hljs-string">&quot;原木、棉麻、羊毛&quot;</span>;
+  furniture: <span class="hljs-string">&quot;简洁实用，注重人体工学&quot;</span>;
+  decor: <span class="hljs-string">&quot;绿植、手工制品、自然元素&quot;</span>;
 }
-</code></pre>
-<h3>工业风格</h3>
+</code></pre></div><h3>工业风格</h3>
 <h4>特点</h4>
 <ul>
 <li><strong>原始质感</strong>：暴露的砖墙、管道</li>
@@ -358,28 +382,26 @@ const storagePrinciples = {
 <li><strong>暗色调</strong>：黑色、灰色、棕色为主</li>
 </ul>
 <h4>实施要点</h4>
-<pre><code class="language-css">/* 工业风格要素 */
-.industrial {
-  color-palette: &quot;黑、灰、棕 + 金属色&quot;;
-  materials: &quot;金属、砖、混凝土、皮革&quot;,
-  furniture: &quot;复古、做旧风格&quot;;
-  decor: &quot;复古灯具、机械元素、老物件&quot;;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-css"><span class="hljs-comment">/* 工业风格要素 */</span>
+<span class="hljs-selector-class">.industrial</span> {
+  <span class="hljs-attribute">color</span>-palette: <span class="hljs-string">&quot;黑、灰、棕 + 金属色&quot;</span>;
+  materials: <span class="hljs-string">&quot;金属、砖、混凝土、皮革&quot;</span>,
+  furniture: <span class="hljs-string">&quot;复古、做旧风格&quot;</span>;
+  decor: <span class="hljs-string">&quot;复古灯具、机械元素、老物件&quot;</span>;
 }
-</code></pre>
-<h2>预算规划与实施</h2>
+</code></pre></div><h2>预算规划与实施</h2>
 <h3>设计预算分配</h3>
 <h4>合理预算分配建议</h4>
-<pre><code class="language-javascript">// 家居设计预算分配
-const budgetAllocation = {
-  furniture: &quot;40-50%&quot;,
-  softDecoration: &quot;20-25%&quot;,
-  lighting: &quot;10-15%&quot;,
-  paintWallpaper: &quot;5-10%&quot;,
-  accessories: &quot;5-10%&quot;,
-  contingency: &quot;5-10%&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 家居设计预算分配</span>
+<span class="hljs-keyword">const</span> budgetAllocation = {
+  <span class="hljs-attr">furniture</span>: <span class="hljs-string">&quot;40-50%&quot;</span>,
+  <span class="hljs-attr">softDecoration</span>: <span class="hljs-string">&quot;20-25%&quot;</span>,
+  <span class="hljs-attr">lighting</span>: <span class="hljs-string">&quot;10-15%&quot;</span>,
+  <span class="hljs-attr">paintWallpaper</span>: <span class="hljs-string">&quot;5-10%&quot;</span>,
+  <span class="hljs-attr">accessories</span>: <span class="hljs-string">&quot;5-10%&quot;</span>,
+  <span class="hljs-attr">contingency</span>: <span class="hljs-string">&quot;5-10%&quot;</span>
 };
-</code></pre>
-<h3>实施步骤</h3>
+</code></pre></div><h3>实施步骤</h3>
 <h4>设计实施流程</h4>
 <ol>
 <li><strong>需求分析</strong>：明确家庭成员需求和生活习惯</li>
@@ -400,27 +422,26 @@ const budgetAllocation = {
 </ul>
 <h3>可持续设计理念</h3>
 <h4>环保实践</h4>
-<pre><code class="language-javascript">// 可持续家居设计实践
-const sustainableDesign = {
-  reuse: {
-    strategy: &quot;旧物改造、重新利用&quot;,
-    examples: &quot;老家具翻新、旧物做装饰&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 可持续家居设计实践</span>
+<span class="hljs-keyword">const</span> sustainableDesign = {
+  <span class="hljs-attr">reuse</span>: {
+    <span class="hljs-attr">strategy</span>: <span class="hljs-string">&quot;旧物改造、重新利用&quot;</span>,
+    <span class="hljs-attr">examples</span>: <span class="hljs-string">&quot;老家具翻新、旧物做装饰&quot;</span>
   },
-  recycle: {
-    strategy: &quot;选择可回收材料&quot;,
-    examples: &quot;金属、玻璃制品&quot;
+  <span class="hljs-attr">recycle</span>: {
+    <span class="hljs-attr">strategy</span>: <span class="hljs-string">&quot;选择可回收材料&quot;</span>,
+    <span class="hljs-attr">examples</span>: <span class="hljs-string">&quot;金属、玻璃制品&quot;</span>
   },
-  reduce: {
-    strategy: &quot;减少不必要的装饰&quot;,
-    examples: &quot;简约设计、多功能家具&quot;
+  <span class="hljs-attr">reduce</span>: {
+    <span class="hljs-attr">strategy</span>: <span class="hljs-string">&quot;减少不必要的装饰&quot;</span>,
+    <span class="hljs-attr">examples</span>: <span class="hljs-string">&quot;简约设计、多功能家具&quot;</span>
   },
-  renewable: {
-    strategy: &quot;使用可再生资源&quot;,
-    examples: &quot;竹制品、再生木材&quot;
+  <span class="hljs-attr">renewable</span>: {
+    <span class="hljs-attr">strategy</span>: <span class="hljs-string">&quot;使用可再生资源&quot;</span>,
+    <span class="hljs-attr">examples</span>: <span class="hljs-string">&quot;竹制品、再生木材&quot;</span>
   }
 };
-</code></pre>
-<h2>结语</h2>
+</code></pre></div><h2>结语</h2>
 <p>家居设计是一个融合美学、功能性和个人偏好的综合性过程。通过本文的指导，希望你能找到适合自己的设计方向，创造一个既美观又实用的居住空间。</p>
 <p>记住，最好的家居设计是能够反映居住者个性和生活方式的设计。不要盲目追求流行趋势，而应该根据自己的实际需求和喜好来打造理想家园。同时，也要注重环保和可持续发展，为子孙后代留下更美好的生活环境。</p>
 <p>家居设计不是一蹴而就的过程，它需要时间、耐心和不断的调整完善。享受这个创造过程，让你的家成为真正的心灵港湾。</p>
@@ -428,10 +449,87 @@ const sustainableDesign = {
             </div>
         </article>
     </main>
-    <footer>
-        <div class="container">
+    <footer class="footer">
+        <div class="max-w-6xl mx-auto px-4">
             <p>&copy; 2025 人人链向未来. All rights reserved.</p>
+            <p class="mt-2"><a href="/rss.xml" class="text-accent-400 hover:text-accent-500">📡 订阅 RSS</a></p>
         </div>
     </footer>
+    <script>
+        // 移动端导航菜单切换 + 代码复制按钮
+        document.addEventListener('DOMContentLoaded', function() {
+                // 图片加载失败占位符
+                document.querySelectorAll('img').forEach(img => {
+                    img.addEventListener('error', function() {
+                        if (this.dataset.fallbackApplied) return;
+                        this.dataset.fallbackApplied = '1';
+                        this.src = '/assets/placeholder.png';
+                        this.classList.add('placeholder');
+                    }, { once: true });
+                });
+            const navbarToggle = document.getElementById('navbar-toggle');
+            const navbarMenu = document.getElementById('navbar-menu');
+            
+            if (navbarToggle && navbarMenu) {
+                navbarToggle.addEventListener('click', function() {
+                    navbarToggle.classList.toggle('open');
+                    navbarMenu.classList.toggle('open');
+                });
+                
+                // 点击菜单项后关闭菜单
+                const navItems = navbarMenu.querySelectorAll('.nav-item');
+                navItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        navbarToggle.classList.remove('open');
+                        navbarMenu.classList.remove('open');
+                    });
+                });
+                
+                // 点击菜单外部关闭菜单
+                document.addEventListener('click', function(e) {
+                    if (!navbarToggle.contains(e.target) && !navbarMenu.contains(e.target)) {
+                        navbarToggle.classList.remove('open');
+                        navbarMenu.classList.remove('open');
+                    }
+                });
+            }
+
+            // 复制代码：事件委托
+            document.body.addEventListener('click', async (e) => {
+                const btn = e.target.closest('.copy-code-btn');
+                if (!btn) return;
+                const container = btn.closest('.code-block');
+                if (!container) return;
+                const codeEl = container.querySelector('pre code');
+                if (!codeEl) return;
+                const text = codeEl.innerText;
+                try {
+                    await navigator.clipboard.writeText(text);
+                    const original = btn.textContent;
+                    btn.textContent = '已复制';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = original;
+                        btn.classList.remove('copied');
+                    }, 1200);
+                } catch (err) {
+                    // 回退方案
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    try { document.execCommand('copy'); } catch {}
+                    document.body.removeChild(textarea);
+                    const original = btn.textContent;
+                    btn.textContent = '已复制';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = original;
+                        btn.classList.remove('copied');
+                    }, 1200);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

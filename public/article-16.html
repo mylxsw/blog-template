@@ -4,32 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>投资理财基础：个人财富增值的实用指南</title>
-    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/modern.css">
+    <link rel="alternate" type="application/rss+xml" title="人人链向未来 RSS Feed" href="/rss.xml">
+    <!-- Highlight.js theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+                        colors: {
+                            primary: { 600: '#FECE00', 700: '#e6b900' },
+                            accent: { 400: '#FECE00', 500: '#ffdb4d' }
+                        }
+          }
+        }
+      }
+    </script>
 </head>
-<body>
-    <header>
-        <div class="container header-content">
-            <h1><a href="/">人人链向未来</a></h1>
-            <nav>
-                <ul>
-                    <li><a href="/">首页</a></li>
-                    <li><a href="/about.html">关于</a></li>
-                </ul>
+<body class="bg-gray-50">
+    <header class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <a href="/" class="navbar-logo">人人链向未来</a>
+            </div>
+            <nav class="navbar-menu" id="navbar-menu">
+                <div class="navbar-nav">
+                    <a href="/" class="nav-item">
+                        <span class="nav-text">首页</span>
+                    </a>
+                    <a href="/about.html" class="nav-item">
+                        <span class="nav-text">关于</span>
+                    </a>
+                    <a href="/rss.xml" class="nav-item nav-item-special" target="_blank" rel="noopener noreferrer">
+                        <span class="nav-text">RSS</span>
+                    </a>
+                </div>
             </nav>
+            <button class="navbar-toggle" id="navbar-toggle" aria-label="切换导航菜单">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
-    <main class="container">
-        <article class="post">
-            <h1>投资理财基础：个人财富增值的实用指南</h1>
-            <div class="post-meta post-meta-detail">
-                <time>Tue Apr 18 2023 08:00:00 GMT+0800 (China Standard Time)</time>
-                <div class="tags">
-                    <span class="tag">finance</span>
-                    <span class="tag">investment</span>
-                    <span class="tag">wealth-management</span>
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <article class="article-container">
+            <div class="article-header">
+                <h1 class="article-title">投资理财基础：个人财富增值的实用指南</h1>
+                <div class="article-meta">
+                    <div class="flex items-center space-x-2">
+                        <time datetime="2023-04-18T00:00:00.000Z">2023年4月18日</time>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="post-tag">finance</span>
+                        <span class="post-tag">investment</span>
+                        <span class="post-tag">wealth-management</span>
+                    </div>
                 </div>
             </div>
-            <div class="post-content">
+            <div class="article-content">
                 <p>在当今经济环境下，仅仅依靠工资收入很难实现财富的快速增长。合理的投资理财规划不仅能帮助我们保值增值，还能为未来的生活提供更好的保障。本文将为你提供一份全面的投资理财指南，帮助你建立正确的理财观念和实用的投资策略。</p>
 <h2>理财的基本概念</h2>
 <h3>什么是理财？</h3>
@@ -49,28 +83,27 @@
 <li><strong>被动收入</strong>：租金、股息、版权收入等</li>
 </ul>
 <h4>支出分类</h4>
-<pre><code class="language-javascript">// 支出分类模型
-const expenseCategories = {
-  essential: {
-    housing: &quot;房租/房贷、物业费、水电费&quot;,
-    food: &quot;日常饮食、外出就餐&quot;,
-    transportation: &quot;交通费、汽车费用&quot;,
-    insurance: &quot;各类保险费用&quot;,
-    utilities: &quot;通讯费、网络费&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 支出分类模型</span>
+<span class="hljs-keyword">const</span> expenseCategories = {
+  <span class="hljs-attr">essential</span>: {
+    <span class="hljs-attr">housing</span>: <span class="hljs-string">&quot;房租/房贷、物业费、水电费&quot;</span>,
+    <span class="hljs-attr">food</span>: <span class="hljs-string">&quot;日常饮食、外出就餐&quot;</span>,
+    <span class="hljs-attr">transportation</span>: <span class="hljs-string">&quot;交通费、汽车费用&quot;</span>,
+    <span class="hljs-attr">insurance</span>: <span class="hljs-string">&quot;各类保险费用&quot;</span>,
+    <span class="hljs-attr">utilities</span>: <span class="hljs-string">&quot;通讯费、网络费&quot;</span>
   },
-  discretionary: {
-    entertainment: &quot;电影、旅游、娱乐活动&quot;,
-    shopping: &quot;服装、电子产品等&quot;,
-    hobbies: &quot;兴趣爱好相关支出&quot;
+  <span class="hljs-attr">discretionary</span>: {
+    <span class="hljs-attr">entertainment</span>: <span class="hljs-string">&quot;电影、旅游、娱乐活动&quot;</span>,
+    <span class="hljs-attr">shopping</span>: <span class="hljs-string">&quot;服装、电子产品等&quot;</span>,
+    <span class="hljs-attr">hobbies</span>: <span class="hljs-string">&quot;兴趣爱好相关支出&quot;</span>
   },
-  savingsInvestment: {
-    emergencyFund: &quot;应急资金储备&quot;,
-    retirement: &quot;养老储蓄&quot;,
-    investment: &quot;各类投资&quot;
+  <span class="hljs-attr">savingsInvestment</span>: {
+    <span class="hljs-attr">emergencyFund</span>: <span class="hljs-string">&quot;应急资金储备&quot;</span>,
+    <span class="hljs-attr">retirement</span>: <span class="hljs-string">&quot;养老储蓄&quot;</span>,
+    <span class="hljs-attr">investment</span>: <span class="hljs-string">&quot;各类投资&quot;</span>
   }
 };
-</code></pre>
-<h3>2. 预算制定</h3>
+</code></pre></div><h3>2. 预算制定</h3>
 <h4>50/30/20法则</h4>
 <ul>
 <li><strong>50%</strong>：必需支出（住房、食物、交通等）</li>
@@ -78,51 +111,50 @@ const expenseCategories = {
 <li><strong>20%</strong>：储蓄和投资</li>
 </ul>
 <h4>预算跟踪工具</h4>
-<pre><code class="language-javascript">// 简单预算跟踪器
-class BudgetTracker {
-  constructor() {
-    this.income = 0;
-    this.expenses = {};
-    this.savings = 0;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 简单预算跟踪器</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">BudgetTracker</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">income</span> = <span class="hljs-number">0</span>;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">expenses</span> = {};
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">savings</span> = <span class="hljs-number">0</span>;
   }
   
-  setIncome(amount) {
-    this.income = amount;
+  <span class="hljs-title function_">setIncome</span>(<span class="hljs-params">amount</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">income</span> = amount;
   }
   
-  addExpense(category, amount) {
-    if (!this.expenses[category]) {
-      this.expenses[category] = 0;
+  <span class="hljs-title function_">addExpense</span>(<span class="hljs-params">category, amount</span>) {
+    <span class="hljs-keyword">if</span> (!<span class="hljs-variable language_">this</span>.<span class="hljs-property">expenses</span>[category]) {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-property">expenses</span>[category] = <span class="hljs-number">0</span>;
     }
-    this.expenses[category] += amount;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">expenses</span>[category] += amount;
   }
   
-  calculateSavings() {
-    const totalExpenses = Object.values(this.expenses)
-      .reduce((sum, expense) =&gt; sum + expense, 0);
-    this.savings = this.income - totalExpenses;
-    return this.savings;
+  <span class="hljs-title function_">calculateSavings</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">const</span> totalExpenses = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">values</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">expenses</span>)
+      .<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">sum, expense</span>) =&gt;</span> sum + expense, <span class="hljs-number">0</span>);
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">savings</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">income</span> - totalExpenses;
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">savings</span>;
   }
   
-  getBudgetReport() {
-    return {
-      income: this.income,
-      expenses: this.expenses,
-      savings: this.calculateSavings(),
-      savingsRate: (this.calculateSavings() / this.income * 100).toFixed(2) + '%'
+  <span class="hljs-title function_">getBudgetReport</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">income</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">income</span>,
+      <span class="hljs-attr">expenses</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">expenses</span>,
+      <span class="hljs-attr">savings</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">calculateSavings</span>(),
+      <span class="hljs-attr">savingsRate</span>: (<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">calculateSavings</span>() / <span class="hljs-variable language_">this</span>.<span class="hljs-property">income</span> * <span class="hljs-number">100</span>).<span class="hljs-title function_">toFixed</span>(<span class="hljs-number">2</span>) + <span class="hljs-string">&#x27;%&#x27;</span>
     };
   }
 }
 
-// 使用示例
-const budget = new BudgetTracker();
-budget.setIncome(10000);
-budget.addExpense('housing', 3000);
-budget.addExpense('food', 1500);
-budget.addExpense('transportation', 800);
-console.log(budget.getBudgetReport());
-</code></pre>
-<h2>应急资金管理</h2>
+<span class="hljs-comment">// 使用示例</span>
+<span class="hljs-keyword">const</span> budget = <span class="hljs-keyword">new</span> <span class="hljs-title class_">BudgetTracker</span>();
+budget.<span class="hljs-title function_">setIncome</span>(<span class="hljs-number">10000</span>);
+budget.<span class="hljs-title function_">addExpense</span>(<span class="hljs-string">&#x27;housing&#x27;</span>, <span class="hljs-number">3000</span>);
+budget.<span class="hljs-title function_">addExpense</span>(<span class="hljs-string">&#x27;food&#x27;</span>, <span class="hljs-number">1500</span>);
+budget.<span class="hljs-title function_">addExpense</span>(<span class="hljs-string">&#x27;transportation&#x27;</span>, <span class="hljs-number">800</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(budget.<span class="hljs-title function_">getBudgetReport</span>());
+</code></pre></div><h2>应急资金管理</h2>
 <h3>应急资金的重要性</h3>
 <p>应急资金是理财规划的基础，用于应对突发事件如失业、疾病或意外支出。</p>
 <h3>资金规模建议</h3>
@@ -140,50 +172,48 @@ console.log(budget.getBudgetReport());
 <h3>投资基本概念</h3>
 <h4>1. 风险与收益</h4>
 <p>投资的基本原则是高风险高收益，低风险低收益。</p>
-<pre><code class="language-javascript">// 风险收益评估模型
-const riskReturnProfile = {
-  lowRisk: {
-    instruments: [&quot;国债&quot;, &quot;银行存款&quot;, &quot;货币基金&quot;],
-    expectedReturn: &quot;2-4%&quot;,
-    volatility: &quot;低&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 风险收益评估模型</span>
+<span class="hljs-keyword">const</span> riskReturnProfile = {
+  <span class="hljs-attr">lowRisk</span>: {
+    <span class="hljs-attr">instruments</span>: [<span class="hljs-string">&quot;国债&quot;</span>, <span class="hljs-string">&quot;银行存款&quot;</span>, <span class="hljs-string">&quot;货币基金&quot;</span>],
+    <span class="hljs-attr">expectedReturn</span>: <span class="hljs-string">&quot;2-4%&quot;</span>,
+    <span class="hljs-attr">volatility</span>: <span class="hljs-string">&quot;低&quot;</span>
   },
-  mediumRisk: {
-    instruments: [&quot;债券基金&quot;, &quot;混合基金&quot;, &quot;蓝筹股&quot;],
-    expectedReturn: &quot;4-8%&quot;,
-    volatility: &quot;中等&quot;
+  <span class="hljs-attr">mediumRisk</span>: {
+    <span class="hljs-attr">instruments</span>: [<span class="hljs-string">&quot;债券基金&quot;</span>, <span class="hljs-string">&quot;混合基金&quot;</span>, <span class="hljs-string">&quot;蓝筹股&quot;</span>],
+    <span class="hljs-attr">expectedReturn</span>: <span class="hljs-string">&quot;4-8%&quot;</span>,
+    <span class="hljs-attr">volatility</span>: <span class="hljs-string">&quot;中等&quot;</span>
   },
-  highRisk: {
-    instruments: [&quot;股票基金&quot;, &quot;成长股&quot;, &quot;期货&quot;, &quot;加密货币&quot;],
-    expectedReturn: &quot;8-15%+&quot;,
-    volatility: &quot;高&quot;
+  <span class="hljs-attr">highRisk</span>: {
+    <span class="hljs-attr">instruments</span>: [<span class="hljs-string">&quot;股票基金&quot;</span>, <span class="hljs-string">&quot;成长股&quot;</span>, <span class="hljs-string">&quot;期货&quot;</span>, <span class="hljs-string">&quot;加密货币&quot;</span>],
+    <span class="hljs-attr">expectedReturn</span>: <span class="hljs-string">&quot;8-15%+&quot;</span>,
+    <span class="hljs-attr">volatility</span>: <span class="hljs-string">&quot;高&quot;</span>
   }
 };
-</code></pre>
-<h4>2. 资产配置</h4>
+</code></pre></div><h4>2. 资产配置</h4>
 <p>通过分散投资于不同类型的资产来降低风险。</p>
 <h4>3. 复利效应</h4>
 <p>爱因斯坦称复利为&quot;世界第八大奇迹&quot;。</p>
-<pre><code class="language-javascript">// 复利计算
-function compoundInterest(principal, rate, time, compoundFrequency = 1) {
-  return principal * Math.pow((1 + rate/compoundFrequency), compoundFrequency * time);
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 复利计算</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">compoundInterest</span>(<span class="hljs-params">principal, rate, time, compoundFrequency = <span class="hljs-number">1</span></span>) {
+  <span class="hljs-keyword">return</span> principal * <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">pow</span>((<span class="hljs-number">1</span> + rate/compoundFrequency), compoundFrequency * time);
 }
 
-// 示例：每月投资1000元，年化收益率8%，投资30年
-const monthlyInvestment = 1000;
-const annualRate = 0.08;
-const years = 30;
+<span class="hljs-comment">// 示例：每月投资1000元，年化收益率8%，投资30年</span>
+<span class="hljs-keyword">const</span> monthlyInvestment = <span class="hljs-number">1000</span>;
+<span class="hljs-keyword">const</span> annualRate = <span class="hljs-number">0.08</span>;
+<span class="hljs-keyword">const</span> years = <span class="hljs-number">30</span>;
 
-// 月复利计算
-const futureValue = compoundInterest(
-  monthlyInvestment * 12, // 年投资金额
+<span class="hljs-comment">// 月复利计算</span>
+<span class="hljs-keyword">const</span> futureValue = <span class="hljs-title function_">compoundInterest</span>(
+  monthlyInvestment * <span class="hljs-number">12</span>, <span class="hljs-comment">// 年投资金额</span>
   annualRate,
   years,
-  12 // 月复利
+  <span class="hljs-number">12</span> <span class="hljs-comment">// 月复利</span>
 );
 
-console.log(`30年后资产价值: ${futureValue.toFixed(2)}元`);
-</code></pre>
-<h3>主要投资工具</h3>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`30年后资产价值: <span class="hljs-subst">${futureValue.toFixed(<span class="hljs-number">2</span>)}</span>元`</span>);
+</code></pre></div><h3>主要投资工具</h3>
 <h4>1. 固定收益类</h4>
 <ul>
 <li><strong>银行存款</strong>：最安全，收益最低</li>
@@ -205,87 +235,84 @@ console.log(`30年后资产价值: ${futureValue.toFixed(2)}元`);
 <h2>投资策略制定</h2>
 <h3>1. 根据年龄制定策略</h3>
 <h4>生命周期投资理论</h4>
-<pre><code class="language-javascript">// 不同年龄段的投资策略
-const ageBasedStrategy = {
-  young: {
-    ageRange: &quot;20-30岁&quot;,
-    riskTolerance: &quot;高&quot;,
-    stockAllocation: &quot;70-80%&quot;,
-    bondAllocation: &quot;20-30%&quot;,
-    focus: &quot;追求长期增长&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 不同年龄段的投资策略</span>
+<span class="hljs-keyword">const</span> ageBasedStrategy = {
+  <span class="hljs-attr">young</span>: {
+    <span class="hljs-attr">ageRange</span>: <span class="hljs-string">&quot;20-30岁&quot;</span>,
+    <span class="hljs-attr">riskTolerance</span>: <span class="hljs-string">&quot;高&quot;</span>,
+    <span class="hljs-attr">stockAllocation</span>: <span class="hljs-string">&quot;70-80%&quot;</span>,
+    <span class="hljs-attr">bondAllocation</span>: <span class="hljs-string">&quot;20-30%&quot;</span>,
+    <span class="hljs-attr">focus</span>: <span class="hljs-string">&quot;追求长期增长&quot;</span>
   },
-  middle: {
-    ageRange: &quot;30-50岁&quot;,
-    riskTolerance: &quot;中高&quot;,
-    stockAllocation: &quot;60-70%&quot;,
-    bondAllocation: &quot;30-40%&quot;,
-    focus: &quot;平衡增长与稳定&quot;
+  <span class="hljs-attr">middle</span>: {
+    <span class="hljs-attr">ageRange</span>: <span class="hljs-string">&quot;30-50岁&quot;</span>,
+    <span class="hljs-attr">riskTolerance</span>: <span class="hljs-string">&quot;中高&quot;</span>,
+    <span class="hljs-attr">stockAllocation</span>: <span class="hljs-string">&quot;60-70%&quot;</span>,
+    <span class="hljs-attr">bondAllocation</span>: <span class="hljs-string">&quot;30-40%&quot;</span>,
+    <span class="hljs-attr">focus</span>: <span class="hljs-string">&quot;平衡增长与稳定&quot;</span>
   },
-  mature: {
-    ageRange: &quot;50岁以上&quot;,
-    riskTolerance: &quot;中低&quot;,
-    stockAllocation: &quot;40-50%&quot;,
-    bondAllocation: &quot;50-60%&quot;,
-    focus: &quot;保值与收入&quot;
+  <span class="hljs-attr">mature</span>: {
+    <span class="hljs-attr">ageRange</span>: <span class="hljs-string">&quot;50岁以上&quot;</span>,
+    <span class="hljs-attr">riskTolerance</span>: <span class="hljs-string">&quot;中低&quot;</span>,
+    <span class="hljs-attr">stockAllocation</span>: <span class="hljs-string">&quot;40-50%&quot;</span>,
+    <span class="hljs-attr">bondAllocation</span>: <span class="hljs-string">&quot;50-60%&quot;</span>,
+    <span class="hljs-attr">focus</span>: <span class="hljs-string">&quot;保值与收入&quot;</span>
   }
 };
-</code></pre>
-<h3>2. 定投策略</h3>
+</code></pre></div><h3>2. 定投策略</h3>
 <p>定期定额投资是分散风险、平滑成本的有效方法。</p>
-<pre><code class="language-javascript">// 定投计算器
-class DollarCostAveraging {
-  constructor(monthlyInvestment, annualReturn, years) {
-    this.monthlyInvestment = monthlyInvestment;
-    this.annualReturn = annualReturn;
-    this.years = years;
-    this.months = years * 12;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 定投计算器</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">DollarCostAveraging</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">monthlyInvestment, annualReturn, years</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">monthlyInvestment</span> = monthlyInvestment;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">annualReturn</span> = annualReturn;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">years</span> = years;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">months</span> = years * <span class="hljs-number">12</span>;
   }
   
-  calculateTotalInvestment() {
-    return this.monthlyInvestment * this.months;
+  <span class="hljs-title function_">calculateTotalInvestment</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">monthlyInvestment</span> * <span class="hljs-variable language_">this</span>.<span class="hljs-property">months</span>;
   }
   
-  calculateFutureValue() {
-    const monthlyRate = this.annualReturn / 12;
-    return this.monthlyInvestment * 
-           (Math.pow(1 + monthlyRate, this.months) - 1) / 
+  <span class="hljs-title function_">calculateFutureValue</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">const</span> monthlyRate = <span class="hljs-variable language_">this</span>.<span class="hljs-property">annualReturn</span> / <span class="hljs-number">12</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">monthlyInvestment</span> * 
+           (<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">pow</span>(<span class="hljs-number">1</span> + monthlyRate, <span class="hljs-variable language_">this</span>.<span class="hljs-property">months</span>) - <span class="hljs-number">1</span>) / 
            monthlyRate;
   }
   
-  getReport() {
-    const totalInvested = this.calculateTotalInvestment();
-    const futureValue = this.calculateFutureValue();
-    const profit = futureValue - totalInvested;
+  <span class="hljs-title function_">getReport</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">const</span> totalInvested = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">calculateTotalInvestment</span>();
+    <span class="hljs-keyword">const</span> futureValue = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">calculateFutureValue</span>();
+    <span class="hljs-keyword">const</span> profit = futureValue - totalInvested;
     
-    return {
-      totalInvested: totalInvested.toFixed(2),
-      futureValue: futureValue.toFixed(2),
-      profit: profit.toFixed(2),
-      profitRate: ((profit / totalInvested) * 100).toFixed(2) + '%'
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">totalInvested</span>: totalInvested.<span class="hljs-title function_">toFixed</span>(<span class="hljs-number">2</span>),
+      <span class="hljs-attr">futureValue</span>: futureValue.<span class="hljs-title function_">toFixed</span>(<span class="hljs-number">2</span>),
+      <span class="hljs-attr">profit</span>: profit.<span class="hljs-title function_">toFixed</span>(<span class="hljs-number">2</span>),
+      <span class="hljs-attr">profitRate</span>: ((profit / totalInvested) * <span class="hljs-number">100</span>).<span class="hljs-title function_">toFixed</span>(<span class="hljs-number">2</span>) + <span class="hljs-string">&#x27;%&#x27;</span>
     };
   }
 }
 
-// 示例：每月定投1000元，年化收益8%，投资20年
-const dca = new DollarCostAveraging(1000, 0.08, 20);
-console.log(dca.getReport());
-</code></pre>
-<h3>3. 资产配置策略</h3>
+<span class="hljs-comment">// 示例：每月定投1000元，年化收益8%，投资20年</span>
+<span class="hljs-keyword">const</span> dca = <span class="hljs-keyword">new</span> <span class="hljs-title class_">DollarCostAveraging</span>(<span class="hljs-number">1000</span>, <span class="hljs-number">0.08</span>, <span class="hljs-number">20</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(dca.<span class="hljs-title function_">getReport</span>());
+</code></pre></div><h3>3. 资产配置策略</h3>
 <h4>核心-卫星策略</h4>
 <ul>
 <li><strong>核心资产</strong>：大盘指数基金，占总资产70-80%</li>
 <li><strong>卫星资产</strong>：行业基金、主题基金等，占20-30%</li>
 </ul>
 <h4>全球资产配置</h4>
-<pre><code class="language-javascript">// 全球资产配置示例
-const globalAllocation = {
-  domesticStocks: &quot;40%&quot;,
-  internationalStocks: &quot;20%&quot;,
-  bonds: &quot;30%&quot;,
-  alternatives: &quot;10%&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 全球资产配置示例</span>
+<span class="hljs-keyword">const</span> globalAllocation = {
+  <span class="hljs-attr">domesticStocks</span>: <span class="hljs-string">&quot;40%&quot;</span>,
+  <span class="hljs-attr">internationalStocks</span>: <span class="hljs-string">&quot;20%&quot;</span>,
+  <span class="hljs-attr">bonds</span>: <span class="hljs-string">&quot;30%&quot;</span>,
+  <span class="hljs-attr">alternatives</span>: <span class="hljs-string">&quot;10%&quot;</span>
 };
-</code></pre>
-<h2>具体投资产品分析</h2>
+</code></pre></div><h2>具体投资产品分析</h2>
 <h3>1. 基金投资</h3>
 <h4>基金类型</h4>
 <ul>
@@ -296,27 +323,26 @@ const globalAllocation = {
 <li><strong>指数基金</strong>：跟踪指数，费用低</li>
 </ul>
 <h4>基金选择要点</h4>
-<pre><code class="language-javascript">// 基金评估标准
-const fundEvaluation = {
-  performance: {
-    metrics: [&quot;近三年年化收益率&quot;, &quot;最大回撤&quot;, &quot;夏普比率&quot;],
-    benchmarks: [&quot;同类基金排名&quot;, &quot;指数表现&quot;]
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 基金评估标准</span>
+<span class="hljs-keyword">const</span> fundEvaluation = {
+  <span class="hljs-attr">performance</span>: {
+    <span class="hljs-attr">metrics</span>: [<span class="hljs-string">&quot;近三年年化收益率&quot;</span>, <span class="hljs-string">&quot;最大回撤&quot;</span>, <span class="hljs-string">&quot;夏普比率&quot;</span>],
+    <span class="hljs-attr">benchmarks</span>: [<span class="hljs-string">&quot;同类基金排名&quot;</span>, <span class="hljs-string">&quot;指数表现&quot;</span>]
   },
-  cost: {
-    expenseRatio: &quot;管理费、托管费等年度费用比率&quot;,
-    transactionCost: &quot;申购赎回费用&quot;
+  <span class="hljs-attr">cost</span>: {
+    <span class="hljs-attr">expenseRatio</span>: <span class="hljs-string">&quot;管理费、托管费等年度费用比率&quot;</span>,
+    <span class="hljs-attr">transactionCost</span>: <span class="hljs-string">&quot;申购赎回费用&quot;</span>
   },
-  manager: {
-    experience: &quot;基金经理从业年限&quot;,
-    trackRecord: &quot;历史管理业绩&quot;
+  <span class="hljs-attr">manager</span>: {
+    <span class="hljs-attr">experience</span>: <span class="hljs-string">&quot;基金经理从业年限&quot;</span>,
+    <span class="hljs-attr">trackRecord</span>: <span class="hljs-string">&quot;历史管理业绩&quot;</span>
   },
-  risk: {
-    volatility: &quot;净值波动程度&quot;,
-    concentration: &quot;持仓集中度&quot;
+  <span class="hljs-attr">risk</span>: {
+    <span class="hljs-attr">volatility</span>: <span class="hljs-string">&quot;净值波动程度&quot;</span>,
+    <span class="hljs-attr">concentration</span>: <span class="hljs-string">&quot;持仓集中度&quot;</span>
   }
 };
-</code></pre>
-<h3>2. 股票投资</h3>
+</code></pre></div><h3>2. 股票投资</h3>
 <h4>股票分析方法</h4>
 <ul>
 <li><strong>基本面分析</strong>：财务状况、行业前景、管理团队</li>
@@ -324,26 +350,25 @@ const fundEvaluation = {
 <li><strong>情绪分析</strong>：市场情绪、新闻事件影响</li>
 </ul>
 <h4>价值投资原则</h4>
-<pre><code class="language-javascript">// 价值投资检查清单
-const valueInvestingChecklist = {
-  financialHealth: {
-    debtToEquity: &quot;负债权益比合理&quot;,
-    currentRatio: &quot;流动比率&gt;1&quot;,
-    roe: &quot;净资产收益率&gt;15%&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 价值投资检查清单</span>
+<span class="hljs-keyword">const</span> valueInvestingChecklist = {
+  <span class="hljs-attr">financialHealth</span>: {
+    <span class="hljs-attr">debtToEquity</span>: <span class="hljs-string">&quot;负债权益比合理&quot;</span>,
+    <span class="hljs-attr">currentRatio</span>: <span class="hljs-string">&quot;流动比率&gt;1&quot;</span>,
+    <span class="hljs-attr">roe</span>: <span class="hljs-string">&quot;净资产收益率&gt;15%&quot;</span>
   },
-  valuation: {
-    peRatio: &quot;市盈率合理&quot;,
-    pbRatio: &quot;市净率合理&quot;,
-    dividendYield: &quot;股息率合理&quot;
+  <span class="hljs-attr">valuation</span>: {
+    <span class="hljs-attr">peRatio</span>: <span class="hljs-string">&quot;市盈率合理&quot;</span>,
+    <span class="hljs-attr">pbRatio</span>: <span class="hljs-string">&quot;市净率合理&quot;</span>,
+    <span class="hljs-attr">dividendYield</span>: <span class="hljs-string">&quot;股息率合理&quot;</span>
   },
-  businessQuality: {
-    competitiveAdvantage: &quot;护城河明显&quot;,
-    management: &quot;管理层优秀&quot;,
-    industryPosition: &quot;行业地位领先&quot;
+  <span class="hljs-attr">businessQuality</span>: {
+    <span class="hljs-attr">competitiveAdvantage</span>: <span class="hljs-string">&quot;护城河明显&quot;</span>,
+    <span class="hljs-attr">management</span>: <span class="hljs-string">&quot;管理层优秀&quot;</span>,
+    <span class="hljs-attr">industryPosition</span>: <span class="hljs-string">&quot;行业地位领先&quot;</span>
   }
 };
-</code></pre>
-<h3>3. 债券投资</h3>
+</code></pre></div><h3>3. 债券投资</h3>
 <h4>债券基本要素</h4>
 <ul>
 <li><strong>面值</strong>：债券的票面价值</li>
@@ -380,23 +405,22 @@ const valueInvestingChecklist = {
 <li><strong>责任保险</strong>：保障法律赔偿责任</li>
 </ul>
 <h3>保险配置建议</h3>
-<pre><code class="language-javascript">// 保险配置优先级
-const insurancePriority = {
-  first: {
-    products: [&quot;社保&quot;, &quot;意外险&quot;, &quot;医疗险&quot;],
-    reason: &quot;保障基本风险，费用较低&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 保险配置优先级</span>
+<span class="hljs-keyword">const</span> insurancePriority = {
+  <span class="hljs-attr">first</span>: {
+    <span class="hljs-attr">products</span>: [<span class="hljs-string">&quot;社保&quot;</span>, <span class="hljs-string">&quot;意外险&quot;</span>, <span class="hljs-string">&quot;医疗险&quot;</span>],
+    <span class="hljs-attr">reason</span>: <span class="hljs-string">&quot;保障基本风险，费用较低&quot;</span>
   },
-  second: {
-    products: [&quot;重疾险&quot;, &quot;定期寿险&quot;],
-    reason: &quot;保障重大风险，保费适中&quot;
+  <span class="hljs-attr">second</span>: {
+    <span class="hljs-attr">products</span>: [<span class="hljs-string">&quot;重疾险&quot;</span>, <span class="hljs-string">&quot;定期寿险&quot;</span>],
+    <span class="hljs-attr">reason</span>: <span class="hljs-string">&quot;保障重大风险，保费适中&quot;</span>
   },
-  third: {
-    products: [&quot;终身寿险&quot;, &quot;年金险&quot;],
-    reason: &quot;储蓄功能，费用较高&quot;
+  <span class="hljs-attr">third</span>: {
+    <span class="hljs-attr">products</span>: [<span class="hljs-string">&quot;终身寿险&quot;</span>, <span class="hljs-string">&quot;年金险&quot;</span>],
+    <span class="hljs-attr">reason</span>: <span class="hljs-string">&quot;储蓄功能，费用较高&quot;</span>
   }
 };
-</code></pre>
-<h2>税务规划</h2>
+</code></pre></div><h2>税务规划</h2>
 <h3>税收对投资收益的影响</h3>
 <p>合理的税务规划能够有效提升投资收益。</p>
 <h3>常见税收优惠</h3>
@@ -412,23 +436,22 @@ const insurancePriority = {
 <li><strong>投资收益</strong>：符合条件的投资收益免税</li>
 </ul>
 <h3>税务优化策略</h3>
-<pre><code class="language-javascript">// 税务优化建议
-const taxOptimization = {
-  timing: {
-    strategy: &quot;合理安排投资买卖时机&quot;,
-    benefit: &quot;利用税收优惠和税率差异&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 税务优化建议</span>
+<span class="hljs-keyword">const</span> taxOptimization = {
+  <span class="hljs-attr">timing</span>: {
+    <span class="hljs-attr">strategy</span>: <span class="hljs-string">&quot;合理安排投资买卖时机&quot;</span>,
+    <span class="hljs-attr">benefit</span>: <span class="hljs-string">&quot;利用税收优惠和税率差异&quot;</span>
   },
-  vehicle: {
-    strategy: &quot;选择税收优惠的投资工具&quot;,
-    benefit: &quot;降低税负成本&quot;
+  <span class="hljs-attr">vehicle</span>: {
+    <span class="hljs-attr">strategy</span>: <span class="hljs-string">&quot;选择税收优惠的投资工具&quot;</span>,
+    <span class="hljs-attr">benefit</span>: <span class="hljs-string">&quot;降低税负成本&quot;</span>
   },
-  location: {
-    strategy: &quot;合理分配资产在不同账户&quot;,
-    benefit: &quot;优化整体税负&quot;
+  <span class="hljs-attr">location</span>: {
+    <span class="hljs-attr">strategy</span>: <span class="hljs-string">&quot;合理分配资产在不同账户&quot;</span>,
+    <span class="hljs-attr">benefit</span>: <span class="hljs-string">&quot;优化整体税负&quot;</span>
   }
 };
-</code></pre>
-<h2>风险管理</h2>
+</code></pre></div><h2>风险管理</h2>
 <h3>投资风险识别</h3>
 <h4>1. 市场风险</h4>
 <ul>
@@ -441,103 +464,101 @@ const taxOptimization = {
 <p>通货膨胀侵蚀投资购买力的风险。</p>
 <h3>风险控制方法</h3>
 <h4>1. 分散投资</h4>
-<pre><code class="language-javascript">// 投资分散度计算
-function calculateDiversification(portfolio) {
-  const totalValue = Object.values(portfolio)
-    .reduce((sum, value) =&gt; sum + value, 0);
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 投资分散度计算</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">calculateDiversification</span>(<span class="hljs-params">portfolio</span>) {
+  <span class="hljs-keyword">const</span> totalValue = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">values</span>(portfolio)
+    .<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">sum, value</span>) =&gt;</span> sum + value, <span class="hljs-number">0</span>);
   
-  let concentration = 0;
-  for (const [asset, value] of Object.entries(portfolio)) {
-    const weight = value / totalValue;
-    concentration += Math.pow(weight, 2);
+  <span class="hljs-keyword">let</span> concentration = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [asset, value] <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(portfolio)) {
+    <span class="hljs-keyword">const</span> weight = value / totalValue;
+    concentration += <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">pow</span>(weight, <span class="hljs-number">2</span>);
   }
   
-  const diversification = 1 - concentration;
-  return {
-    concentration: concentration,
-    diversification: diversification,
-    assessment: diversification &gt; 0.7 ? &quot;良好&quot; : &quot;需要改善&quot;
+  <span class="hljs-keyword">const</span> diversification = <span class="hljs-number">1</span> - concentration;
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">concentration</span>: concentration,
+    <span class="hljs-attr">diversification</span>: diversification,
+    <span class="hljs-attr">assessment</span>: diversification &gt; <span class="hljs-number">0.7</span> ? <span class="hljs-string">&quot;良好&quot;</span> : <span class="hljs-string">&quot;需要改善&quot;</span>
   };
 }
 
-// 示例投资组合
-const portfolio = {
-  &quot;沪深300&quot;: 400000,
-  &quot;中证500&quot;: 200000,
-  &quot;创业板&quot;: 150000,
-  &quot;债券基金&quot;: 150000,
-  &quot;黄金&quot;: 100000
+<span class="hljs-comment">// 示例投资组合</span>
+<span class="hljs-keyword">const</span> portfolio = {
+  <span class="hljs-string">&quot;沪深300&quot;</span>: <span class="hljs-number">400000</span>,
+  <span class="hljs-string">&quot;中证500&quot;</span>: <span class="hljs-number">200000</span>,
+  <span class="hljs-string">&quot;创业板&quot;</span>: <span class="hljs-number">150000</span>,
+  <span class="hljs-string">&quot;债券基金&quot;</span>: <span class="hljs-number">150000</span>,
+  <span class="hljs-string">&quot;黄金&quot;</span>: <span class="hljs-number">100000</span>
 };
 
-console.log(calculateDiversification(portfolio));
-</code></pre>
-<h4>2. 止损策略</h4>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">calculateDiversification</span>(portfolio));
+</code></pre></div><h4>2. 止损策略</h4>
 <p>设定合理的止损点，避免损失扩大。</p>
 <h4>3. 定期评估</h4>
 <p>定期检视投资组合，根据市场变化和个人情况调整。</p>
 <h2>退休规划</h2>
 <h3>退休资金需求计算</h3>
-<pre><code class="language-javascript">// 退休资金需求计算
-class RetirementCalculator {
-  constructor(currentAge, retirementAge, lifeExpectancy, 
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 退休资金需求计算</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">RetirementCalculator</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">currentAge, retirementAge, lifeExpectancy, 
               currentAnnualExpense, inflationRate, 
-              investmentReturn, currentSavings) {
-    this.currentAge = currentAge;
-    this.retirementAge = retirementAge;
-    this.retirementYears = lifeExpectancy - retirementAge;
-    this.currentAnnualExpense = currentAnnualExpense;
-    this.inflationRate = inflationRate;
-    this.investmentReturn = investmentReturn;
-    this.currentSavings = currentSavings;
+              investmentReturn, currentSavings</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">currentAge</span> = currentAge;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">retirementAge</span> = retirementAge;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">retirementYears</span> = lifeExpectancy - retirementAge;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">currentAnnualExpense</span> = currentAnnualExpense;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">inflationRate</span> = inflationRate;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">investmentReturn</span> = investmentReturn;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">currentSavings</span> = currentSavings;
   }
   
-  calculateRetirementExpense() {
-    const yearsToRetirement = this.retirementAge - this.currentAge;
-    return this.currentAnnualExpense * 
-           Math.pow(1 + this.inflationRate, yearsToRetirement);
+  <span class="hljs-title function_">calculateRetirementExpense</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">const</span> yearsToRetirement = <span class="hljs-variable language_">this</span>.<span class="hljs-property">retirementAge</span> - <span class="hljs-variable language_">this</span>.<span class="hljs-property">currentAge</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">currentAnnualExpense</span> * 
+           <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">pow</span>(<span class="hljs-number">1</span> + <span class="hljs-variable language_">this</span>.<span class="hljs-property">inflationRate</span>, yearsToRetirement);
   }
   
-  calculateTotalNeed() {
-    const retirementExpense = this.calculateRetirementExpense();
-    const realReturn = this.investmentReturn - this.inflationRate;
+  <span class="hljs-title function_">calculateTotalNeed</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">const</span> retirementExpense = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">calculateRetirementExpense</span>();
+    <span class="hljs-keyword">const</span> realReturn = <span class="hljs-variable language_">this</span>.<span class="hljs-property">investmentReturn</span> - <span class="hljs-variable language_">this</span>.<span class="hljs-property">inflationRate</span>;
     
-    // 按实际收益率计算所需资金
-    return retirementExpense * 
-           (1 - Math.pow(1 + realReturn, -this.retirementYears)) / 
+    <span class="hljs-comment">// 按实际收益率计算所需资金</span>
+    <span class="hljs-keyword">return</span> retirementExpense * 
+           (<span class="hljs-number">1</span> - <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">pow</span>(<span class="hljs-number">1</span> + realReturn, -<span class="hljs-variable language_">this</span>.<span class="hljs-property">retirementYears</span>)) / 
            realReturn;
   }
   
-  calculateAnnualSavingsRequired() {
-    const yearsToRetirement = this.retirementAge - this.currentAge;
-    const totalNeed = this.calculateTotalNeed();
+  <span class="hljs-title function_">calculateAnnualSavingsRequired</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">const</span> yearsToRetirement = <span class="hljs-variable language_">this</span>.<span class="hljs-property">retirementAge</span> - <span class="hljs-variable language_">this</span>.<span class="hljs-property">currentAge</span>;
+    <span class="hljs-keyword">const</span> totalNeed = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">calculateTotalNeed</span>();
     
-    // 计算每年需要储蓄的金额
-    const futureValueOfCurrentSavings = this.currentSavings * 
-      Math.pow(1 + this.investmentReturn, yearsToRetirement);
+    <span class="hljs-comment">// 计算每年需要储蓄的金额</span>
+    <span class="hljs-keyword">const</span> futureValueOfCurrentSavings = <span class="hljs-variable language_">this</span>.<span class="hljs-property">currentSavings</span> * 
+      <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">pow</span>(<span class="hljs-number">1</span> + <span class="hljs-variable language_">this</span>.<span class="hljs-property">investmentReturn</span>, yearsToRetirement);
     
-    const gap = totalNeed - futureValueOfCurrentSavings;
+    <span class="hljs-keyword">const</span> gap = totalNeed - futureValueOfCurrentSavings;
     
-    return gap * this.investmentReturn / 
-           (Math.pow(1 + this.investmentReturn, yearsToRetirement) - 1);
+    <span class="hljs-keyword">return</span> gap * <span class="hljs-variable language_">this</span>.<span class="hljs-property">investmentReturn</span> / 
+           (<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">pow</span>(<span class="hljs-number">1</span> + <span class="hljs-variable language_">this</span>.<span class="hljs-property">investmentReturn</span>, yearsToRetirement) - <span class="hljs-number">1</span>);
   }
   
-  getReport() {
-    return {
-      retirementExpense: this.calculateRetirementExpense().toFixed(2),
-      totalNeed: this.calculateTotalNeed().toFixed(2),
-      annualSavingsRequired: this.calculateAnnualSavingsRequired().toFixed(2)
+  <span class="hljs-title function_">getReport</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">retirementExpense</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">calculateRetirementExpense</span>().<span class="hljs-title function_">toFixed</span>(<span class="hljs-number">2</span>),
+      <span class="hljs-attr">totalNeed</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">calculateTotalNeed</span>().<span class="hljs-title function_">toFixed</span>(<span class="hljs-number">2</span>),
+      <span class="hljs-attr">annualSavingsRequired</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">calculateAnnualSavingsRequired</span>().<span class="hljs-title function_">toFixed</span>(<span class="hljs-number">2</span>)
     };
   }
 }
 
-// 示例：30岁，计划60岁退休，预期寿命85岁
-// 当前年支出10万元，通胀率3%，投资收益率6%，现有储蓄20万元
-const retirement = new RetirementCalculator(
-  30, 60, 85, 100000, 0.03, 0.06, 200000
+<span class="hljs-comment">// 示例：30岁，计划60岁退休，预期寿命85岁</span>
+<span class="hljs-comment">// 当前年支出10万元，通胀率3%，投资收益率6%，现有储蓄20万元</span>
+<span class="hljs-keyword">const</span> retirement = <span class="hljs-keyword">new</span> <span class="hljs-title class_">RetirementCalculator</span>(
+  <span class="hljs-number">30</span>, <span class="hljs-number">60</span>, <span class="hljs-number">85</span>, <span class="hljs-number">100000</span>, <span class="hljs-number">0.03</span>, <span class="hljs-number">0.06</span>, <span class="hljs-number">200000</span>
 );
-console.log(retirement.getReport());
-</code></pre>
-<h3>退休规划策略</h3>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(retirement.<span class="hljs-title function_">getReport</span>());
+</code></pre></div><h3>退休规划策略</h3>
 <h4>1. 逐步增加储蓄率</h4>
 <p>随着收入增长，逐步提高储蓄比例。</p>
 <h4>2. 优化投资组合</h4>
@@ -553,32 +574,31 @@ console.log(retirement.getReport());
 <h4>3. 过度自信</h4>
 <p>高估自己的投资能力，忽视风险。</p>
 <h3>克服心理偏差的方法</h3>
-<pre><code class="language-javascript">// 投资纪律检查清单
-const investmentDiscipline = {
-  planning: {
-    checklist: [
-      &quot;制定明确的投资目标&quot;,
-      &quot;建立合理的资产配置&quot;,
-      &quot;设定投资纪律和止损点&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 投资纪律检查清单</span>
+<span class="hljs-keyword">const</span> investmentDiscipline = {
+  <span class="hljs-attr">planning</span>: {
+    <span class="hljs-attr">checklist</span>: [
+      <span class="hljs-string">&quot;制定明确的投资目标&quot;</span>,
+      <span class="hljs-string">&quot;建立合理的资产配置&quot;</span>,
+      <span class="hljs-string">&quot;设定投资纪律和止损点&quot;</span>
     ]
   },
-  execution: {
-    checklist: [
-      &quot;避免情绪化交易&quot;,
-      &quot;定期检视而非频繁交易&quot;,
-      &quot;坚持长期投资理念&quot;
+  <span class="hljs-attr">execution</span>: {
+    <span class="hljs-attr">checklist</span>: [
+      <span class="hljs-string">&quot;避免情绪化交易&quot;</span>,
+      <span class="hljs-string">&quot;定期检视而非频繁交易&quot;</span>,
+      <span class="hljs-string">&quot;坚持长期投资理念&quot;</span>
     ]
   },
-  review: {
-    checklist: [
-      &quot;定期评估投资组合&quot;,
-      &quot;总结投资经验教训&quot;,
-      &quot;持续学习提升能力&quot;
+  <span class="hljs-attr">review</span>: {
+    <span class="hljs-attr">checklist</span>: [
+      <span class="hljs-string">&quot;定期评估投资组合&quot;</span>,
+      <span class="hljs-string">&quot;总结投资经验教训&quot;</span>,
+      <span class="hljs-string">&quot;持续学习提升能力&quot;</span>
     ]
   }
 };
-</code></pre>
-<h2>结语</h2>
+</code></pre></div><h2>结语</h2>
 <p>投资理财是一项系统工程，需要理论知识与实践经验相结合。通过本文的介绍，希望你能建立起科学的理财观念，制定适合自己的投资策略。</p>
 <p>记住，成功的投资理财不是一夜暴富，而是通过长期坚持和纪律性执行实现财富的稳步增长。在投资过程中，要保持理性，控制风险，不断学习，才能在财富增值的道路上走得更远。</p>
 <p>最重要的是，投资理财应该服务于你的生活目标，而不是成为生活的负担。合理规划，稳健投资，让金钱成为实现美好生活的工具，而不是追求的目标本身。</p>
@@ -586,10 +606,87 @@ const investmentDiscipline = {
             </div>
         </article>
     </main>
-    <footer>
-        <div class="container">
+    <footer class="footer">
+        <div class="max-w-6xl mx-auto px-4">
             <p>&copy; 2025 人人链向未来. All rights reserved.</p>
+            <p class="mt-2"><a href="/rss.xml" class="text-accent-400 hover:text-accent-500">📡 订阅 RSS</a></p>
         </div>
     </footer>
+    <script>
+        // 移动端导航菜单切换 + 代码复制按钮
+        document.addEventListener('DOMContentLoaded', function() {
+                // 图片加载失败占位符
+                document.querySelectorAll('img').forEach(img => {
+                    img.addEventListener('error', function() {
+                        if (this.dataset.fallbackApplied) return;
+                        this.dataset.fallbackApplied = '1';
+                        this.src = '/assets/placeholder.png';
+                        this.classList.add('placeholder');
+                    }, { once: true });
+                });
+            const navbarToggle = document.getElementById('navbar-toggle');
+            const navbarMenu = document.getElementById('navbar-menu');
+            
+            if (navbarToggle && navbarMenu) {
+                navbarToggle.addEventListener('click', function() {
+                    navbarToggle.classList.toggle('open');
+                    navbarMenu.classList.toggle('open');
+                });
+                
+                // 点击菜单项后关闭菜单
+                const navItems = navbarMenu.querySelectorAll('.nav-item');
+                navItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        navbarToggle.classList.remove('open');
+                        navbarMenu.classList.remove('open');
+                    });
+                });
+                
+                // 点击菜单外部关闭菜单
+                document.addEventListener('click', function(e) {
+                    if (!navbarToggle.contains(e.target) && !navbarMenu.contains(e.target)) {
+                        navbarToggle.classList.remove('open');
+                        navbarMenu.classList.remove('open');
+                    }
+                });
+            }
+
+            // 复制代码：事件委托
+            document.body.addEventListener('click', async (e) => {
+                const btn = e.target.closest('.copy-code-btn');
+                if (!btn) return;
+                const container = btn.closest('.code-block');
+                if (!container) return;
+                const codeEl = container.querySelector('pre code');
+                if (!codeEl) return;
+                const text = codeEl.innerText;
+                try {
+                    await navigator.clipboard.writeText(text);
+                    const original = btn.textContent;
+                    btn.textContent = '已复制';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = original;
+                        btn.classList.remove('copied');
+                    }, 1200);
+                } catch (err) {
+                    // 回退方案
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    try { document.execCommand('copy'); } catch {}
+                    document.body.removeChild(textarea);
+                    const original = btn.textContent;
+                    btn.textContent = '已复制';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = original;
+                        btn.classList.remove('copied');
+                    }, 1200);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

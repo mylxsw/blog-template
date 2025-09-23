@@ -4,32 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>前端性能优化实战：提升用户体验的关键策略</title>
-    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/modern.css">
+    <link rel="alternate" type="application/rss+xml" title="人人链向未来 RSS Feed" href="/rss.xml">
+    <!-- Highlight.js theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+                        colors: {
+                            primary: { 600: '#FECE00', 700: '#e6b900' },
+                            accent: { 400: '#FECE00', 500: '#ffdb4d' }
+                        }
+          }
+        }
+      }
+    </script>
 </head>
-<body>
-    <header>
-        <div class="container header-content">
-            <h1><a href="/">人人链向未来</a></h1>
-            <nav>
-                <ul>
-                    <li><a href="/">首页</a></li>
-                    <li><a href="/about.html">关于</a></li>
-                </ul>
+<body class="bg-gray-50">
+    <header class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <a href="/" class="navbar-logo">人人链向未来</a>
+            </div>
+            <nav class="navbar-menu" id="navbar-menu">
+                <div class="navbar-nav">
+                    <a href="/" class="nav-item">
+                        <span class="nav-text">首页</span>
+                    </a>
+                    <a href="/about.html" class="nav-item">
+                        <span class="nav-text">关于</span>
+                    </a>
+                    <a href="/rss.xml" class="nav-item nav-item-special" target="_blank" rel="noopener noreferrer">
+                        <span class="nav-text">RSS</span>
+                    </a>
+                </div>
             </nav>
+            <button class="navbar-toggle" id="navbar-toggle" aria-label="切换导航菜单">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
-    <main class="container">
-        <article class="post">
-            <h1>前端性能优化实战：提升用户体验的关键策略</h1>
-            <div class="post-meta post-meta-detail">
-                <time>Tue Feb 14 2023 08:00:00 GMT+0800 (China Standard Time)</time>
-                <div class="tags">
-                    <span class="tag">frontend</span>
-                    <span class="tag">performance</span>
-                    <span class="tag">web-development</span>
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <article class="article-container">
+            <div class="article-header">
+                <h1 class="article-title">前端性能优化实战：提升用户体验的关键策略</h1>
+                <div class="article-meta">
+                    <div class="flex items-center space-x-2">
+                        <time datetime="2023-02-14T00:00:00.000Z">2023年2月14日</time>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="post-tag">frontend</span>
+                        <span class="post-tag">performance</span>
+                        <span class="post-tag">web-development</span>
+                    </div>
                 </div>
             </div>
-            <div class="post-content">
+            <div class="article-content">
                 <p>在当今快节奏的数字世界中，网站和应用的性能直接影响用户满意度和业务成功。研究表明，页面加载时间每增加1秒，转化率可能下降7%。因此，前端性能优化已成为现代Web开发中不可或缺的重要环节。本文将深入探讨前端性能优化的核心策略和实践方法。</p>
 <h2>为什么前端性能优化至关重要？</h2>
 <h3>用户体验影响</h3>
@@ -73,29 +107,27 @@
 <h2>性能分析工具</h2>
 <h3>1. Lighthouse</h3>
 <p>Google开发的开源自动化审计工具：</p>
-<pre><code class="language-bash"># 安装Lighthouse
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-bash"><span class="hljs-comment"># 安装Lighthouse</span>
 npm install -g lighthouse
 
-# 运行审计
+<span class="hljs-comment"># 运行审计</span>
 lighthouse https://example.com --view
-</code></pre>
-<h3>2. WebPageTest</h3>
+</code></pre></div><h3>2. WebPageTest</h3>
 <p>提供详细的页面性能分析：</p>
-<pre><code class="language-javascript">// 使用WebPageTest API
-const WebPageTest = require('webpagetest');
-const wpt = new WebPageTest('www.webpagetest.org', 'YOUR_API_KEY');
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 使用WebPageTest API</span>
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">WebPageTest</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;webpagetest&#x27;</span>);
+<span class="hljs-keyword">const</span> wpt = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WebPageTest</span>(<span class="hljs-string">&#x27;www.webpagetest.org&#x27;</span>, <span class="hljs-string">&#x27;YOUR_API_KEY&#x27;</span>);
 
-wpt.runTest('https://example.com', {
-  location: 'Dulles:Chrome',
-  connectivity: '4G',
-  firstViewOnly: false,
-  runs: 3,
-  timeline: true
-}, (err, data) =&gt; {
-  console.log(data);
+wpt.<span class="hljs-title function_">runTest</span>(<span class="hljs-string">&#x27;https://example.com&#x27;</span>, {
+  <span class="hljs-attr">location</span>: <span class="hljs-string">&#x27;Dulles:Chrome&#x27;</span>,
+  <span class="hljs-attr">connectivity</span>: <span class="hljs-string">&#x27;4G&#x27;</span>,
+  <span class="hljs-attr">firstViewOnly</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">runs</span>: <span class="hljs-number">3</span>,
+  <span class="hljs-attr">timeline</span>: <span class="hljs-literal">true</span>
+}, <span class="hljs-function">(<span class="hljs-params">err, data</span>) =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data);
 });
-</code></pre>
-<h3>3. Chrome DevTools</h3>
+</code></pre></div><h3>3. Chrome DevTools</h3>
 <p>浏览器内置的性能分析工具：</p>
 <ul>
 <li>Performance面板：分析运行时性能</li>
@@ -105,440 +137,417 @@ wpt.runTest('https://example.com', {
 <h2>资源加载优化</h2>
 <h3>1. 资源压缩</h3>
 <h4>JavaScript压缩</h4>
-<pre><code class="language-javascript">// 使用Terser进行JS压缩
-const Terser = require('terser');
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 使用Terser进行JS压缩</span>
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">Terser</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;terser&#x27;</span>);
 
-const code = `
+<span class="hljs-keyword">const</span> code = <span class="hljs-string">`
 function add(a, b) {
   return a + b;
 }
-`;
+`</span>;
 
-const result = Terser.minify(code);
-console.log(result.code); // function add(a,b){return a+b}
-</code></pre>
-<h4>CSS压缩</h4>
-<pre><code class="language-css">/* 压缩前 */
-.container {
-  width: 100%;
-  height: 100px;
-  margin: 10px 20px 10px 20px;
-  padding: 5px;
-  background-color: #ffffff;
-  border: 1px solid #cccccc;
+<span class="hljs-keyword">const</span> result = <span class="hljs-title class_">Terser</span>.<span class="hljs-title function_">minify</span>(code);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result.<span class="hljs-property">code</span>); <span class="hljs-comment">// function add(a,b){return a+b}</span>
+</code></pre></div><h4>CSS压缩</h4>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-css"><span class="hljs-comment">/* 压缩前 */</span>
+<span class="hljs-selector-class">.container</span> {
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">100px</span>;
+  <span class="hljs-attribute">margin</span>: <span class="hljs-number">10px</span> <span class="hljs-number">20px</span> <span class="hljs-number">10px</span> <span class="hljs-number">20px</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">5px</span>;
+  <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#ffffff</span>;
+  <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#cccccc</span>;
 }
 
-/* 压缩后 */
-.container{width:100%;height:100px;margin:10px 20px;padding:5px;background-color:#fff;border:1px solid #ccc}
-</code></pre>
-<h4>HTML压缩</h4>
-<pre><code class="language-html">&lt;!-- 压缩前 --&gt;
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;My Page&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h1&gt;Hello World&lt;/h1&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+<span class="hljs-comment">/* 压缩后 */</span>
+<span class="hljs-selector-class">.container</span>{<span class="hljs-attribute">width</span>:<span class="hljs-number">100%</span>;<span class="hljs-attribute">height</span>:<span class="hljs-number">100px</span>;<span class="hljs-attribute">margin</span>:<span class="hljs-number">10px</span> <span class="hljs-number">20px</span>;<span class="hljs-attribute">padding</span>:<span class="hljs-number">5px</span>;<span class="hljs-attribute">background-color</span>:<span class="hljs-number">#fff</span>;<span class="hljs-attribute">border</span>:<span class="hljs-number">1px</span> solid <span class="hljs-number">#ccc</span>}
+</code></pre></div><h4>HTML压缩</h4>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-html"><span class="hljs-comment">&lt;!-- 压缩前 --&gt;</span>
+<span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>My Page<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello World<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
 
-&lt;!-- 压缩后 --&gt;
-&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;title&gt;My Page&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;Hello World&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
-</code></pre>
-<h3>2. 资源压缩（Gzip/Brotli）</h3>
-<pre><code class="language-javascript">// Express.js中启用Gzip压缩
-const compression = require('compression');
-const express = require('express');
-const app = express();
+<span class="hljs-comment">&lt;!-- 压缩后 --&gt;</span>
+<span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>My Page<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello World<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre></div><h3>2. 资源压缩（Gzip/Brotli）</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// Express.js中启用Gzip压缩</span>
+<span class="hljs-keyword">const</span> compression = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;compression&#x27;</span>);
+<span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>);
+<span class="hljs-keyword">const</span> app = <span class="hljs-title function_">express</span>();
 
-app.use(compression());
+app.<span class="hljs-title function_">use</span>(<span class="hljs-title function_">compression</span>());
 
-// 自定义压缩过滤器
-app.use(compression({
-  filter: (req, res) =&gt; {
-    if (req.headers['x-no-compression']) {
-      // 不压缩响应
-      return false;
+<span class="hljs-comment">// 自定义压缩过滤器</span>
+app.<span class="hljs-title function_">use</span>(<span class="hljs-title function_">compression</span>({
+  <span class="hljs-attr">filter</span>: <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (req.<span class="hljs-property">headers</span>[<span class="hljs-string">&#x27;x-no-compression&#x27;</span>]) {
+      <span class="hljs-comment">// 不压缩响应</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
     }
-    // 使用默认过滤器
-    return compression.filter(req, res);
+    <span class="hljs-comment">// 使用默认过滤器</span>
+    <span class="hljs-keyword">return</span> compression.<span class="hljs-title function_">filter</span>(req, res);
   }
 }));
-</code></pre>
-<h3>3. 资源缓存策略</h3>
+</code></pre></div><h3>3. 资源缓存策略</h3>
 <h4>HTTP缓存头设置</h4>
-<pre><code class="language-javascript">// Express.js中设置缓存头
-app.use('/static', express.static('public', {
-  maxAge: '1y', // 静态资源缓存1年
-  etag: true
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// Express.js中设置缓存头</span>
+app.<span class="hljs-title function_">use</span>(<span class="hljs-string">&#x27;/static&#x27;</span>, express.<span class="hljs-title function_">static</span>(<span class="hljs-string">&#x27;public&#x27;</span>, {
+  <span class="hljs-attr">maxAge</span>: <span class="hljs-string">&#x27;1y&#x27;</span>, <span class="hljs-comment">// 静态资源缓存1年</span>
+  <span class="hljs-attr">etag</span>: <span class="hljs-literal">true</span>
 }));
 
-// 动态资源设置缓存
-app.get('/api/data', (req, res) =&gt; {
-  res.set({
-    'Cache-Control': 'public, max-age=300', // 缓存5分钟
-    'ETag': '12345'
+<span class="hljs-comment">// 动态资源设置缓存</span>
+app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/api/data&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  res.<span class="hljs-title function_">set</span>({
+    <span class="hljs-string">&#x27;Cache-Control&#x27;</span>: <span class="hljs-string">&#x27;public, max-age=300&#x27;</span>, <span class="hljs-comment">// 缓存5分钟</span>
+    <span class="hljs-string">&#x27;ETag&#x27;</span>: <span class="hljs-string">&#x27;12345&#x27;</span>
   });
-  res.json({ data: 'example' });
+  res.<span class="hljs-title function_">json</span>({ <span class="hljs-attr">data</span>: <span class="hljs-string">&#x27;example&#x27;</span> });
 });
-</code></pre>
-<h4>Service Worker缓存</h4>
-<pre><code class="language-javascript">// service-worker.js
-const CACHE_NAME = 'my-site-cache-v1';
-const urlsToCache = [
-  '/',
-  '/styles/main.css',
-  '/scripts/main.js',
-  '/images/logo.png'
+</code></pre></div><h4>Service Worker缓存</h4>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// service-worker.js</span>
+<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">CACHE_NAME</span> = <span class="hljs-string">&#x27;my-site-cache-v1&#x27;</span>;
+<span class="hljs-keyword">const</span> urlsToCache = [
+  <span class="hljs-string">&#x27;/&#x27;</span>,
+  <span class="hljs-string">&#x27;/styles/main.css&#x27;</span>,
+  <span class="hljs-string">&#x27;/scripts/main.js&#x27;</span>,
+  <span class="hljs-string">&#x27;/images/logo.png&#x27;</span>
 ];
 
-self.addEventListener('install', (event) =&gt; {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) =&gt; cache.addAll(urlsToCache))
+self.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;install&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {
+  event.<span class="hljs-title function_">waitUntil</span>(
+    caches.<span class="hljs-title function_">open</span>(<span class="hljs-variable constant_">CACHE_NAME</span>)
+      .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">cache</span>) =&gt;</span> cache.<span class="hljs-title function_">addAll</span>(urlsToCache))
   );
 });
 
-self.addEventListener('fetch', (event) =&gt; {
-  event.respondWith(
-    caches.match(event.request)
-      .then((response) =&gt; {
-        // 缓存命中则返回缓存，否则发起网络请求
-        return response || fetch(event.request);
+self.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;fetch&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {
+  event.<span class="hljs-title function_">respondWith</span>(
+    caches.<span class="hljs-title function_">match</span>(event.<span class="hljs-property">request</span>)
+      .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> {
+        <span class="hljs-comment">// 缓存命中则返回缓存，否则发起网络请求</span>
+        <span class="hljs-keyword">return</span> response || <span class="hljs-title function_">fetch</span>(event.<span class="hljs-property">request</span>);
       })
   );
 });
-</code></pre>
-<h2>图片优化策略</h2>
+</code></pre></div><h2>图片优化策略</h2>
 <h3>1. 选择合适的图片格式</h3>
 <h4>现代图片格式</h4>
-<pre><code class="language-html">&lt;!-- 使用现代图片格式 --&gt;
-&lt;picture&gt;
-  &lt;source srcset=&quot;image.webp&quot; type=&quot;image/webp&quot;&gt;
-  &lt;source srcset=&quot;image.avif&quot; type=&quot;image/avif&quot;&gt;
-  &lt;img src=&quot;image.jpg&quot; alt=&quot;Description&quot;&gt;
-&lt;/picture&gt;
-</code></pre>
-<h4>响应式图片</h4>
-<pre><code class="language-html">&lt;!-- 根据屏幕尺寸选择图片 --&gt;
-&lt;img 
-  srcset=&quot;small.jpg 300w,
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-html"><span class="hljs-comment">&lt;!-- 使用现代图片格式 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">picture</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">source</span> <span class="hljs-attr">srcset</span>=<span class="hljs-string">&quot;image.webp&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;image/webp&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">source</span> <span class="hljs-attr">srcset</span>=<span class="hljs-string">&quot;image.avif&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;image/avif&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;image.jpg&quot;</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">&quot;Description&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">picture</span>&gt;</span>
+</code></pre></div><h4>响应式图片</h4>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-html"><span class="hljs-comment">&lt;!-- 根据屏幕尺寸选择图片 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">img</span> 
+  <span class="hljs-attr">srcset</span>=<span class="hljs-string">&quot;small.jpg 300w,
           medium.jpg 600w,
-          large.jpg 1200w&quot;
-  sizes=&quot;(max-width: 600px) 300px,
+          large.jpg 1200w&quot;</span>
+  <span class="hljs-attr">sizes</span>=<span class="hljs-string">&quot;(max-width: 600px) 300px,
          (max-width: 1200px) 600px,
-         1200px&quot;
-  src=&quot;medium.jpg&quot; 
-  alt=&quot;Responsive image&quot;&gt;
-</code></pre>
-<h3>2. 图片懒加载</h3>
-<pre><code class="language-javascript">// 原生懒加载
-&lt;img src=&quot;placeholder.jpg&quot; data-src=&quot;image.jpg&quot; class=&quot;lazy&quot; alt=&quot;Lazy loaded image&quot;&gt;
+         1200px&quot;</span>
+  <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;medium.jpg&quot;</span> 
+  <span class="hljs-attr">alt</span>=<span class="hljs-string">&quot;Responsive image&quot;</span>&gt;</span>
+</code></pre></div><h3>2. 图片懒加载</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 原生懒加载</span>
+&lt;img src=<span class="hljs-string">&quot;placeholder.jpg&quot;</span> data-src=<span class="hljs-string">&quot;image.jpg&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;lazy&quot;</span> alt=<span class="hljs-string">&quot;Lazy loaded image&quot;</span>&gt;
 
-// JavaScript实现
-const lazyImages = document.querySelectorAll('.lazy');
+<span class="hljs-comment">// JavaScript实现</span>
+<span class="hljs-keyword">const</span> lazyImages = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelectorAll</span>(<span class="hljs-string">&#x27;.lazy&#x27;</span>);
 
-const imageObserver = new IntersectionObserver((entries, observer) =&gt; {
-  entries.forEach(entry =&gt; {
-    if (entry.isIntersecting) {
-      const img = entry.target;
-      img.src = img.dataset.src;
-      img.classList.remove('lazy');
-      observer.unobserve(img);
+<span class="hljs-keyword">const</span> imageObserver = <span class="hljs-keyword">new</span> <span class="hljs-title class_">IntersectionObserver</span>(<span class="hljs-function">(<span class="hljs-params">entries, observer</span>) =&gt;</span> {
+  entries.<span class="hljs-title function_">forEach</span>(<span class="hljs-function"><span class="hljs-params">entry</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (entry.<span class="hljs-property">isIntersecting</span>) {
+      <span class="hljs-keyword">const</span> img = entry.<span class="hljs-property">target</span>;
+      img.<span class="hljs-property">src</span> = img.<span class="hljs-property">dataset</span>.<span class="hljs-property">src</span>;
+      img.<span class="hljs-property">classList</span>.<span class="hljs-title function_">remove</span>(<span class="hljs-string">&#x27;lazy&#x27;</span>);
+      observer.<span class="hljs-title function_">unobserve</span>(img);
     }
   });
 });
 
-lazyImages.forEach(img =&gt; imageObserver.observe(img));
-</code></pre>
-<h3>3. 图片压缩和优化</h3>
-<pre><code class="language-javascript">// 使用Sharp进行图片处理
-const sharp = require('sharp');
+lazyImages.<span class="hljs-title function_">forEach</span>(<span class="hljs-function"><span class="hljs-params">img</span> =&gt;</span> imageObserver.<span class="hljs-title function_">observe</span>(img));
+</code></pre></div><h3>3. 图片压缩和优化</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 使用Sharp进行图片处理</span>
+<span class="hljs-keyword">const</span> sharp = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;sharp&#x27;</span>);
 
-// 压缩图片
-sharp('input.jpg')
-  .resize(800, 600)
-  .jpeg({ quality: 80 })
-  .toFile('output.jpg');
+<span class="hljs-comment">// 压缩图片</span>
+<span class="hljs-title function_">sharp</span>(<span class="hljs-string">&#x27;input.jpg&#x27;</span>)
+  .<span class="hljs-title function_">resize</span>(<span class="hljs-number">800</span>, <span class="hljs-number">600</span>)
+  .<span class="hljs-title function_">jpeg</span>({ <span class="hljs-attr">quality</span>: <span class="hljs-number">80</span> })
+  .<span class="hljs-title function_">toFile</span>(<span class="hljs-string">&#x27;output.jpg&#x27;</span>);
 
-// 转换为WebP格式
-sharp('input.jpg')
-  .webp({ quality: 80 })
-  .toFile('output.webp');
-</code></pre>
-<h2>代码分割和懒加载</h2>
+<span class="hljs-comment">// 转换为WebP格式</span>
+<span class="hljs-title function_">sharp</span>(<span class="hljs-string">&#x27;input.jpg&#x27;</span>)
+  .<span class="hljs-title function_">webp</span>({ <span class="hljs-attr">quality</span>: <span class="hljs-number">80</span> })
+  .<span class="hljs-title function_">toFile</span>(<span class="hljs-string">&#x27;output.webp&#x27;</span>);
+</code></pre></div><h2>代码分割和懒加载</h2>
 <h3>1. Webpack代码分割</h3>
-<pre><code class="language-javascript">// 动态导入实现代码分割
-const loadModule = async () =&gt; {
-  const { default: module } = await import('./heavy-module.js');
-  return module;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 动态导入实现代码分割</span>
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">loadModule</span> = <span class="hljs-keyword">async</span> (<span class="hljs-params"></span>) =&gt; {
+  <span class="hljs-keyword">const</span> { <span class="hljs-attr">default</span>: <span class="hljs-variable language_">module</span> } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;./heavy-module.js&#x27;</span>);
+  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">module</span>;
 };
 
-// React中的懒加载
-import { lazy, Suspense } from 'react';
+<span class="hljs-comment">// React中的懒加载</span>
+<span class="hljs-keyword">import</span> { lazy, <span class="hljs-title class_">Suspense</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;
 
-const LazyComponent = lazy(() =&gt; import('./LazyComponent'));
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">LazyComponent</span> = <span class="hljs-title function_">lazy</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;./LazyComponent&#x27;</span>));
 
-function App() {
-  return (
-    &lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;
-      &lt;LazyComponent /&gt;
-    &lt;/Suspense&gt;
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">App</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Suspense</span> <span class="hljs-attr">fallback</span>=<span class="hljs-string">{</span>&lt;<span class="hljs-attr">div</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>}&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-name">LazyComponent</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Suspense</span>&gt;</span></span>
   );
 }
-</code></pre>
-<h3>2. 路由级别的代码分割</h3>
-<pre><code class="language-javascript">// React Router中的代码分割
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+</code></pre></div><h3>2. 路由级别的代码分割</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// React Router中的代码分割</span>
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">BrowserRouter</span> <span class="hljs-keyword">as</span> <span class="hljs-title class_">Router</span>, <span class="hljs-title class_">Routes</span>, <span class="hljs-title class_">Route</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-router-dom&#x27;</span>;
 
-const Home = lazy(() =&gt; import('./pages/Home'));
-const About = lazy(() =&gt; import('./pages/About'));
-const Contact = lazy(() =&gt; import('./pages/Contact'));
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">Home</span> = <span class="hljs-title function_">lazy</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;./pages/Home&#x27;</span>));
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">About</span> = <span class="hljs-title function_">lazy</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;./pages/About&#x27;</span>));
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">Contact</span> = <span class="hljs-title function_">lazy</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;./pages/Contact&#x27;</span>));
 
-function App() {
-  return (
-    &lt;Router&gt;
-      &lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;
-        &lt;Routes&gt;
-          &lt;Route path=&quot;/&quot; element={&lt;Home /&gt;} /&gt;
-          &lt;Route path=&quot;/about&quot; element={&lt;About /&gt;} /&gt;
-          &lt;Route path=&quot;/contact&quot; element={&lt;Contact /&gt;} /&gt;
-        &lt;/Routes&gt;
-      &lt;/Suspense&gt;
-    &lt;/Router&gt;
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">App</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Router</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Suspense</span> <span class="hljs-attr">fallback</span>=<span class="hljs-string">{</span>&lt;<span class="hljs-attr">div</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>}&gt;
+        <span class="hljs-tag">&lt;<span class="hljs-name">Routes</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/&quot;</span> <span class="hljs-attr">element</span>=<span class="hljs-string">{</span>&lt;<span class="hljs-attr">Home</span> /&gt;</span>} /&gt;
+          <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/about&quot;</span> <span class="hljs-attr">element</span>=<span class="hljs-string">{</span>&lt;<span class="hljs-attr">About</span> /&gt;</span>} /&gt;
+          <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/contact&quot;</span> <span class="hljs-attr">element</span>=<span class="hljs-string">{</span>&lt;<span class="hljs-attr">Contact</span> /&gt;</span>} /&gt;
+        <span class="hljs-tag">&lt;/<span class="hljs-name">Routes</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">Suspense</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Router</span>&gt;</span></span>
   );
 }
-</code></pre>
-<h2>CSS优化</h2>
+</code></pre></div><h2>CSS优化</h2>
 <h3>1. 关键CSS内联</h3>
-<pre><code class="language-javascript">// 使用Critical提取关键CSS
-const critical = require('critical');
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 使用Critical提取关键CSS</span>
+<span class="hljs-keyword">const</span> critical = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;critical&#x27;</span>);
 
-critical.generate({
-  base: 'dist/',
-  src: 'index.html',
-  dest: 'dist/index.html',
-  inline: true,
-  width: 1300,
-  height: 900
+critical.<span class="hljs-title function_">generate</span>({
+  <span class="hljs-attr">base</span>: <span class="hljs-string">&#x27;dist/&#x27;</span>,
+  <span class="hljs-attr">src</span>: <span class="hljs-string">&#x27;index.html&#x27;</span>,
+  <span class="hljs-attr">dest</span>: <span class="hljs-string">&#x27;dist/index.html&#x27;</span>,
+  <span class="hljs-attr">inline</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">width</span>: <span class="hljs-number">1300</span>,
+  <span class="hljs-attr">height</span>: <span class="hljs-number">900</span>
 });
-</code></pre>
-<h3>2. CSS选择器优化</h3>
-<pre><code class="language-css">/* 避免低效选择器 */
-/* 不推荐 */
-ul#nav li a { }
-ul#nav li a span { }
+</code></pre></div><h3>2. CSS选择器优化</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-css"><span class="hljs-comment">/* 避免低效选择器 */</span>
+<span class="hljs-comment">/* 不推荐 */</span>
+<span class="hljs-selector-tag">ul</span><span class="hljs-selector-id">#nav</span> <span class="hljs-selector-tag">li</span> <span class="hljs-selector-tag">a</span> { }
+<span class="hljs-selector-tag">ul</span><span class="hljs-selector-id">#nav</span> <span class="hljs-selector-tag">li</span> <span class="hljs-selector-tag">a</span> <span class="hljs-selector-tag">span</span> { }
 
-/* 推荐 */
-.nav-link { }
-.nav-link span { }
+<span class="hljs-comment">/* 推荐 */</span>
+<span class="hljs-selector-class">.nav-link</span> { }
+<span class="hljs-selector-class">.nav-link</span> <span class="hljs-selector-tag">span</span> { }
 
-/* 避免通配符选择器 */
-* { margin: 0; padding: 0; } /* 不推荐 */
+<span class="hljs-comment">/* 避免通配符选择器 */</span>
+* { <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>; <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>; } <span class="hljs-comment">/* 不推荐 */</span>
 
-/* 使用具体的选择器 */
-body, h1, h2, h3, p, ul, ol { margin: 0; padding: 0; } /* 推荐 */
-</code></pre>
-<h3>3. CSS Grid和Flexbox优化</h3>
-<pre><code class="language-css">/* 使用CSS Grid优化布局 */
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+<span class="hljs-comment">/* 使用具体的选择器 */</span>
+<span class="hljs-selector-tag">body</span>, <span class="hljs-selector-tag">h1</span>, <span class="hljs-selector-tag">h2</span>, <span class="hljs-selector-tag">h3</span>, <span class="hljs-selector-tag">p</span>, <span class="hljs-selector-tag">ul</span>, <span class="hljs-selector-tag">ol</span> { <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>; <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>; } <span class="hljs-comment">/* 推荐 */</span>
+</code></pre></div><h3>3. CSS Grid和Flexbox优化</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-css"><span class="hljs-comment">/* 使用CSS Grid优化布局 */</span>
+<span class="hljs-selector-class">.grid-container</span> {
+  <span class="hljs-attribute">display</span>: grid;
+  <span class="hljs-attribute">grid-template-columns</span>: <span class="hljs-built_in">repeat</span>(auto-fit, <span class="hljs-built_in">minmax</span>(<span class="hljs-number">300px</span>, <span class="hljs-number">1</span>fr));
+  <span class="hljs-attribute">gap</span>: <span class="hljs-number">20px</span>;
 }
 
-/* 使用Flexbox优化对齐 */
-.flex-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+<span class="hljs-comment">/* 使用Flexbox优化对齐 */</span>
+<span class="hljs-selector-class">.flex-container</span> {
+  <span class="hljs-attribute">display</span>: flex;
+  <span class="hljs-attribute">justify-content</span>: space-between;
+  <span class="hljs-attribute">align-items</span>: center;
 }
-</code></pre>
-<h2>JavaScript优化</h2>
+</code></pre></div><h2>JavaScript优化</h2>
 <h3>1. 防抖和节流</h3>
-<pre><code class="language-javascript">// 防抖函数
-function debounce(func, delay) {
-  let timeoutId;
-  return function (...args) {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() =&gt; func.apply(this, args), delay);
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 防抖函数</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">debounce</span>(<span class="hljs-params">func, delay</span>) {
+  <span class="hljs-keyword">let</span> timeoutId;
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span> (<span class="hljs-params">...args</span>) {
+    <span class="hljs-built_in">clearTimeout</span>(timeoutId);
+    timeoutId = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> func.<span class="hljs-title function_">apply</span>(<span class="hljs-variable language_">this</span>, args), delay);
   };
 }
 
-// 节流函数
-function throttle(func, limit) {
-  let inThrottle;
-  return function (...args) {
-    if (!inThrottle) {
-      func.apply(this, args);
-      inThrottle = true;
-      setTimeout(() =&gt; inThrottle = false, limit);
+<span class="hljs-comment">// 节流函数</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">throttle</span>(<span class="hljs-params">func, limit</span>) {
+  <span class="hljs-keyword">let</span> inThrottle;
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span> (<span class="hljs-params">...args</span>) {
+    <span class="hljs-keyword">if</span> (!inThrottle) {
+      func.<span class="hljs-title function_">apply</span>(<span class="hljs-variable language_">this</span>, args);
+      inThrottle = <span class="hljs-literal">true</span>;
+      <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> inThrottle = <span class="hljs-literal">false</span>, limit);
     }
   };
 }
 
-// 使用示例
-const handleScroll = debounce(() =&gt; {
-  console.log('Scroll event handled');
-}, 300);
+<span class="hljs-comment">// 使用示例</span>
+<span class="hljs-keyword">const</span> handleScroll = <span class="hljs-title function_">debounce</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Scroll event handled&#x27;</span>);
+}, <span class="hljs-number">300</span>);
 
-window.addEventListener('scroll', handleScroll);
-</code></pre>
-<h3>2. Web Workers</h3>
-<pre><code class="language-javascript">// main.js
-const worker = new Worker('worker.js');
+<span class="hljs-variable language_">window</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;scroll&#x27;</span>, handleScroll);
+</code></pre></div><h3>2. Web Workers</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// main.js</span>
+<span class="hljs-keyword">const</span> worker = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Worker</span>(<span class="hljs-string">&#x27;worker.js&#x27;</span>);
 
-worker.postMessage({ data: [1, 2, 3, 4, 5] });
+worker.<span class="hljs-title function_">postMessage</span>({ <span class="hljs-attr">data</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>] });
 
-worker.onmessage = function(e) {
-  console.log('Result:', e.data);
+worker.<span class="hljs-property">onmessage</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Result:&#x27;</span>, e.<span class="hljs-property">data</span>);
 };
 
-// worker.js
-self.onmessage = function(e) {
-  const data = e.data.data;
-  const result = data.map(x =&gt; x * 2);
-  self.postMessage(result);
+<span class="hljs-comment">// worker.js</span>
+self.<span class="hljs-property">onmessage</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) {
+  <span class="hljs-keyword">const</span> data = e.<span class="hljs-property">data</span>.<span class="hljs-property">data</span>;
+  <span class="hljs-keyword">const</span> result = data.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x * <span class="hljs-number">2</span>);
+  self.<span class="hljs-title function_">postMessage</span>(result);
 };
-</code></pre>
-<h3>3. 虚拟滚动</h3>
-<pre><code class="language-javascript">// 虚拟滚动实现示例
-class VirtualList {
-  constructor(container, items, itemHeight) {
-    this.container = container;
-    this.items = items;
-    this.itemHeight = itemHeight;
-    this.visibleItems = 20;
-    this.startIndex = 0;
+</code></pre></div><h3>3. 虚拟滚动</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 虚拟滚动实现示例</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">VirtualList</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">container, items, itemHeight</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">container</span> = container;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span> = items;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">itemHeight</span> = itemHeight;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">visibleItems</span> = <span class="hljs-number">20</span>;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">startIndex</span> = <span class="hljs-number">0</span>;
     
-    this.init();
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">init</span>();
   }
   
-  init() {
-    this.container.addEventListener('scroll', () =&gt; {
-      this.updateVisibleItems();
+  <span class="hljs-title function_">init</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">container</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;scroll&#x27;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">updateVisibleItems</span>();
     });
     
-    this.render();
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">render</span>();
   }
   
-  updateVisibleItems() {
-    const scrollTop = this.container.scrollTop;
-    this.startIndex = Math.floor(scrollTop / this.itemHeight);
-    this.render();
+  <span class="hljs-title function_">updateVisibleItems</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">const</span> scrollTop = <span class="hljs-variable language_">this</span>.<span class="hljs-property">container</span>.<span class="hljs-property">scrollTop</span>;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">startIndex</span> = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>(scrollTop / <span class="hljs-variable language_">this</span>.<span class="hljs-property">itemHeight</span>);
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">render</span>();
   }
   
-  render() {
-    const fragment = document.createDocumentFragment();
-    const endIndex = Math.min(
-      this.startIndex + this.visibleItems,
-      this.items.length
+  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">const</span> fragment = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createDocumentFragment</span>();
+    <span class="hljs-keyword">const</span> endIndex = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(
+      <span class="hljs-variable language_">this</span>.<span class="hljs-property">startIndex</span> + <span class="hljs-variable language_">this</span>.<span class="hljs-property">visibleItems</span>,
+      <span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>.<span class="hljs-property">length</span>
     );
     
-    for (let i = this.startIndex; i &lt; endIndex; i++) {
-      const item = document.createElement('div');
-      item.style.height = `${this.itemHeight}px`;
-      item.textContent = this.items[i];
-      fragment.appendChild(item);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-variable language_">this</span>.<span class="hljs-property">startIndex</span>; i &lt; endIndex; i++) {
+      <span class="hljs-keyword">const</span> item = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;div&#x27;</span>);
+      item.<span class="hljs-property">style</span>.<span class="hljs-property">height</span> = <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-variable language_">this</span>.itemHeight}</span>px`</span>;
+      item.<span class="hljs-property">textContent</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>[i];
+      fragment.<span class="hljs-title function_">appendChild</span>(item);
     }
     
-    this.container.innerHTML = '';
-    this.container.appendChild(fragment);
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">container</span>.<span class="hljs-property">innerHTML</span> = <span class="hljs-string">&#x27;&#x27;</span>;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">container</span>.<span class="hljs-title function_">appendChild</span>(fragment);
   }
 }
-</code></pre>
-<h2>网络优化</h2>
+</code></pre></div><h2>网络优化</h2>
 <h3>1. CDN使用</h3>
-<pre><code class="language-html">&lt;!-- 使用CDN加载第三方库 --&gt;
-&lt;script src=&quot;https://cdn.jsdelivr.net/npm/react@17/umd/react.production.min.js&quot;&gt;&lt;/script&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css&quot;&gt;
-</code></pre>
-<h3>2. 资源预加载</h3>
-<pre><code class="language-html">&lt;!-- DNS预解析 --&gt;
-&lt;link rel=&quot;dns-prefetch&quot; href=&quot;//example.com&quot;&gt;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-html"><span class="hljs-comment">&lt;!-- 使用CDN加载第三方库 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://cdn.jsdelivr.net/npm/react@17/umd/react.production.min.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css&quot;</span>&gt;</span>
+</code></pre></div><h3>2. 资源预加载</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-html"><span class="hljs-comment">&lt;!-- DNS预解析 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;dns-prefetch&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;//example.com&quot;</span>&gt;</span>
 
-&lt;!-- 预连接 --&gt;
-&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;
+<span class="hljs-comment">&lt;!-- 预连接 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;preconnect&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://fonts.googleapis.com&quot;</span>&gt;</span>
 
-&lt;!-- 预加载关键资源 --&gt;
-&lt;link rel=&quot;preload&quot; href=&quot;/styles/critical.css&quot; as=&quot;style&quot;&gt;
-&lt;link rel=&quot;preload&quot; href=&quot;/scripts/main.js&quot; as=&quot;script&quot;&gt;
+<span class="hljs-comment">&lt;!-- 预加载关键资源 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;preload&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/styles/critical.css&quot;</span> <span class="hljs-attr">as</span>=<span class="hljs-string">&quot;style&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;preload&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/scripts/main.js&quot;</span> <span class="hljs-attr">as</span>=<span class="hljs-string">&quot;script&quot;</span>&gt;</span>
 
-&lt;!-- 预获取 --&gt;
-&lt;link rel=&quot;prefetch&quot; href=&quot;/next-page.html&quot;&gt;
-</code></pre>
-<h3>3. HTTP/2优化</h3>
-<pre><code class="language-javascript">// Node.js中启用HTTP/2
-const http2 = require('http2');
-const fs = require('fs');
+<span class="hljs-comment">&lt;!-- 预获取 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;prefetch&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/next-page.html&quot;</span>&gt;</span>
+</code></pre></div><h3>3. HTTP/2优化</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// Node.js中启用HTTP/2</span>
+<span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;http2&#x27;</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);
 
-const server = http2.createSecureServer({
-  key: fs.readFileSync('private-key.pem'),
-  cert: fs.readFileSync('certificate.pem')
+<span class="hljs-keyword">const</span> server = http2.<span class="hljs-title function_">createSecureServer</span>({
+  <span class="hljs-attr">key</span>: fs.<span class="hljs-title function_">readFileSync</span>(<span class="hljs-string">&#x27;private-key.pem&#x27;</span>),
+  <span class="hljs-attr">cert</span>: fs.<span class="hljs-title function_">readFileSync</span>(<span class="hljs-string">&#x27;certificate.pem&#x27;</span>)
 });
 
-server.on('stream', (stream, headers) =&gt; {
-  stream.respond({
-    'content-type': 'text/html',
-    ':status': 200
+server.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;stream&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">stream, headers</span>) =&gt;</span> {
+  stream.<span class="hljs-title function_">respond</span>({
+    <span class="hljs-string">&#x27;content-type&#x27;</span>: <span class="hljs-string">&#x27;text/html&#x27;</span>,
+    <span class="hljs-string">&#x27;:status&#x27;</span>: <span class="hljs-number">200</span>
   });
-  stream.end('&lt;h1&gt;Hello World&lt;/h1&gt;');
+  stream.<span class="hljs-title function_">end</span>(<span class="hljs-string">&#x27;&lt;h1&gt;Hello World&lt;/h1&gt;&#x27;</span>);
 });
 
-server.listen(8443);
-</code></pre>
-<h2>性能监控</h2>
+server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8443</span>);
+</code></pre></div><h2>性能监控</h2>
 <h3>1. Web Vitals监控</h3>
-<pre><code class="language-javascript">// 监控Core Web Vitals
-import { getCLS, getFID, getFCP, getLCP, getTTFB } from 'web-vitals';
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 监控Core Web Vitals</span>
+<span class="hljs-keyword">import</span> { getCLS, getFID, getFCP, getLCP, getTTFB } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;web-vitals&#x27;</span>;
 
-function sendToAnalytics(metric) {
-  // 发送指标到分析系统
-  console.log(metric);
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">sendToAnalytics</span>(<span class="hljs-params">metric</span>) {
+  <span class="hljs-comment">// 发送指标到分析系统</span>
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(metric);
 }
 
-getCLS(sendToAnalytics);
-getFID(sendToAnalytics);
-getFCP(sendToAnalytics);
-getLCP(sendToAnalytics);
-getTTFB(sendToAnalytics);
-</code></pre>
-<h3>2. 自定义性能监控</h3>
-<pre><code class="language-javascript">// 性能监控工具类
-class PerformanceMonitor {
-  constructor() {
-    this.metrics = {};
+<span class="hljs-title function_">getCLS</span>(sendToAnalytics);
+<span class="hljs-title function_">getFID</span>(sendToAnalytics);
+<span class="hljs-title function_">getFCP</span>(sendToAnalytics);
+<span class="hljs-title function_">getLCP</span>(sendToAnalytics);
+<span class="hljs-title function_">getTTFB</span>(sendToAnalytics);
+</code></pre></div><h3>2. 自定义性能监控</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 性能监控工具类</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">PerformanceMonitor</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">metrics</span> = {};
   }
   
-  mark(name) {
-    performance.mark(name);
+  <span class="hljs-title function_">mark</span>(<span class="hljs-params">name</span>) {
+    performance.<span class="hljs-title function_">mark</span>(name);
   }
   
-  measure(name, startMark, endMark) {
-    performance.measure(name, startMark, endMark);
-    const measure = performance.getEntriesByName(name)[0];
-    this.metrics[name] = measure.duration;
-    return measure.duration;
+  <span class="hljs-title function_">measure</span>(<span class="hljs-params">name, startMark, endMark</span>) {
+    performance.<span class="hljs-title function_">measure</span>(name, startMark, endMark);
+    <span class="hljs-keyword">const</span> measure = performance.<span class="hljs-title function_">getEntriesByName</span>(name)[<span class="hljs-number">0</span>];
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">metrics</span>[name] = measure.<span class="hljs-property">duration</span>;
+    <span class="hljs-keyword">return</span> measure.<span class="hljs-property">duration</span>;
   }
   
-  getResourceTiming() {
-    return performance.getEntriesByType('navigation');
+  <span class="hljs-title function_">getResourceTiming</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">return</span> performance.<span class="hljs-title function_">getEntriesByType</span>(<span class="hljs-string">&#x27;navigation&#x27;</span>);
   }
   
-  getPaintTiming() {
-    return performance.getEntriesByType('paint');
+  <span class="hljs-title function_">getPaintTiming</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">return</span> performance.<span class="hljs-title function_">getEntriesByType</span>(<span class="hljs-string">&#x27;paint&#x27;</span>);
   }
 }
 
-// 使用示例
-const monitor = new PerformanceMonitor();
-monitor.mark('start-loading');
-// ... 加载过程
-monitor.mark('end-loading');
-monitor.measure('loading-time', 'start-loading', 'end-loading');
-</code></pre>
-<h2>实际案例：电商网站优化</h2>
+<span class="hljs-comment">// 使用示例</span>
+<span class="hljs-keyword">const</span> monitor = <span class="hljs-keyword">new</span> <span class="hljs-title class_">PerformanceMonitor</span>();
+monitor.<span class="hljs-title function_">mark</span>(<span class="hljs-string">&#x27;start-loading&#x27;</span>);
+<span class="hljs-comment">// ... 加载过程</span>
+monitor.<span class="hljs-title function_">mark</span>(<span class="hljs-string">&#x27;end-loading&#x27;</span>);
+monitor.<span class="hljs-title function_">measure</span>(<span class="hljs-string">&#x27;loading-time&#x27;</span>, <span class="hljs-string">&#x27;start-loading&#x27;</span>, <span class="hljs-string">&#x27;end-loading&#x27;</span>);
+</code></pre></div><h2>实际案例：电商网站优化</h2>
 <p>让我们通过一个电商网站的优化案例来展示如何综合运用这些优化策略。</p>
 <h3>优化前问题分析</h3>
 <ol>
@@ -548,62 +557,59 @@ monitor.measure('loading-time', 'start-loading', 'end-loading');
 </ol>
 <h3>优化方案实施</h3>
 <h4>1. 图片优化</h4>
-<pre><code class="language-javascript">// 图片懒加载和格式优化
-const ImageComponent = ({ src, alt }) =&gt; {
-  const [imageSrc, setImageSrc] = useState('');
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 图片懒加载和格式优化</span>
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">ImageComponent</span> = (<span class="hljs-params">{ src, alt }</span>) =&gt; {
+  <span class="hljs-keyword">const</span> [imageSrc, setImageSrc] = <span class="hljs-title function_">useState</span>(<span class="hljs-string">&#x27;&#x27;</span>);
   
-  useEffect(() =&gt; {
-    // 检测支持的图片格式
-    const supportsWebP = /* 检测逻辑 */;
-    const imageFormat = supportsWebP ? 'webp' : 'jpg';
+  <span class="hljs-title function_">useEffect</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-comment">// 检测支持的图片格式</span>
+    <span class="hljs-keyword">const</span> supportsWebP = <span class="hljs-comment">/* 检测逻辑 */</span>;
+    <span class="hljs-keyword">const</span> imageFormat = supportsWebP ? <span class="hljs-string">&#x27;webp&#x27;</span> : <span class="hljs-string">&#x27;jpg&#x27;</span>;
     
-    setImageSrc(src.replace('.jpg', `.${imageFormat}`));
+    <span class="hljs-title function_">setImageSrc</span>(src.<span class="hljs-title function_">replace</span>(<span class="hljs-string">&#x27;.jpg&#x27;</span>, <span class="hljs-string">`.<span class="hljs-subst">${imageFormat}</span>`</span>));
   }, [src]);
   
-  return (
-    &lt;img 
-      data-src={imageSrc}
-      alt={alt}
-      className=&quot;lazy&quot;
-      loading=&quot;lazy&quot;
-    /&gt;
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> 
+      <span class="hljs-attr">data-src</span>=<span class="hljs-string">{imageSrc}</span>
+      <span class="hljs-attr">alt</span>=<span class="hljs-string">{alt}</span>
+      <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;lazy&quot;</span>
+      <span class="hljs-attr">loading</span>=<span class="hljs-string">&quot;lazy&quot;</span>
+    /&gt;</span></span>
   );
 };
-</code></pre>
-<h4>2. 代码分割</h4>
-<pre><code class="language-javascript">// 路由级别代码分割
-const ProductPage = lazy(() =&gt; import('./pages/ProductPage'));
-const CartPage = lazy(() =&gt; import('./pages/CartPage'));
-const CheckoutPage = lazy(() =&gt; import('./pages/CheckoutPage'));
+</code></pre></div><h4>2. 代码分割</h4>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 路由级别代码分割</span>
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">ProductPage</span> = <span class="hljs-title function_">lazy</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;./pages/ProductPage&#x27;</span>));
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">CartPage</span> = <span class="hljs-title function_">lazy</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;./pages/CartPage&#x27;</span>));
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">CheckoutPage</span> = <span class="hljs-title function_">lazy</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;./pages/CheckoutPage&#x27;</span>));
 
-function App() {
-  return (
-    &lt;Router&gt;
-      &lt;Suspense fallback={&lt;LoadingSpinner /&gt;}&gt;
-        &lt;Routes&gt;
-          &lt;Route path=&quot;/product/:id&quot; element={&lt;ProductPage /&gt;} /&gt;
-          &lt;Route path=&quot;/cart&quot; element={&lt;CartPage /&gt;} /&gt;
-          &lt;Route path=&quot;/checkout&quot; element={&lt;CheckoutPage /&gt;} /&gt;
-        &lt;/Routes&gt;
-      &lt;/Suspense&gt;
-    &lt;/Router&gt;
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">App</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Router</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Suspense</span> <span class="hljs-attr">fallback</span>=<span class="hljs-string">{</span>&lt;<span class="hljs-attr">LoadingSpinner</span> /&gt;</span>}&gt;
+        <span class="hljs-tag">&lt;<span class="hljs-name">Routes</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/product/:id&quot;</span> <span class="hljs-attr">element</span>=<span class="hljs-string">{</span>&lt;<span class="hljs-attr">ProductPage</span> /&gt;</span>} /&gt;
+          <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/cart&quot;</span> <span class="hljs-attr">element</span>=<span class="hljs-string">{</span>&lt;<span class="hljs-attr">CartPage</span> /&gt;</span>} /&gt;
+          <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/checkout&quot;</span> <span class="hljs-attr">element</span>=<span class="hljs-string">{</span>&lt;<span class="hljs-attr">CheckoutPage</span> /&gt;</span>} /&gt;
+        <span class="hljs-tag">&lt;/<span class="hljs-name">Routes</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">Suspense</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Router</span>&gt;</span></span>
   );
 }
-</code></pre>
-<h4>3. 关键路径优化</h4>
-<pre><code class="language-html">&lt;!-- 内联关键CSS --&gt;
-&lt;style&gt;
-  /* 关键路径CSS */
-  .header { display: flex; align-items: center; }
-  .logo { width: 120px; height: 40px; }
-  .nav { display: flex; list-style: none; }
-&lt;/style&gt;
+</code></pre></div><h4>3. 关键路径优化</h4>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-html"><span class="hljs-comment">&lt;!-- 内联关键CSS --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css">
+  <span class="hljs-comment">/* 关键路径CSS */</span>
+  <span class="hljs-selector-class">.header</span> { <span class="hljs-attribute">display</span>: flex; <span class="hljs-attribute">align-items</span>: center; }
+  <span class="hljs-selector-class">.logo</span> { <span class="hljs-attribute">width</span>: <span class="hljs-number">120px</span>; <span class="hljs-attribute">height</span>: <span class="hljs-number">40px</span>; }
+  <span class="hljs-selector-class">.nav</span> { <span class="hljs-attribute">display</span>: flex; <span class="hljs-attribute">list-style</span>: none; }
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
 
-&lt;!-- 预加载关键资源 --&gt;
-&lt;link rel=&quot;preload&quot; href=&quot;/api/products&quot; as=&quot;fetch&quot; crossorigin&gt;
-&lt;link rel=&quot;preload&quot; href=&quot;/fonts/main.woff2&quot; as=&quot;font&quot; type=&quot;font/woff2&quot; crossorigin&gt;
-</code></pre>
-<h2>性能优化检查清单</h2>
+<span class="hljs-comment">&lt;!-- 预加载关键资源 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;preload&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/api/products&quot;</span> <span class="hljs-attr">as</span>=<span class="hljs-string">&quot;fetch&quot;</span> <span class="hljs-attr">crossorigin</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;preload&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/fonts/main.woff2&quot;</span> <span class="hljs-attr">as</span>=<span class="hljs-string">&quot;font&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;font/woff2&quot;</span> <span class="hljs-attr">crossorigin</span>&gt;</span>
+</code></pre></div><h2>性能优化检查清单</h2>
 <h3>加载性能</h3>
 <ul>
 <li>[ ] 启用Gzip/Brotli压缩</li>
@@ -639,10 +645,87 @@ function App() {
             </div>
         </article>
     </main>
-    <footer>
-        <div class="container">
+    <footer class="footer">
+        <div class="max-w-6xl mx-auto px-4">
             <p>&copy; 2025 人人链向未来. All rights reserved.</p>
+            <p class="mt-2"><a href="/rss.xml" class="text-accent-400 hover:text-accent-500">📡 订阅 RSS</a></p>
         </div>
     </footer>
+    <script>
+        // 移动端导航菜单切换 + 代码复制按钮
+        document.addEventListener('DOMContentLoaded', function() {
+                // 图片加载失败占位符
+                document.querySelectorAll('img').forEach(img => {
+                    img.addEventListener('error', function() {
+                        if (this.dataset.fallbackApplied) return;
+                        this.dataset.fallbackApplied = '1';
+                        this.src = '/assets/placeholder.png';
+                        this.classList.add('placeholder');
+                    }, { once: true });
+                });
+            const navbarToggle = document.getElementById('navbar-toggle');
+            const navbarMenu = document.getElementById('navbar-menu');
+            
+            if (navbarToggle && navbarMenu) {
+                navbarToggle.addEventListener('click', function() {
+                    navbarToggle.classList.toggle('open');
+                    navbarMenu.classList.toggle('open');
+                });
+                
+                // 点击菜单项后关闭菜单
+                const navItems = navbarMenu.querySelectorAll('.nav-item');
+                navItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        navbarToggle.classList.remove('open');
+                        navbarMenu.classList.remove('open');
+                    });
+                });
+                
+                // 点击菜单外部关闭菜单
+                document.addEventListener('click', function(e) {
+                    if (!navbarToggle.contains(e.target) && !navbarMenu.contains(e.target)) {
+                        navbarToggle.classList.remove('open');
+                        navbarMenu.classList.remove('open');
+                    }
+                });
+            }
+
+            // 复制代码：事件委托
+            document.body.addEventListener('click', async (e) => {
+                const btn = e.target.closest('.copy-code-btn');
+                if (!btn) return;
+                const container = btn.closest('.code-block');
+                if (!container) return;
+                const codeEl = container.querySelector('pre code');
+                if (!codeEl) return;
+                const text = codeEl.innerText;
+                try {
+                    await navigator.clipboard.writeText(text);
+                    const original = btn.textContent;
+                    btn.textContent = '已复制';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = original;
+                        btn.classList.remove('copied');
+                    }, 1200);
+                } catch (err) {
+                    // 回退方案
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    try { document.execCommand('copy'); } catch {}
+                    document.body.removeChild(textarea);
+                    const original = btn.textContent;
+                    btn.textContent = '已复制';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = original;
+                        btn.classList.remove('copied');
+                    }, 1200);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

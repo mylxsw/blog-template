@@ -4,35 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Docker容器化技术详解：从入门到实践</title>
-    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/modern.css">
+    <link rel="alternate" type="application/rss+xml" title="人人链向未来 RSS Feed" href="/rss.xml">
+    <!-- Highlight.js theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+                        colors: {
+                            primary: { 600: '#FECE00', 700: '#e6b900' },
+                            accent: { 400: '#FECE00', 500: '#ffdb4d' }
+                        }
+          }
+        }
+      }
+    </script>
 </head>
-<body>
-    <header>
-        <div class="container header-content">
-            <h1><a href="/">人人链向未来</a></h1>
-            <nav>
-                <ul>
-                    <li><a href="/">首页</a></li>
-                    <li><a href="/about.html">关于</a></li>
-                </ul>
+<body class="bg-gray-50">
+    <header class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <a href="/" class="navbar-logo">人人链向未来</a>
+            </div>
+            <nav class="navbar-menu" id="navbar-menu">
+                <div class="navbar-nav">
+                    <a href="/" class="nav-item">
+                        <span class="nav-text">首页</span>
+                    </a>
+                    <a href="/about.html" class="nav-item">
+                        <span class="nav-text">关于</span>
+                    </a>
+                    <a href="/rss.xml" class="nav-item nav-item-special" target="_blank" rel="noopener noreferrer">
+                        <span class="nav-text">RSS</span>
+                    </a>
+                </div>
             </nav>
+            <button class="navbar-toggle" id="navbar-toggle" aria-label="切换导航菜单">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
-    <main class="container">
-        <article class="post">
-            <h1>Docker容器化技术详解：从入门到实践</h1>
-            <div class="post-cover-detail">
-                <img src="https://images.unsplash.com/photo-1542837332-64e3c71fbe2c?ixlib&#x3D;rb-4.0.3&amp;ixid&#x3D;M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;1200&amp;q&#x3D;80" alt="Docker容器化技术详解：从入门到实践" loading="lazy">
-            </div>
-            <div class="post-meta post-meta-detail">
-                <time>Wed Oct 25 2023 08:00:00 GMT+0800 (China Standard Time)</time>
-                <div class="tags">
-                    <span class="tag">docker</span>
-                    <span class="tag">devops</span>
-                    <span class="tag">containerization</span>
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <article class="article-container">
+            <div class="article-header">
+                <h1 class="article-title">Docker容器化技术详解：从入门到实践</h1>
+                <div class="article-meta">
+                    <div class="flex items-center space-x-2">
+                        <time datetime="2023-10-25T00:00:00.000Z">2023年10月25日</time>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="post-tag">docker</span>
+                        <span class="post-tag">devops</span>
+                        <span class="post-tag">containerization</span>
+                    </div>
+                </div>
+                <div class="w-full h-80 overflow-hidden mt-6">
+                    <img src="https://images.unsplash.com/photo-1542837332-64e3c71fbe2c?ixlib&#x3D;rb-4.0.3&amp;ixid&#x3D;M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;1200&amp;q&#x3D;80" alt="Docker容器化技术详解：从入门到实践" class="w-full h-full object-cover rounded-xl" loading="lazy" onerror="this.onerror=null;this.src='/assets/placeholder.svg';this.classList.add('placeholder');">
                 </div>
             </div>
-            <div class="post-content">
+            <div class="article-content">
                 <p>容器化技术正在改变软件开发和部署的方式，而Docker作为容器化技术的领军者，已经成为现代DevOps实践的重要组成部分。本文将详细介绍Docker的核心概念、使用方法和最佳实践。</p>
 <h2>什么是Docker？</h2>
 <p>Docker是一个开源的容器化平台，它允许开发者将应用程序及其依赖项打包到一个轻量级、可移植的容器中，从而实现应用程序在任何环境中的一致运行。</p>
@@ -57,120 +91,114 @@
 <h3>Windows和Mac</h3>
 <p>下载Docker Desktop安装包，按照提示完成安装。</p>
 <h3>Linux（以Ubuntu为例）</h3>
-<pre><code class="language-bash"># 更新包索引
-sudo apt-get update
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-bash"><span class="hljs-comment"># 更新包索引</span>
+<span class="hljs-built_in">sudo</span> apt-get update
 
-# 安装必要的包
-sudo apt-get install \
+<span class="hljs-comment"># 安装必要的包</span>
+<span class="hljs-built_in">sudo</span> apt-get install \
     apt-transport-https \
     ca-certificates \
     curl \
     gnupg \
     lsb-release
 
-# 添加Docker官方GPG密钥
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+<span class="hljs-comment"># 添加Docker官方GPG密钥</span>
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | <span class="hljs-built_in">sudo</span> gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
-# 设置稳定版仓库
-echo \
-  &quot;deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable&quot; | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+<span class="hljs-comment"># 设置稳定版仓库</span>
+<span class="hljs-built_in">echo</span> \
+  <span class="hljs-string">&quot;deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  <span class="hljs-subst">$(lsb_release -cs)</span> stable&quot;</span> | <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /etc/apt/sources.list.d/docker.list &gt; /dev/null
 
-# 安装Docker Engine
-sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io
+<span class="hljs-comment"># 安装Docker Engine</span>
+<span class="hljs-built_in">sudo</span> apt-get update
+<span class="hljs-built_in">sudo</span> apt-get install docker-ce docker-ce-cli containerd.io
 
-# 验证安装
-sudo docker run hello-world
-</code></pre>
-<h2>Docker基本操作</h2>
+<span class="hljs-comment"># 验证安装</span>
+<span class="hljs-built_in">sudo</span> docker run hello-world
+</code></pre></div><h2>Docker基本操作</h2>
 <h3>镜像操作</h3>
-<pre><code class="language-bash"># 搜索镜像
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-bash"><span class="hljs-comment"># 搜索镜像</span>
 docker search nginx
 
-# 拉取镜像
+<span class="hljs-comment"># 拉取镜像</span>
 docker pull nginx
 
-# 查看本地镜像
+<span class="hljs-comment"># 查看本地镜像</span>
 docker images
 
-# 删除镜像
+<span class="hljs-comment"># 删除镜像</span>
 docker rmi image_name
-</code></pre>
-<h3>容器操作</h3>
-<pre><code class="language-bash"># 运行容器
+</code></pre></div><h3>容器操作</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-bash"><span class="hljs-comment"># 运行容器</span>
 docker run -d -p 8080:80 --name mynginx nginx
 
-# 查看运行中的容器
+<span class="hljs-comment"># 查看运行中的容器</span>
 docker ps
 
-# 查看所有容器（包括停止的）
+<span class="hljs-comment"># 查看所有容器（包括停止的）</span>
 docker ps -a
 
-# 停止容器
+<span class="hljs-comment"># 停止容器</span>
 docker stop container_name
 
-# 启动容器
+<span class="hljs-comment"># 启动容器</span>
 docker start container_name
 
-# 重启容器
+<span class="hljs-comment"># 重启容器</span>
 docker restart container_name
 
-# 删除容器
-docker rm container_name
+<span class="hljs-comment"># 删除容器</span>
+docker <span class="hljs-built_in">rm</span> container_name
 
-# 进入容器
-docker exec -it container_name /bin/bash
-</code></pre>
-<h3>容器日志和信息</h3>
-<pre><code class="language-bash"># 查看容器日志
+<span class="hljs-comment"># 进入容器</span>
+docker <span class="hljs-built_in">exec</span> -it container_name /bin/bash
+</code></pre></div><h3>容器日志和信息</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-bash"><span class="hljs-comment"># 查看容器日志</span>
 docker logs container_name
 
-# 查看容器详细信息
+<span class="hljs-comment"># 查看容器详细信息</span>
 docker inspect container_name
 
-# 查看容器资源使用情况
+<span class="hljs-comment"># 查看容器资源使用情况</span>
 docker stats container_name
-</code></pre>
-<h2>Dockerfile详解</h2>
+</code></pre></div><h2>Dockerfile详解</h2>
 <p>Dockerfile是构建Docker镜像的脚本文件，包含了一系列指令。</p>
 <h3>基本指令</h3>
-<pre><code class="language-dockerfile"># 指定基础镜像
-FROM ubuntu:20.04
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-dockerfile"><span class="hljs-comment"># 指定基础镜像</span>
+<span class="hljs-keyword">FROM</span> ubuntu:<span class="hljs-number">20.04</span>
 
-# 维护者信息
-LABEL maintainer=&quot;yourname@example.com&quot;
+<span class="hljs-comment"># 维护者信息</span>
+<span class="hljs-keyword">LABEL</span><span class="language-bash"> maintainer=<span class="hljs-string">&quot;yourname@example.com&quot;</span></span>
 
-# 设置环境变量
-ENV NODE_VERSION=14.15.0
+<span class="hljs-comment"># 设置环境变量</span>
+<span class="hljs-keyword">ENV</span> NODE_VERSION=<span class="hljs-number">14.15</span>.<span class="hljs-number">0</span>
 
-# 设置工作目录
-WORKDIR /app
+<span class="hljs-comment"># 设置工作目录</span>
+<span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /app</span>
 
-# 复制文件
-COPY . /app
+<span class="hljs-comment"># 复制文件</span>
+<span class="hljs-keyword">COPY</span><span class="language-bash"> . /app</span>
 
-# 运行命令
-RUN apt-get update &amp;&amp; apt-get install -y nodejs npm
+<span class="hljs-comment"># 运行命令</span>
+<span class="hljs-keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; apt-get install -y nodejs npm</span>
 
-# 暴露端口
-EXPOSE 3000
+<span class="hljs-comment"># 暴露端口</span>
+<span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">3000</span>
 
-# 启动命令
-CMD [&quot;node&quot;, &quot;app.js&quot;]
-</code></pre>
-<h3>构建镜像</h3>
-<pre><code class="language-bash"># 构建镜像
+<span class="hljs-comment"># 启动命令</span>
+<span class="hljs-keyword">CMD</span><span class="language-bash"> [<span class="hljs-string">&quot;node&quot;</span>, <span class="hljs-string">&quot;app.js&quot;</span>]</span>
+</code></pre></div><h3>构建镜像</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-bash"><span class="hljs-comment"># 构建镜像</span>
 docker build -t myapp:latest .
 
-# 指定Dockerfile路径
+<span class="hljs-comment"># 指定Dockerfile路径</span>
 docker build -f /path/to/Dockerfile -t myapp:latest .
-</code></pre>
-<h2>实际案例：构建Node.js应用镜像</h2>
+</code></pre></div><h2>实际案例：构建Node.js应用镜像</h2>
 <p>让我们通过一个实际的Node.js应用来演示Docker的使用。</p>
 <h3>应用代码</h3>
 <p>首先创建一个简单的Node.js应用：</p>
-<pre><code>// app.js
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs">// app.js
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -186,23 +214,21 @@ app.get('/health', (req, res) =&gt; {
 app.listen(PORT, () =&gt; {
   console.log(`Server is running on port ${PORT}`);
 });
-</code></pre>
-<pre><code class="language-json">// package.json
-{
-  &quot;name&quot;: &quot;docker-nodejs-app&quot;,
-  &quot;version&quot;: &quot;1.0.0&quot;,
-  &quot;description&quot;: &quot;A simple Node.js app for Docker tutorial&quot;,
-  &quot;main&quot;: &quot;app.js&quot;,
-  &quot;scripts&quot;: {
-    &quot;start&quot;: &quot;node app.js&quot;
-  },
-  &quot;dependencies&quot;: {
-    &quot;express&quot;: &quot;^4.17.1&quot;
-  }
-}
-</code></pre>
-<h3>Dockerfile</h3>
-<pre><code># 使用官方Node.js运行时作为基础镜像
+</code></pre></div><div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-json"><span class="hljs-comment">// package.json</span>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;docker-nodejs-app&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1.0.0&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;A simple Node.js app for Docker tutorial&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;main&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;app.js&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;start&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;node app.js&quot;</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;dependencies&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;express&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^4.17.1&quot;</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre></div><h3>Dockerfile</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs"># 使用官方Node.js运行时作为基础镜像
 FROM node:14-alpine
 
 # 设置工作目录
@@ -229,9 +255,8 @@ USER nextjs
 
 # 启动应用
 CMD [ &quot;npm&quot;, &quot;start&quot; ]
-</code></pre>
-<h3>构建和运行</h3>
-<pre><code># 构建镜像
+</code></pre></div><h3>构建和运行</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs"># 构建镜像
 docker build -t docker-nodejs-app .
 
 # 运行容器
@@ -239,11 +264,10 @@ docker run -p 3000:3000 docker-nodejs-app
 
 # 在后台运行
 docker run -d -p 3000:3000 --name my-node-app docker-nodejs-app
-</code></pre>
-<h2>Docker Compose</h2>
+</code></pre></div><h2>Docker Compose</h2>
 <p>Docker Compose是一个用于定义和运行多容器Docker应用程序的工具。</p>
 <h3>docker-compose.yml示例</h3>
-<pre><code>version: '3.8'
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs">version: '3.8'
 
 services:
   web:
@@ -259,9 +283,8 @@ services:
     image: &quot;redis:alpine&quot;
     ports:
       - &quot;6379:6379&quot;
-</code></pre>
-<h3>Docker Compose命令</h3>
-<pre><code># 启动所有服务
+</code></pre></div><h3>Docker Compose命令</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs"># 启动所有服务
 docker-compose up
 
 # 后台启动
@@ -278,11 +301,10 @@ docker-compose logs
 
 # 重新构建服务
 docker-compose build
-</code></pre>
-<h2>Docker网络</h2>
+</code></pre></div><h2>Docker网络</h2>
 <p>Docker提供了多种网络模式来满足不同的需求。</p>
 <h3>网络类型</h3>
-<pre><code># 查看网络
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs"># 查看网络
 docker network ls
 
 # 创建自定义网络
@@ -293,10 +315,9 @@ docker run -d --name container1 --network mynetwork nginx
 
 # 连接现有容器到网络
 docker network connect mynetwork container2
-</code></pre>
-<h2>Docker数据持久化</h2>
+</code></pre></div><h2>Docker数据持久化</h2>
 <h3>卷（Volumes）</h3>
-<pre><code># 创建卷
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs"># 创建卷
 docker volume create myvolume
 
 # 使用卷运行容器
@@ -307,14 +328,12 @@ docker volume ls
 
 # 删除卷
 docker volume rm myvolume
-</code></pre>
-<h3>绑定挂载</h3>
-<pre><code># 绑定挂载
+</code></pre></div><h3>绑定挂载</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs"># 绑定挂载
 docker run -d --name mycontainer -v /host/path:/container/path nginx
-</code></pre>
-<h2>Docker最佳实践</h2>
+</code></pre></div><h2>Docker最佳实践</h2>
 <h3>1. 镜像优化</h3>
-<pre><code># 使用更小的基础镜像
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs"># 使用更小的基础镜像
 FROM alpine:latest
 
 # 合并RUN指令减少层数
@@ -328,17 +347,15 @@ RUN apk add --no-cache \
 # npm-debug.log
 # .git
 # .gitignore
-</code></pre>
-<h3>2. 安全性</h3>
-<pre><code># 创建非root用户
+</code></pre></div><h3>2. 安全性</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs"># 创建非root用户
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
 
 # 使用特定用户运行
 USER nextjs
-</code></pre>
-<h3>3. 多阶段构建</h3>
-<pre><code># 多阶段构建示例
+</code></pre></div><h3>3. 多阶段构建</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs"># 多阶段构建示例
 # 构建阶段
 FROM node:14 AS builder
 WORKDIR /app
@@ -354,18 +371,16 @@ COPY package*.json ./
 RUN npm ci --only=production
 COPY --from=builder /app/dist ./dist
 CMD [&quot;node&quot;, &quot;dist/index.js&quot;]
-</code></pre>
-<h3>4. 标签管理</h3>
-<pre><code># 使用语义化版本标签
+</code></pre></div><h3>4. 标签管理</h3>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs"># 使用语义化版本标签
 docker build -t myapp:v1.0.0 .
 docker build -t myapp:latest .
 
 # 使用git commit hash作为标签
 docker build -t myapp:$(git rev-parse --short HEAD) .
-</code></pre>
-<h2>Docker在CI/CD中的应用</h2>
+</code></pre></div><h2>Docker在CI/CD中的应用</h2>
 <h3>GitHub Actions示例</h3>
-<pre><code>name: Docker Build and Push
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs">name: Docker Build and Push
 
 on:
   push:
@@ -390,10 +405,9 @@ jobs:
         context: .
         push: true
         tags: myusername/myapp:latest
-</code></pre>
-<h2>监控和日志</h2>
+</code></pre></div><h2>监控和日志</h2>
 <h3>使用Prometheus和Grafana监控</h3>
-<pre><code># docker-compose.yml
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs"># docker-compose.yml
 version: '3.8'
 
 services:
@@ -415,41 +429,36 @@ services:
       - &quot;3001:3000&quot;
     depends_on:
       - prometheus
-</code></pre>
-<h2>故障排除</h2>
+</code></pre></div><h2>故障排除</h2>
 <h3>常见问题及解决方案</h3>
 <ol>
 <li>
 <p><strong>端口冲突</strong></p>
-<pre><code class="language-bash"># 查看端口占用
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-bash"><span class="hljs-comment"># 查看端口占用</span>
 docker ps -a
-# 停止占用端口的容器
+<span class="hljs-comment"># 停止占用端口的容器</span>
 docker stop container_name
-</code></pre>
-</li>
+</code></pre></div></li>
 <li>
 <p><strong>权限问题</strong></p>
-<pre><code class="language-bash"># 在Linux上，将用户添加到docker组
-sudo usermod -aG docker $USER
-</code></pre>
-</li>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-bash"><span class="hljs-comment"># 在Linux上，将用户添加到docker组</span>
+<span class="hljs-built_in">sudo</span> usermod -aG docker <span class="hljs-variable">$USER</span>
+</code></pre></div></li>
 <li>
 <p><strong>磁盘空间不足</strong></p>
-<pre><code class="language-bash"># 清理未使用的资源
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-bash"><span class="hljs-comment"># 清理未使用的资源</span>
 docker system prune -a
-</code></pre>
-</li>
+</code></pre></div></li>
 <li>
 <p><strong>网络问题</strong></p>
-<pre><code class="language-bash"># 重启Docker服务
-sudo systemctl restart docker
-</code></pre>
-</li>
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-bash"><span class="hljs-comment"># 重启Docker服务</span>
+<span class="hljs-built_in">sudo</span> systemctl restart docker
+</code></pre></div></li>
 </ol>
 <h2>Docker与Kubernetes</h2>
 <p>虽然Docker是容器化技术的基础，但在生产环境中，通常会使用Kubernetes进行容器编排。</p>
 <h3>Kubernetes中的Docker镜像</h3>
-<pre><code># deployment.yaml
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs"># deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -469,8 +478,7 @@ spec:
         image: myusername/myapp:latest
         ports:
         - containerPort: 3000
-</code></pre>
-<h2>未来趋势</h2>
+</code></pre></div><h2>未来趋势</h2>
 <h3>1. 容器运行时的多样化</h3>
 <p>除了Docker，还有其他容器运行时如containerd、CRI-O等。</p>
 <h3>2. 无服务器容器</h3>
@@ -484,10 +492,87 @@ spec:
             </div>
         </article>
     </main>
-    <footer>
-        <div class="container">
+    <footer class="footer">
+        <div class="max-w-6xl mx-auto px-4">
             <p>&copy; 2025 人人链向未来. All rights reserved.</p>
+            <p class="mt-2"><a href="/rss.xml" class="text-accent-400 hover:text-accent-500">📡 订阅 RSS</a></p>
         </div>
     </footer>
+    <script>
+        // 移动端导航菜单切换 + 代码复制按钮
+        document.addEventListener('DOMContentLoaded', function() {
+                // 图片加载失败占位符
+                document.querySelectorAll('img').forEach(img => {
+                    img.addEventListener('error', function() {
+                        if (this.dataset.fallbackApplied) return;
+                        this.dataset.fallbackApplied = '1';
+                        this.src = '/assets/placeholder.png';
+                        this.classList.add('placeholder');
+                    }, { once: true });
+                });
+            const navbarToggle = document.getElementById('navbar-toggle');
+            const navbarMenu = document.getElementById('navbar-menu');
+            
+            if (navbarToggle && navbarMenu) {
+                navbarToggle.addEventListener('click', function() {
+                    navbarToggle.classList.toggle('open');
+                    navbarMenu.classList.toggle('open');
+                });
+                
+                // 点击菜单项后关闭菜单
+                const navItems = navbarMenu.querySelectorAll('.nav-item');
+                navItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        navbarToggle.classList.remove('open');
+                        navbarMenu.classList.remove('open');
+                    });
+                });
+                
+                // 点击菜单外部关闭菜单
+                document.addEventListener('click', function(e) {
+                    if (!navbarToggle.contains(e.target) && !navbarMenu.contains(e.target)) {
+                        navbarToggle.classList.remove('open');
+                        navbarMenu.classList.remove('open');
+                    }
+                });
+            }
+
+            // 复制代码：事件委托
+            document.body.addEventListener('click', async (e) => {
+                const btn = e.target.closest('.copy-code-btn');
+                if (!btn) return;
+                const container = btn.closest('.code-block');
+                if (!container) return;
+                const codeEl = container.querySelector('pre code');
+                if (!codeEl) return;
+                const text = codeEl.innerText;
+                try {
+                    await navigator.clipboard.writeText(text);
+                    const original = btn.textContent;
+                    btn.textContent = '已复制';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = original;
+                        btn.classList.remove('copied');
+                    }, 1200);
+                } catch (err) {
+                    // 回退方案
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    try { document.execCommand('copy'); } catch {}
+                    document.body.removeChild(textarea);
+                    const original = btn.textContent;
+                    btn.textContent = '已复制';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = original;
+                        btn.classList.remove('copied');
+                    }, 1200);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

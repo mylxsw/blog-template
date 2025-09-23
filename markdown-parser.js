@@ -2,6 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const fm = require('front-matter');
 const markdownIt = require('markdown-it');
+const hljs = require('highlight.js');
 
 class MarkdownParser {
     constructor() {
@@ -10,6 +11,38 @@ class MarkdownParser {
             linkify: true,
             typographer: true
         });
+
+        const escapeHtml = this.md.utils.escapeHtml;
+
+        // 自定义渲染：围栏代码块（```lang）
+        const renderFence = (tokens, idx) => {
+            const token = tokens[idx];
+            const info = token.info ? token.info.trim() : '';
+            const lang = info.split(/\s+/)[0] || '';
+            const code = token.content || '';
+            let highlighted;
+            try {
+                if (lang && hljs.getLanguage(lang)) {
+                    highlighted = hljs.highlight(code, { language: lang, ignoreIllegals: true }).value;
+                } else {
+                    highlighted = escapeHtml(code);
+                }
+            } catch (_) {
+                highlighted = escapeHtml(code);
+            }
+            const langClass = lang ? ` language-${lang}` : '';
+            return `<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs${langClass}">${highlighted}</code></pre></div>`;
+        };
+
+        // 自定义渲染：缩进代码块（四空格）
+        const renderCodeBlock = (tokens, idx) => {
+            const code = tokens[idx].content || '';
+            const highlighted = escapeHtml(code);
+            return `<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs">${highlighted}</code></pre></div>`;
+        };
+
+        this.md.renderer.rules.fence = renderFence;
+        this.md.renderer.rules.code_block = renderCodeBlock;
     }
 
     /**

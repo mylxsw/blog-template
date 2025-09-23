@@ -4,32 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>咖啡文化探索：从豆子到杯子的艺术</title>
-    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/modern.css">
+    <link rel="alternate" type="application/rss+xml" title="人人链向未来 RSS Feed" href="/rss.xml">
+    <!-- Highlight.js theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+                        colors: {
+                            primary: { 600: '#FECE00', 700: '#e6b900' },
+                            accent: { 400: '#FECE00', 500: '#ffdb4d' }
+                        }
+          }
+        }
+      }
+    </script>
 </head>
-<body>
-    <header>
-        <div class="container header-content">
-            <h1><a href="/">人人链向未来</a></h1>
-            <nav>
-                <ul>
-                    <li><a href="/">首页</a></li>
-                    <li><a href="/about.html">关于</a></li>
-                </ul>
+<body class="bg-gray-50">
+    <header class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <a href="/" class="navbar-logo">人人链向未来</a>
+            </div>
+            <nav class="navbar-menu" id="navbar-menu">
+                <div class="navbar-nav">
+                    <a href="/" class="nav-item">
+                        <span class="nav-text">首页</span>
+                    </a>
+                    <a href="/about.html" class="nav-item">
+                        <span class="nav-text">关于</span>
+                    </a>
+                    <a href="/rss.xml" class="nav-item nav-item-special" target="_blank" rel="noopener noreferrer">
+                        <span class="nav-text">RSS</span>
+                    </a>
+                </div>
             </nav>
+            <button class="navbar-toggle" id="navbar-toggle" aria-label="切换导航菜单">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
-    <main class="container">
-        <article class="post">
-            <h1>咖啡文化探索：从豆子到杯子的艺术</h1>
-            <div class="post-meta post-meta-detail">
-                <time>Mon May 22 2023 08:00:00 GMT+0800 (China Standard Time)</time>
-                <div class="tags">
-                    <span class="tag">coffee</span>
-                    <span class="tag">culture</span>
-                    <span class="tag">lifestyle</span>
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <article class="article-container">
+            <div class="article-header">
+                <h1 class="article-title">咖啡文化探索：从豆子到杯子的艺术</h1>
+                <div class="article-meta">
+                    <div class="flex items-center space-x-2">
+                        <time datetime="2023-05-22T00:00:00.000Z">2023年5月22日</time>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="post-tag">coffee</span>
+                        <span class="post-tag">culture</span>
+                        <span class="post-tag">lifestyle</span>
+                    </div>
                 </div>
             </div>
-            <div class="post-content">
+            <div class="article-content">
                 <p>咖啡不仅是一种饮品，更是一种文化、一种生活方式。从埃塞俄比亚的高原到全球各地的咖啡馆，咖啡文化经历了数百年的发展演变，形成了丰富多彩的品鉴艺术和社交传统。本文将带你深入探索咖啡的世界，从咖啡豆的种植到一杯完美咖啡的制作。</p>
 <h2>咖啡的历史渊源</h2>
 <h3>起源传说</h3>
@@ -68,41 +102,40 @@
 <li><strong>种植条件</strong>：海拔较低，适应性强</li>
 </ul>
 <h3>主要产地风味特征</h3>
-<pre><code class="language-javascript">// 主要咖啡产地风味特征
-const coffeeOrigins = {
-  ethiopia: {
-    region: &quot;埃塞俄比亚&quot;,
-    flavorProfile: &quot;花香、柑橘、茶感&quot;,
-    processing: &quot;日晒、水洗&quot;,
-    notableAreas: [&quot;耶加雪菲&quot;, &quot;西达摩&quot;, &quot;哈拉尔&quot;]
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 主要咖啡产地风味特征</span>
+<span class="hljs-keyword">const</span> coffeeOrigins = {
+  <span class="hljs-attr">ethiopia</span>: {
+    <span class="hljs-attr">region</span>: <span class="hljs-string">&quot;埃塞俄比亚&quot;</span>,
+    <span class="hljs-attr">flavorProfile</span>: <span class="hljs-string">&quot;花香、柑橘、茶感&quot;</span>,
+    <span class="hljs-attr">processing</span>: <span class="hljs-string">&quot;日晒、水洗&quot;</span>,
+    <span class="hljs-attr">notableAreas</span>: [<span class="hljs-string">&quot;耶加雪菲&quot;</span>, <span class="hljs-string">&quot;西达摩&quot;</span>, <span class="hljs-string">&quot;哈拉尔&quot;</span>]
   },
-  colombia: {
-    region: &quot;哥伦比亚&quot;,
-    flavorProfile: &quot;坚果、巧克力、中等酸度&quot;,
-    processing: &quot;水洗&quot;,
-    notableAreas: [&quot;慧兰&quot;, &quot;麦德林&quot;, &quot;哥伦比亚Supremo&quot;]
+  <span class="hljs-attr">colombia</span>: {
+    <span class="hljs-attr">region</span>: <span class="hljs-string">&quot;哥伦比亚&quot;</span>,
+    <span class="hljs-attr">flavorProfile</span>: <span class="hljs-string">&quot;坚果、巧克力、中等酸度&quot;</span>,
+    <span class="hljs-attr">processing</span>: <span class="hljs-string">&quot;水洗&quot;</span>,
+    <span class="hljs-attr">notableAreas</span>: [<span class="hljs-string">&quot;慧兰&quot;</span>, <span class="hljs-string">&quot;麦德林&quot;</span>, <span class="hljs-string">&quot;哥伦比亚Supremo&quot;</span>]
   },
-  brazil: {
-    region: &quot;巴西&quot;,
-    flavorProfile: &quot;坚果、巧克力、低酸度&quot;,
-    processing: &quot;日晒、半水洗&quot;,
-    notableAreas: [&quot;圣保罗&quot;, &quot;米纳斯吉拉斯&quot;, &quot;巴伊亚&quot;]
+  <span class="hljs-attr">brazil</span>: {
+    <span class="hljs-attr">region</span>: <span class="hljs-string">&quot;巴西&quot;</span>,
+    <span class="hljs-attr">flavorProfile</span>: <span class="hljs-string">&quot;坚果、巧克力、低酸度&quot;</span>,
+    <span class="hljs-attr">processing</span>: <span class="hljs-string">&quot;日晒、半水洗&quot;</span>,
+    <span class="hljs-attr">notableAreas</span>: [<span class="hljs-string">&quot;圣保罗&quot;</span>, <span class="hljs-string">&quot;米纳斯吉拉斯&quot;</span>, <span class="hljs-string">&quot;巴伊亚&quot;</span>]
   },
-  costaRica: {
-    region: &quot;哥斯达黎加&quot;,
-    flavorProfile: &quot;柑橘、焦糖、明亮酸度&quot;,
-    processing: &quot;水洗、蜜处理&quot;,
-    notableAreas: [&quot;塔拉苏&quot;, &quot;中央山谷&quot;, &quot;西部山谷&quot;]
+  <span class="hljs-attr">costaRica</span>: {
+    <span class="hljs-attr">region</span>: <span class="hljs-string">&quot;哥斯达黎加&quot;</span>,
+    <span class="hljs-attr">flavorProfile</span>: <span class="hljs-string">&quot;柑橘、焦糖、明亮酸度&quot;</span>,
+    <span class="hljs-attr">processing</span>: <span class="hljs-string">&quot;水洗、蜜处理&quot;</span>,
+    <span class="hljs-attr">notableAreas</span>: [<span class="hljs-string">&quot;塔拉苏&quot;</span>, <span class="hljs-string">&quot;中央山谷&quot;</span>, <span class="hljs-string">&quot;西部山谷&quot;</span>]
   },
-  kenya: {
-    region: &quot;肯尼亚&quot;,
-    flavorProfile: &quot;浆果、葡萄酒、高酸度&quot;,
-    processing: &quot;水洗&quot;,
-    notableAreas: [&quot;涅里&quot;, &quot;基安布&quot;, &quot;穆兰加&quot;]
+  <span class="hljs-attr">kenya</span>: {
+    <span class="hljs-attr">region</span>: <span class="hljs-string">&quot;肯尼亚&quot;</span>,
+    <span class="hljs-attr">flavorProfile</span>: <span class="hljs-string">&quot;浆果、葡萄酒、高酸度&quot;</span>,
+    <span class="hljs-attr">processing</span>: <span class="hljs-string">&quot;水洗&quot;</span>,
+    <span class="hljs-attr">notableAreas</span>: [<span class="hljs-string">&quot;涅里&quot;</span>, <span class="hljs-string">&quot;基安布&quot;</span>, <span class="hljs-string">&quot;穆兰加&quot;</span>]
   }
 };
-</code></pre>
-<h3>处理方法对风味的影响</h3>
+</code></pre></div><h3>处理方法对风味的影响</h3>
 <h4>1. 水洗处理（Washed）</h4>
 <ul>
 <li><strong>过程</strong>：去除果肉后发酵去除粘液，再进行干燥</li>
@@ -120,51 +153,50 @@ const coffeeOrigins = {
 </ul>
 <h2>咖啡烘焙艺术</h2>
 <h3>烘焙程度分类</h3>
-<pre><code class="language-javascript">// 咖啡烘焙程度及其特征
-const roastLevels = {
-  light: {
-    temperature: &quot;196-205°C&quot;,
-    duration: &quot;8-10分钟&quot;,
-    characteristics: {
-      color: &quot;浅棕色&quot;,
-      surface: &quot;无油&quot;,
-      flavor: &quot;保留原产地风味，高酸度&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 咖啡烘焙程度及其特征</span>
+<span class="hljs-keyword">const</span> roastLevels = {
+  <span class="hljs-attr">light</span>: {
+    <span class="hljs-attr">temperature</span>: <span class="hljs-string">&quot;196-205°C&quot;</span>,
+    <span class="hljs-attr">duration</span>: <span class="hljs-string">&quot;8-10分钟&quot;</span>,
+    <span class="hljs-attr">characteristics</span>: {
+      <span class="hljs-attr">color</span>: <span class="hljs-string">&quot;浅棕色&quot;</span>,
+      <span class="hljs-attr">surface</span>: <span class="hljs-string">&quot;无油&quot;</span>,
+      <span class="hljs-attr">flavor</span>: <span class="hljs-string">&quot;保留原产地风味，高酸度&quot;</span>
     },
-    suitableFor: &quot;手冲、滴滤咖啡&quot;
+    <span class="hljs-attr">suitableFor</span>: <span class="hljs-string">&quot;手冲、滴滤咖啡&quot;</span>
   },
-  medium: {
-    temperature: &quot;210-219°C&quot;,
-    duration: &quot;10-12分钟&quot;,
-    characteristics: {
-      color: &quot;中等棕色&quot;,
-      surface: &quot;可能有少量油&quot;,
-      flavor: &quot;平衡的酸甜苦味&quot;
+  <span class="hljs-attr">medium</span>: {
+    <span class="hljs-attr">temperature</span>: <span class="hljs-string">&quot;210-219°C&quot;</span>,
+    <span class="hljs-attr">duration</span>: <span class="hljs-string">&quot;10-12分钟&quot;</span>,
+    <span class="hljs-attr">characteristics</span>: {
+      <span class="hljs-attr">color</span>: <span class="hljs-string">&quot;中等棕色&quot;</span>,
+      <span class="hljs-attr">surface</span>: <span class="hljs-string">&quot;可能有少量油&quot;</span>,
+      <span class="hljs-attr">flavor</span>: <span class="hljs-string">&quot;平衡的酸甜苦味&quot;</span>
     },
-    suitableFor: &quot;大多数冲煮方法&quot;
+    <span class="hljs-attr">suitableFor</span>: <span class="hljs-string">&quot;大多数冲煮方法&quot;</span>
   },
-  mediumDark: {
-    temperature: &quot;225-230°C&quot;,
-    duration: &quot;12-14分钟&quot;,
-    characteristics: {
-      color: &quot;深棕色&quot;,
-      surface: &quot;有油光&quot;,
-      flavor: &quot;苦味增加，酸度减少&quot;
+  <span class="hljs-attr">mediumDark</span>: {
+    <span class="hljs-attr">temperature</span>: <span class="hljs-string">&quot;225-230°C&quot;</span>,
+    <span class="hljs-attr">duration</span>: <span class="hljs-string">&quot;12-14分钟&quot;</span>,
+    <span class="hljs-attr">characteristics</span>: {
+      <span class="hljs-attr">color</span>: <span class="hljs-string">&quot;深棕色&quot;</span>,
+      <span class="hljs-attr">surface</span>: <span class="hljs-string">&quot;有油光&quot;</span>,
+      <span class="hljs-attr">flavor</span>: <span class="hljs-string">&quot;苦味增加，酸度减少&quot;</span>
     },
-    suitableFor: &quot;意式浓缩咖啡&quot;
+    <span class="hljs-attr">suitableFor</span>: <span class="hljs-string">&quot;意式浓缩咖啡&quot;</span>
   },
-  dark: {
-    temperature: &quot;235-245°C&quot;,
-    duration: &quot;14-16分钟&quot;,
-    characteristics: {
-      color: &quot;深褐色至黑色&quot;,
-      surface: &quot;明显油光&quot;,
-      flavor: &quot;苦味主导，焦糖化风味&quot;
+  <span class="hljs-attr">dark</span>: {
+    <span class="hljs-attr">temperature</span>: <span class="hljs-string">&quot;235-245°C&quot;</span>,
+    <span class="hljs-attr">duration</span>: <span class="hljs-string">&quot;14-16分钟&quot;</span>,
+    <span class="hljs-attr">characteristics</span>: {
+      <span class="hljs-attr">color</span>: <span class="hljs-string">&quot;深褐色至黑色&quot;</span>,
+      <span class="hljs-attr">surface</span>: <span class="hljs-string">&quot;明显油光&quot;</span>,
+      <span class="hljs-attr">flavor</span>: <span class="hljs-string">&quot;苦味主导，焦糖化风味&quot;</span>
     },
-    suitableFor: &quot;浓缩咖啡、法压壶&quot;
+    <span class="hljs-attr">suitableFor</span>: <span class="hljs-string">&quot;浓缩咖啡、法压壶&quot;</span>
   }
 };
-</code></pre>
-<h3>烘焙对风味的影响</h3>
+</code></pre></div><h3>烘焙对风味的影响</h3>
 <h4>化学变化过程</h4>
 <ol>
 <li><strong>脱水阶段</strong>：水分蒸发，豆子颜色开始变化</li>
@@ -186,18 +218,17 @@ const roastLevels = {
 <li><strong>特点</strong>：能够精确控制水温和冲煮时间</li>
 <li><strong>风味表现</strong>：干净、层次丰富</li>
 </ul>
-<pre><code class="language-javascript">// 手冲咖啡参数
-const pourOverRecipe = {
-  coffeeAmount: &quot;25g&quot;,
-  waterAmount: &quot;400ml&quot;,
-  ratio: &quot;1:16&quot;,
-  grindSize: &quot;中细研磨&quot;,
-  waterTemperature: &quot;92-96°C&quot;,
-  brewingTime: &quot;2分30秒-3分钟&quot;,
-  pouringTechnique: &quot;中心注水，螺旋式向外扩展&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 手冲咖啡参数</span>
+<span class="hljs-keyword">const</span> pourOverRecipe = {
+  <span class="hljs-attr">coffeeAmount</span>: <span class="hljs-string">&quot;25g&quot;</span>,
+  <span class="hljs-attr">waterAmount</span>: <span class="hljs-string">&quot;400ml&quot;</span>,
+  <span class="hljs-attr">ratio</span>: <span class="hljs-string">&quot;1:16&quot;</span>,
+  <span class="hljs-attr">grindSize</span>: <span class="hljs-string">&quot;中细研磨&quot;</span>,
+  <span class="hljs-attr">waterTemperature</span>: <span class="hljs-string">&quot;92-96°C&quot;</span>,
+  <span class="hljs-attr">brewingTime</span>: <span class="hljs-string">&quot;2分30秒-3分钟&quot;</span>,
+  <span class="hljs-attr">pouringTechnique</span>: <span class="hljs-string">&quot;中心注水，螺旋式向外扩展&quot;</span>
 };
-</code></pre>
-<h4>2. 法压壶（French Press）</h4>
+</code></pre></div><h4>2. 法压壶（French Press）</h4>
 <ul>
 <li><strong>器具</strong>：玻璃或不锈钢法压壶</li>
 <li><strong>特点</strong>：金属滤网过滤，保留油脂</li>
@@ -216,37 +247,36 @@ const pourOverRecipe = {
 <li><strong>风味表现</strong>：低酸度，甜感明显</li>
 </ul>
 <h3>影响萃取的因素</h3>
-<pre><code class="language-javascript">// 咖啡萃取的黄金法则
-const goldenCupTheory = {
-  solublesExtracted: &quot;18-22%&quot;,
-  factors: {
-    grindSize: {
-      effect: &quot;影响萃取速度&quot;,
-      fine: &quot;萃取快，易过萃&quot;,
-      coarse: &quot;萃取慢，易欠萃&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 咖啡萃取的黄金法则</span>
+<span class="hljs-keyword">const</span> goldenCupTheory = {
+  <span class="hljs-attr">solublesExtracted</span>: <span class="hljs-string">&quot;18-22%&quot;</span>,
+  <span class="hljs-attr">factors</span>: {
+    <span class="hljs-attr">grindSize</span>: {
+      <span class="hljs-attr">effect</span>: <span class="hljs-string">&quot;影响萃取速度&quot;</span>,
+      <span class="hljs-attr">fine</span>: <span class="hljs-string">&quot;萃取快，易过萃&quot;</span>,
+      <span class="hljs-attr">coarse</span>: <span class="hljs-string">&quot;萃取慢，易欠萃&quot;</span>
     },
-    waterTemperature: {
-      effect: &quot;影响溶解速度&quot;,
-      low: &quot;90-93°C，萃取温和&quot;,
-      medium: &quot;93-96°C，标准范围&quot;,
-      high: &quot;96-99°C，萃取快速&quot;
+    <span class="hljs-attr">waterTemperature</span>: {
+      <span class="hljs-attr">effect</span>: <span class="hljs-string">&quot;影响溶解速度&quot;</span>,
+      <span class="hljs-attr">low</span>: <span class="hljs-string">&quot;90-93°C，萃取温和&quot;</span>,
+      <span class="hljs-attr">medium</span>: <span class="hljs-string">&quot;93-96°C，标准范围&quot;</span>,
+      <span class="hljs-attr">high</span>: <span class="hljs-string">&quot;96-99°C，萃取快速&quot;</span>
     },
-    brewTime: {
-      effect: &quot;影响萃取程度&quot;,
-      short: &quot;欠萃，酸涩&quot;,
-      optimal: &quot;平衡萃取&quot;,
-      long: &quot;过萃，苦涩&quot;
+    <span class="hljs-attr">brewTime</span>: {
+      <span class="hljs-attr">effect</span>: <span class="hljs-string">&quot;影响萃取程度&quot;</span>,
+      <span class="hljs-attr">short</span>: <span class="hljs-string">&quot;欠萃，酸涩&quot;</span>,
+      <span class="hljs-attr">optimal</span>: <span class="hljs-string">&quot;平衡萃取&quot;</span>,
+      <span class="hljs-attr">long</span>: <span class="hljs-string">&quot;过萃，苦涩&quot;</span>
     },
-    coffeeToWaterRatio: {
-      effect: &quot;影响浓度&quot;,
-      weak: &quot;1:18以上&quot;,
-      standard: &quot;1:15-1:17&quot;,
-      strong: &quot;1:12-1:14&quot;
+    <span class="hljs-attr">coffeeToWaterRatio</span>: {
+      <span class="hljs-attr">effect</span>: <span class="hljs-string">&quot;影响浓度&quot;</span>,
+      <span class="hljs-attr">weak</span>: <span class="hljs-string">&quot;1:18以上&quot;</span>,
+      <span class="hljs-attr">standard</span>: <span class="hljs-string">&quot;1:15-1:17&quot;</span>,
+      <span class="hljs-attr">strong</span>: <span class="hljs-string">&quot;1:12-1:14&quot;</span>
     }
   }
 };
-</code></pre>
-<h2>咖啡品鉴艺术</h2>
+</code></pre></div><h2>咖啡品鉴艺术</h2>
 <h3>感官评估方法</h3>
 <h4>1. 视觉评估</h4>
 <ul>
@@ -261,24 +291,23 @@ const goldenCupTheory = {
 <li><strong>余香</strong>：饮用后留在口腔中的香气</li>
 </ul>
 <h4>3. 味觉评估</h4>
-<pre><code class="language-javascript">// 咖啡风味轮
-const flavorWheel = {
-  primary: {
-    sweet: [&quot;焦糖&quot;, &quot;蜂蜜&quot;, &quot;甘蔗&quot;],
-    floral: [&quot;茉莉&quot;, &quot;玫瑰&quot;, &quot;薰衣草&quot;],
-    fruity: [&quot;柑橘&quot;, &quot;浆果&quot;, &quot;热带水果&quot;],
-    nutty: [&quot;杏仁&quot;, &quot;榛子&quot;, &quot;花生&quot;],
-    chocolatey: [&quot;可可&quot;, &quot;黑巧克力&quot;, &quot;牛奶巧克力&quot;],
-    spicy: [&quot;肉桂&quot;, &quot;胡椒&quot;, &quot;丁香&quot;]
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 咖啡风味轮</span>
+<span class="hljs-keyword">const</span> flavorWheel = {
+  <span class="hljs-attr">primary</span>: {
+    <span class="hljs-attr">sweet</span>: [<span class="hljs-string">&quot;焦糖&quot;</span>, <span class="hljs-string">&quot;蜂蜜&quot;</span>, <span class="hljs-string">&quot;甘蔗&quot;</span>],
+    <span class="hljs-attr">floral</span>: [<span class="hljs-string">&quot;茉莉&quot;</span>, <span class="hljs-string">&quot;玫瑰&quot;</span>, <span class="hljs-string">&quot;薰衣草&quot;</span>],
+    <span class="hljs-attr">fruity</span>: [<span class="hljs-string">&quot;柑橘&quot;</span>, <span class="hljs-string">&quot;浆果&quot;</span>, <span class="hljs-string">&quot;热带水果&quot;</span>],
+    <span class="hljs-attr">nutty</span>: [<span class="hljs-string">&quot;杏仁&quot;</span>, <span class="hljs-string">&quot;榛子&quot;</span>, <span class="hljs-string">&quot;花生&quot;</span>],
+    <span class="hljs-attr">chocolatey</span>: [<span class="hljs-string">&quot;可可&quot;</span>, <span class="hljs-string">&quot;黑巧克力&quot;</span>, <span class="hljs-string">&quot;牛奶巧克力&quot;</span>],
+    <span class="hljs-attr">spicy</span>: [<span class="hljs-string">&quot;肉桂&quot;</span>, <span class="hljs-string">&quot;胡椒&quot;</span>, <span class="hljs-string">&quot;丁香&quot;</span>]
   },
-  secondary: {
-    acidity: [&quot;明亮&quot;, &quot;柔和&quot;, &quot;尖锐&quot;],
-    body: [&quot;轻盈&quot;, &quot;中等&quot;, &quot;厚重&quot;],
-    aftertaste: [&quot;持久&quot;, &quot;干净&quot;, &quot;苦涩&quot;]
+  <span class="hljs-attr">secondary</span>: {
+    <span class="hljs-attr">acidity</span>: [<span class="hljs-string">&quot;明亮&quot;</span>, <span class="hljs-string">&quot;柔和&quot;</span>, <span class="hljs-string">&quot;尖锐&quot;</span>],
+    <span class="hljs-attr">body</span>: [<span class="hljs-string">&quot;轻盈&quot;</span>, <span class="hljs-string">&quot;中等&quot;</span>, <span class="hljs-string">&quot;厚重&quot;</span>],
+    <span class="hljs-attr">aftertaste</span>: [<span class="hljs-string">&quot;持久&quot;</span>, <span class="hljs-string">&quot;干净&quot;</span>, <span class="hljs-string">&quot;苦涩&quot;</span>]
   }
 };
-</code></pre>
-<h3>品鉴步骤</h3>
+</code></pre></div><h3>品鉴步骤</h3>
 <h4>SCA品鉴标准</h4>
 <ol>
 <li><strong>Fragrance/Aroma</strong>（香气）：干香和湿香</li>
@@ -323,42 +352,41 @@ const flavorWheel = {
 <h2>家庭咖啡制作</h2>
 <h3>基础设备推荐</h3>
 <h4>入门级设备</h4>
-<pre><code class="language-javascript">// 家庭咖啡制作设备推荐
-const homeEquipment = {
-  grinder: {
-    entryLevel: {
-      type: &quot;刀盘式磨豆机&quot;,
-      brands: [&quot;Baratza Encore&quot;, &quot;Hario Mini Mill&quot;],
-      priceRange: &quot;300-800元&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 家庭咖啡制作设备推荐</span>
+<span class="hljs-keyword">const</span> homeEquipment = {
+  <span class="hljs-attr">grinder</span>: {
+    <span class="hljs-attr">entryLevel</span>: {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;刀盘式磨豆机&quot;</span>,
+      <span class="hljs-attr">brands</span>: [<span class="hljs-string">&quot;Baratza Encore&quot;</span>, <span class="hljs-string">&quot;Hario Mini Mill&quot;</span>],
+      <span class="hljs-attr">priceRange</span>: <span class="hljs-string">&quot;300-800元&quot;</span>
     },
-    midLevel: {
-      type: &quot;锥刀磨豆机&quot;,
-      brands: [&quot;Baratza Virtuoso+&quot;, &quot;Fellow Ode&quot;],
-      priceRange: &quot;800-2000元&quot;
+    <span class="hljs-attr">midLevel</span>: {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;锥刀磨豆机&quot;</span>,
+      <span class="hljs-attr">brands</span>: [<span class="hljs-string">&quot;Baratza Virtuoso+&quot;</span>, <span class="hljs-string">&quot;Fellow Ode&quot;</span>],
+      <span class="hljs-attr">priceRange</span>: <span class="hljs-string">&quot;800-2000元&quot;</span>
     }
   },
-  brewer: {
-    pourOver: {
-      options: [&quot;Hario V60&quot;, &quot;Kalita Wave&quot;, &quot;Chemex&quot;],
-      priceRange: &quot;100-500元&quot;
+  <span class="hljs-attr">brewer</span>: {
+    <span class="hljs-attr">pourOver</span>: {
+      <span class="hljs-attr">options</span>: [<span class="hljs-string">&quot;Hario V60&quot;</span>, <span class="hljs-string">&quot;Kalita Wave&quot;</span>, <span class="hljs-string">&quot;Chemex&quot;</span>],
+      <span class="hljs-attr">priceRange</span>: <span class="hljs-string">&quot;100-500元&quot;</span>
     },
-    espresso: {
-      options: [&quot;Breville BES870&quot;, &quot;De'Longhi EC155&quot;],
-      priceRange: &quot;1000-3000元&quot;
+    <span class="hljs-attr">espresso</span>: {
+      <span class="hljs-attr">options</span>: [<span class="hljs-string">&quot;Breville BES870&quot;</span>, <span class="hljs-string">&quot;De&#x27;Longhi EC155&quot;</span>],
+      <span class="hljs-attr">priceRange</span>: <span class="hljs-string">&quot;1000-3000元&quot;</span>
     },
-    alternative: {
-      options: [&quot;French Press&quot;, &quot;AeroPress&quot;, &quot;Moka Pot&quot;],
-      priceRange: &quot;100-500元&quot;
+    <span class="hljs-attr">alternative</span>: {
+      <span class="hljs-attr">options</span>: [<span class="hljs-string">&quot;French Press&quot;</span>, <span class="hljs-string">&quot;AeroPress&quot;</span>, <span class="hljs-string">&quot;Moka Pot&quot;</span>],
+      <span class="hljs-attr">priceRange</span>: <span class="hljs-string">&quot;100-500元&quot;</span>
     }
   },
-  accessories: {
-    kettle: &quot;手冲壶，建议带温度控制&quot;,
-    scale: &quot;精确到0.1g的电子秤&quot;,
-    timer: &quot;计时器，确保冲煮时间准确&quot;
+  <span class="hljs-attr">accessories</span>: {
+    <span class="hljs-attr">kettle</span>: <span class="hljs-string">&quot;手冲壶，建议带温度控制&quot;</span>,
+    <span class="hljs-attr">scale</span>: <span class="hljs-string">&quot;精确到0.1g的电子秤&quot;</span>,
+    <span class="hljs-attr">timer</span>: <span class="hljs-string">&quot;计时器，确保冲煮时间准确&quot;</span>
   }
 };
-</code></pre>
-<h3>日常制作流程</h3>
+</code></pre></div><h3>日常制作流程</h3>
 <h4>手冲咖啡制作步骤</h4>
 <ol>
 <li><strong>准备</strong>：预热器具，准备92-96°C热水</li>
@@ -397,25 +425,24 @@ const homeEquipment = {
 <li><strong>胃肠刺激</strong>：空腹饮用可能刺激胃部</li>
 </ul>
 <h3>健康建议</h3>
-<pre><code class="language-javascript">// 咖啡健康饮用指南
-const healthGuidelines = {
-  dailyIntake: {
-    safeAmount: &quot;400mg咖啡因/天（约4杯咖啡）&quot;,
-    pregnantWomen: &quot;200mg咖啡因/天&quot;,
-    teenagers: &quot;100mg咖啡因/天&quot;
+<div class="code-block"><button class="copy-code-btn" type="button" aria-label="复制代码">复制</button><pre><code class="hljs language-javascript"><span class="hljs-comment">// 咖啡健康饮用指南</span>
+<span class="hljs-keyword">const</span> healthGuidelines = {
+  <span class="hljs-attr">dailyIntake</span>: {
+    <span class="hljs-attr">safeAmount</span>: <span class="hljs-string">&quot;400mg咖啡因/天（约4杯咖啡）&quot;</span>,
+    <span class="hljs-attr">pregnantWomen</span>: <span class="hljs-string">&quot;200mg咖啡因/天&quot;</span>,
+    <span class="hljs-attr">teenagers</span>: <span class="hljs-string">&quot;100mg咖啡因/天&quot;</span>
   },
-  timing: {
-    bestTime: &quot;上午9:30-11:30&quot;,
-    avoidTime: &quot;下午3点后（影响睡眠）&quot;
+  <span class="hljs-attr">timing</span>: {
+    <span class="hljs-attr">bestTime</span>: <span class="hljs-string">&quot;上午9:30-11:30&quot;</span>,
+    <span class="hljs-attr">avoidTime</span>: <span class="hljs-string">&quot;下午3点后（影响睡眠）&quot;</span>
   },
-  specialConsiderations: {
-    heartConditions: &quot;咨询医生后饮用&quot;,
-    anxietyDisorders: &quot;限制摄入量&quot;,
-    osteoporosis: &quot;注意钙质补充&quot;
+  <span class="hljs-attr">specialConsiderations</span>: {
+    <span class="hljs-attr">heartConditions</span>: <span class="hljs-string">&quot;咨询医生后饮用&quot;</span>,
+    <span class="hljs-attr">anxietyDisorders</span>: <span class="hljs-string">&quot;限制摄入量&quot;</span>,
+    <span class="hljs-attr">osteoporosis</span>: <span class="hljs-string">&quot;注意钙质补充&quot;</span>
   }
 };
-</code></pre>
-<h2>可持续咖啡发展</h2>
+</code></pre></div><h2>可持续咖啡发展</h2>
 <h3>环境影响</h3>
 <h4>种植环节</h4>
 <ul>
@@ -450,10 +477,87 @@ const healthGuidelines = {
             </div>
         </article>
     </main>
-    <footer>
-        <div class="container">
+    <footer class="footer">
+        <div class="max-w-6xl mx-auto px-4">
             <p>&copy; 2025 人人链向未来. All rights reserved.</p>
+            <p class="mt-2"><a href="/rss.xml" class="text-accent-400 hover:text-accent-500">📡 订阅 RSS</a></p>
         </div>
     </footer>
+    <script>
+        // 移动端导航菜单切换 + 代码复制按钮
+        document.addEventListener('DOMContentLoaded', function() {
+                // 图片加载失败占位符
+                document.querySelectorAll('img').forEach(img => {
+                    img.addEventListener('error', function() {
+                        if (this.dataset.fallbackApplied) return;
+                        this.dataset.fallbackApplied = '1';
+                        this.src = '/assets/placeholder.png';
+                        this.classList.add('placeholder');
+                    }, { once: true });
+                });
+            const navbarToggle = document.getElementById('navbar-toggle');
+            const navbarMenu = document.getElementById('navbar-menu');
+            
+            if (navbarToggle && navbarMenu) {
+                navbarToggle.addEventListener('click', function() {
+                    navbarToggle.classList.toggle('open');
+                    navbarMenu.classList.toggle('open');
+                });
+                
+                // 点击菜单项后关闭菜单
+                const navItems = navbarMenu.querySelectorAll('.nav-item');
+                navItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        navbarToggle.classList.remove('open');
+                        navbarMenu.classList.remove('open');
+                    });
+                });
+                
+                // 点击菜单外部关闭菜单
+                document.addEventListener('click', function(e) {
+                    if (!navbarToggle.contains(e.target) && !navbarMenu.contains(e.target)) {
+                        navbarToggle.classList.remove('open');
+                        navbarMenu.classList.remove('open');
+                    }
+                });
+            }
+
+            // 复制代码：事件委托
+            document.body.addEventListener('click', async (e) => {
+                const btn = e.target.closest('.copy-code-btn');
+                if (!btn) return;
+                const container = btn.closest('.code-block');
+                if (!container) return;
+                const codeEl = container.querySelector('pre code');
+                if (!codeEl) return;
+                const text = codeEl.innerText;
+                try {
+                    await navigator.clipboard.writeText(text);
+                    const original = btn.textContent;
+                    btn.textContent = '已复制';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = original;
+                        btn.classList.remove('copied');
+                    }, 1200);
+                } catch (err) {
+                    // 回退方案
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    try { document.execCommand('copy'); } catch {}
+                    document.body.removeChild(textarea);
+                    const original = btn.textContent;
+                    btn.textContent = '已复制';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = original;
+                        btn.classList.remove('copied');
+                    }, 1200);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

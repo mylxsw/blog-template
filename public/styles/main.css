@@ -46,17 +46,28 @@ body {
 
 /* 头部样式 */
 header {
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   color: white;
   padding: 1rem 0;
-  box-shadow: var(--box-shadow);
   position: sticky;
   top: 0;
   z-index: 100;
-  margin-bottom: 2rem; /* 添加底部边距 */
+  margin-bottom: 2rem;
+  background-color: #f5f7fb; /* 与页面背景色一致 */
+}
+
+/* 头部内容区域添加背景和限制宽度 */
+.header-content {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  border-radius: 12px;
+  padding: 1rem 2rem;
+  box-shadow: var(--box-shadow);
 }
 
 .header-content {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  border-radius: 12px;
+  padding: 1rem 2rem;
+  box-shadow: var(--box-shadow);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -89,6 +100,20 @@ nav ul li a:hover {
   color: white;
 }
 
+/* RSS链接特殊样式 */
+nav ul li a[href="/rss.xml"] {
+  background-color: var(--accent-color);
+  color: white;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 0.4rem 0.8rem;
+}
+
+nav ul li a[href="/rss.xml"]:hover {
+  background-color: rgba(76, 201, 240, 0.8);
+  transform: scale(1.05);
+}
+
 /* 主要内容区域 */
 main {
   padding: 3rem 0 0 0; /* 调整padding，只保留顶部padding */
@@ -97,31 +122,44 @@ main {
 
 /* 文章列表样式 */
 .posts-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 2.5rem; /* 增加卡片间距 */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .post-preview {
   background: white;
-  border-radius: var(--border-radius);
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: var(--box-shadow);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
   transition: var(--transition);
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  border: 1px solid #f1f3f5;
+  position: relative;
 }
 
 .post-preview:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--box-shadow-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  border-color: var(--accent-color);
 }
 
 .post-cover {
   width: 100%;
-  height: 200px;
+  height: 240px;
   overflow: hidden;
+  position: relative;
+}
+
+.post-cover::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent 0%, transparent 60%, rgba(0,0,0,0.1) 100%);
 }
 
 .post-cover img {
@@ -137,17 +175,17 @@ main {
 
 .post-preview h2 {
   margin: 0;
-  padding: 1.2rem 1.2rem 0; /* 减小padding */
-  flex-grow: 1;
+  padding: 1.5rem 2rem 0.5rem;
 }
 
 .post-preview h2 a {
   text-decoration: none;
   color: var(--dark-color);
   transition: var(--transition);
-  font-size: 1.25rem; /* 从1.4rem调整为1.25rem，使标题更小一些 */
-  font-weight: 600;
-  line-height: 1.4;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.3;
+  display: block;
 }
 
 .post-preview h2 a:hover {
@@ -161,69 +199,83 @@ main {
 
 .post-meta {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem; /* 减小gap */
-  padding: 0.4rem 1.2rem; /* 减小padding */
-  margin: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 2rem;
+  margin: 0.5rem 0 1rem;
 }
 
 .post-date {
   font-size: 0.9rem;
   color: var(--gray-600);
   font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.post-date::before {
+  content: '📅';
+  margin-right: 0.5rem;
 }
 
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .tag {
-  background-color: var(--primary-color);
+  background: linear-gradient(135deg, var(--accent-color), #3b82f6);
   color: white;
-  padding: 0.2rem 0.6rem; /* 减小padding使标签更小 */
-  border-radius: 20px;
-  font-size: 0.75rem; /* 从0.8rem调整为0.75rem，使标签更小 */
+  padding: 0.3rem 0.8rem;
+  border-radius: 16px;
+  font-size: 0.75rem;
   font-weight: 500;
   transition: var(--transition);
+  box-shadow: 0 2px 4px rgba(76, 201, 240, 0.2);
 }
 
 .tag:hover {
-  background-color: var(--secondary-color);
-  transform: scale(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(76, 201, 240, 0.3);
 }
 
 .excerpt {
   color: var(--gray-700);
-  line-height: 1.6; /* 稍微减小行高 */
-  padding: 0.5rem 1.2rem 1.2rem; /* 减小padding */
-  flex-grow: 1;
-  font-size: 95%;
+  line-height: 1.6;
+  padding: 0 2rem 2rem;
+  font-size: 0.95rem;
+  border-top: 1px solid #f8f9fa;
+  margin-top: 1rem;
+  padding-top: 1.5rem;
 }
 
-/* 单篇文章样式 */
+/* 单篇文章样式 - 重新设计 */
 .post {
   background: white;
-  border-radius: var(--border-radius);
-  padding: 2rem;
-  box-shadow: var(--box-shadow);
+  border-radius: 12px;
+  padding: 0;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
   margin-bottom: 2rem;
+  overflow: hidden;
 }
 
 .post h1 {
   color: var(--dark-color);
-  margin-bottom: 1rem;
-  font-size: 2.5rem;
+  margin: 0;
+  padding: 2rem 2rem 1rem 2rem;
+  font-size: 2.2rem;
   text-align: center;
+  font-weight: 700;
+  line-height: 1.3;
 }
 
 .post-cover-detail {
   width: 100%;
-  height: 400px;
+  height: 300px;
   overflow: hidden;
-  border-radius: var(--border-radius);
-  margin-bottom: 2rem;
+  margin: 0;
 }
 
 .post-cover-detail img {
@@ -234,12 +286,126 @@ main {
 
 .post-meta-detail {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--gray-300);
+  gap: 1rem;
+  margin: 0;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #f0f0f0;
   color: var(--gray-600);
+  font-size: 0.9rem;
+}
+
+.post-content {
+  padding: 2rem;
+  line-height: 1.8;
+  font-size: 16px;
+  color: #333;
+}
+
+/* 文章内容段落样式 */
+.post-content p {
+  margin: 1.2rem 0;
+  line-height: 1.8;
+}
+
+/* 文章副标题样式 */
+.post-content h2 {
+  background: linear-gradient(135deg, #ffd700, #ffed4a);
+  color: #333;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 2.5rem 0 1.5rem 0;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+}
+
+.post-content h3 {
+  color: var(--dark-color);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 2rem 0 1rem 0;
+  padding-left: 1rem;
+  border-left: 4px solid #ffd700;
+}
+
+.post-content h4 {
+  color: var(--dark-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.8rem 0;
+}
+
+/* 引用块样式 - 参考图片风格 */
+.post-content blockquote {
+  background: #f8f9fa;
+  border-left: 4px solid #ffd700;
+  margin: 2rem 0;
+  padding: 1.5rem 2rem;
+  font-style: italic;
+  color: #ff8c00;
+  font-weight: 500;
+  border-radius: 0 8px 8px 0;
+  position: relative;
+}
+
+.post-content blockquote::before {
+  content: '"';
+  font-size: 2rem;
+  color: #ffd700;
+  position: absolute;
+  top: 0.5rem;
+  left: 0.8rem;
+}
+
+/* 列表样式优化 */
+.post-content ul {
+  margin: 1.5rem 0;
+  padding-left: 0;
+}
+
+.post-content li {
+  margin: 0.8rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  line-height: 1.7;
+}
+
+.post-content li::before {
+  content: '•';
+  color: #ffd700;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+/* 有序列表样式 */
+.post-content ol {
+  counter-reset: item;
+  padding-left: 0;
+  margin: 1.5rem 0;
+}
+
+.post-content ol li {
+  counter-increment: item;
+  padding-left: 2rem;
+}
+
+.post-content ol li::before {
+  content: counter(item) '.';
+  background: linear-gradient(135deg, #ffd700, #ffed4a);
+  color: #333;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  position: absolute;
+  left: 0;
+  top: 0.1rem;
+  min-width: 1.2rem;
+  text-align: center;
 }
 
 /* 分页样式 */
@@ -281,24 +447,22 @@ footer {
   margin-top: 2rem;
 }
 
-/* 代码块样式 */
-pre {
-  background-color: var(--gray-900);
-  color: var(--gray-100);
+/* 代码块样式优化 */
+.post-content pre {
+  background: #2d3748;
+  color: #e2e8f0;
   padding: 1.5rem;
-  border-radius: var(--border-radius);
+  border-radius: 12px;
   overflow-x: auto;
-  margin: 1.5rem 0;
-  line-height: 1.5;
+  margin: 2rem 0;
+  line-height: 1.6;
   font-size: 0.9rem;
-  font-family: 'Fira Code', 'Courier New', monospace;
-  tab-size: 4;
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
-  -webkit-tab-size: 4;
+  font-family: 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border: 1px solid #4a5568;
 }
 
-pre code {
+.post-content pre code {
   background: none;
   padding: 0;
   border-radius: 0;
@@ -306,67 +470,89 @@ pre code {
   color: inherit;
 }
 
-code {
-  font-family: 'Fira Code', 'Courier New', monospace;
-  background-color: var(--gray-200);
-  padding: 0.2rem 0.4rem;
-  border-radius: 4px;
+.post-content code {
+  font-family: 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  background: linear-gradient(135deg, #ffd700, #ffed4a);
+  color: #333;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
   font-size: 0.9rem;
-  color: var(--gray-800);
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(255, 215, 0, 0.3);
 }
 
-/* 引用样式 */
-blockquote {
-  border-left: 4px solid var(--accent-color);
-  padding: 1rem 1.5rem;
-  margin: 1.5rem 0;
-  background-color: var(--gray-100);
-  border-radius: 0 var(--border-radius) var(--border-radius) 0;
-}
-
-/* 表格样式 */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.5rem 0;
-  display: block;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-table th,
-table td {
-  padding: 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid var(--gray-300);
-  white-space: nowrap;
-}
-
-table th {
-  background-color: var(--gray-100);
+/* 强调文本样式 */
+.post-content strong {
+  color: #2d3748;
   font-weight: 600;
+}
+
+.post-content em {
+  color: #4a5568;
+  font-style: italic;
+}
+
+/* 链接样式优化 */
+.post-content a {
+  color: #0066cc;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.post-content a:hover {
+  color: #004499;
+  border-bottom-color: #ffd700;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 237, 74, 0.1));
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
 }
 
 /* 图片样式 */
 .post-content img {
   max-width: 100%;
   height: auto;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  margin: 1rem 0;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  margin: 2rem 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* 链接样式 */
-.post-content a {
-  color: var(--primary-color);
-  text-decoration: none;
-  border-bottom: 1px dashed var(--primary-color);
-  transition: var(--transition);
+/* 表格样式 */
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
-.post-content a:hover {
-  color: var(--secondary-color);
-  border-bottom: 1px solid var(--secondary-color);
+.post-content table th {
+  background: linear-gradient(135deg, #ffd700, #ffed4a);
+  color: #333;
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.post-content table td {
+  padding: 1rem;
+  border-bottom: 1px solid #f7fafc;
+  color: #4a5568;
+}
+
+.post-content table tr:last-child td {
+  border-bottom: none;
+}
+
+.post-content table tr:hover {
+  background: #f8f9fa;
 }
 
 /* 响应式设计 */
@@ -375,9 +561,12 @@ table th {
     padding: 0 15px;
   }
   
+  /* 移动端头部样式调整 */
   .header-content {
     flex-direction: column;
     gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
   }
   
   header h1 a {
@@ -393,22 +582,89 @@ table th {
     font-size: 0.9rem;
   }
   
+  /* 移动端列表样式调整 */
   .posts-list {
-    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 100%;
+  }
+  
+  .post-preview {
+    border-radius: 12px;
+    margin: 0 0.5rem;
+  }
+  
+  .post-preview h2 {
+    padding: 1rem 1.5rem 0.5rem;
+  }
+  
+  .post-preview h2 a {
+    font-size: 1.2rem;
+  }
+  
+  .post-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 0 1.5rem;
+  }
+  
+  .excerpt {
+    padding: 0 1.5rem 1.5rem;
+    padding-top: 1rem;
+  }
+  
+  .post-cover {
+    height: 180px;
   }
   
   .post {
-    padding: 1.5rem;
+    padding: 0;
+    margin: 1rem;
+    border-radius: 8px;
   }
   
   .post h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
     text-align: center;
   }
   
   .post-content {
+    padding: 1.5rem;
+    line-height: 1.8;
+    font-size: 15px;
+  }
+  
+  .post-content h2 {
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+    margin: 2rem 0 1rem 0;
+  }
+  
+  .post-content h3 {
+    font-size: 1.2rem;
+    margin: 1.5rem 0 0.8rem 0;
+  }
+  
+  .post-content blockquote {
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    font-size: 0.95rem;
+  }
+  
+  .post-content pre {
     padding: 1rem;
-    line-height: 1.6;
+    font-size: 0.8rem;
+    margin: 1.5rem 0;
+  }
+  
+  .post-content table {
+    font-size: 0.9rem;
+  }
+  
+  .post-content table th,
+  .post-content table td {
+    padding: 0.7rem;
   }
   
   .post-preview h2 {
@@ -424,7 +680,14 @@ table th {
   }
   
   .post-cover-detail {
-    height: 250px;
+    height: 200px;
+  }
+  
+  .post-meta-detail {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    text-align: center;
   }
   
   pre {
