@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深入理解JavaScript闭包</title>
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <h1><a href="/">人人链向未来</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="/">首页</a></li>
+                    <li><a href="/about.html">关于</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <article class="post">
+            <h1>深入理解JavaScript闭包</h1>
+            <div class="post-cover-detail">
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib&#x3D;rb-4.0.3&amp;ixid&#x3D;M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;1200&amp;q&#x3D;80" alt="深入理解JavaScript闭包" loading="lazy">
+            </div>
+            <div class="post-meta post-meta-detail">
+                <time>Sun Jan 15 2023 08:00:00 GMT+0800 (China Standard Time)</time>
+                <div class="tags">
+                    <span class="tag">javascript</span>
+                    <span class="tag">programming</span>
+                    <span class="tag">frontend</span>
+                </div>
+            </div>
+            <div class="post-content">
+                <p>闭包是JavaScript中一个非常重要的概念，也是许多开发者感到困惑的地方。本文将深入探讨闭包的本质和应用。</p>
+<h2>什么是闭包？</h2>
+<p>闭包是指一个函数能够访问并操作其外部作用域中的变量，即使在其外部函数已经执行完毕之后。</p>
+<pre><code class="language-javascript">function outerFunction(x) {
+  return function innerFunction(y) {
+    return x + y;
+  }
+}
+
+const add5 = outerFunction(5);
+console.log(add5(3)); // 输出 8
+</code></pre>
+<h2>闭包的实际应用</h2>
+<h3>1. 数据封装和私有变量</h3>
+<pre><code class="language-javascript">function createCounter() {
+  let count = 0;
+  
+  return {
+    increment: () =&gt; ++count,
+    decrement: () =&gt; --count,
+    getCount: () =&gt; count
+  };
+}
+
+const counter = createCounter();
+counter.increment();
+counter.increment();
+console.log(counter.getCount()); // 输出 2
+</code></pre>
+<h3>2. 函数工厂</h3>
+<pre><code class="language-javascript">function createMultiplier(multiplier) {
+  return function(number) {
+    return number * multiplier;
+  };
+}
+
+const double = createMultiplier(2);
+const triple = createMultiplier(3);
+
+console.log(double(5)); // 输出 10
+console.log(triple(5)); // 输出 15
+</code></pre>
+<h2>闭包的注意事项</h2>
+<p>虽然闭包非常有用，但也需要注意一些潜在问题：</p>
+<ol>
+<li><strong>内存泄漏</strong>：不当使用闭包可能导致内存泄漏</li>
+<li><strong>性能影响</strong>：闭包会保留对外部变量的引用，可能影响性能</li>
+</ol>
+<h2>总结</h2>
+<p>闭包是JavaScript中的强大特性，理解并正确使用闭包对于编写高质量的JavaScript代码至关重要。</p>
+
+            </div>
+        </article>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 人人链向未来. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

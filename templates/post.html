@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <h1><a href="/">{{site.title}}</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="/">首页</a></li>
+                    <li><a href="/about.html">关于</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <article class="post">
+            <h1>{{title}}</h1>
+            {{#if coverImage}}
+            <div class="post-cover-detail">
+                <img src="{{coverImage}}" alt="{{title}}" loading="lazy">
+            </div>
+            {{/if}}
+            <div class="post-meta post-meta-detail">
+                <time>{{date}}</time>
+                <div class="tags">
+                    {{#tags}}
+                    <span class="tag">{{.}}</span>
+                    {{/tags}}
+                </div>
+            </div>
+            <div class="post-content">
+                {{{content}}}
+            </div>
+        </article>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; {{site.copyrightYear}} {{site.title}}. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

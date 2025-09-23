@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <h1><a href="/">{{site.title}}</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="/">首页</a></li>
+                    <li><a href="/about.html">关于</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <div class="posts-list">
+            {{#posts}}
+            <article class="post-preview">
+                {{#if coverImage}}
+                <div class="post-cover">
+                    <img src="{{coverImage}}" alt="{{title}}" loading="lazy">
+                </div>
+                {{/if}}
+                <h2><a href="{{url}}">{{title}}</a></h2>
+                <div class="post-meta">
+                    <div class="post-date">
+                        <time>{{date}}</time>
+                    </div>
+                    {{#if tags}}
+                    <div class="tags">
+                        {{#tags}}
+                        <span class="tag">{{.}}</span>
+                        {{/tags}}
+                    </div>
+                    {{/if}}
+                </div>
+                <div class="excerpt">
+                    {{{excerpt}}}
+                </div>
+            </article>
+            {{/posts}}
+        </div>
+        
+        <!-- 分页导航 -->
+        <div class="pagination">
+            {{#if pagination.hasPrev}}
+                {{#if (eq pagination.prevPage 1)}}
+                    <a href="/">&laquo; 上一页</a>
+                {{else}}
+                    <a href="/page/{{pagination.prevPage}}/">&laquo; 上一页</a>
+                {{/if}}
+            {{/if}}
+            
+            {{#each (range 1 pagination.totalPages)}}
+                {{#if (eq this ../pagination.currentPage)}}
+                    <span class="current">{{this}}</span>
+                {{else}}
+                    {{#if (eq this 1)}}
+                        <a href="/">{{this}}</a>
+                    {{else}}
+                        <a href="/page/{{this}}/">{{this}}</a>
+                    {{/if}}
+                {{/if}}
+            {{/each}}
+            
+            {{#if pagination.hasNext}}
+                <a href="/page/{{pagination.nextPage}}/">下一页 &raquo;</a>
+            {{/if}}
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; {{site.copyrightYear}} {{site.title}}. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

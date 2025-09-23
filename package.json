@@ -1,0 +1,24 @@
+{
+  "name": "markdown-blog",
+  "version": "1.0.0",
+  "description": "A simple static blog generator using Markdown",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.js",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "markdown-it": "^13.0.1",
+    "front-matter": "^4.0.2",
+    "fs-extra": "^11.1.0",
+    "handlebars": "^4.7.7",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "keywords": ["markdown", "blog", "static"],
+  "author": "Your Name",
+  "license": "MIT"
+}
