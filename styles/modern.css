@@ -35,6 +35,32 @@ body.theme-modern {
   position: relative;
 }
 
+body.theme-modern.theme-light {
+  color-scheme: light;
+}
+
+body.theme-modern.theme-dark {
+  color-scheme: dark;
+  --color-bg-start: #020617;
+  --color-bg-end: #0f172a;
+  --color-surface: rgba(15, 23, 42, 0.88);
+  --color-surface-strong: rgba(15, 23, 42, 0.94);
+  --color-border: rgba(129, 140, 248, 0.24);
+  --color-border-strong: rgba(129, 140, 248, 0.38);
+  --color-text: #e2e8f0;
+  --color-muted: rgba(148, 163, 184, 0.8);
+  --color-muted-strong: rgba(203, 213, 225, 0.92);
+  --color-primary-soft: rgba(99, 102, 241, 0.22);
+  --color-secondary-soft: rgba(14, 165, 233, 0.26);
+  --color-glow: rgba(99, 102, 241, 0.35);
+  --color-shadow: rgba(2, 6, 23, 0.65);
+  --color-shadow-strong: rgba(2, 6, 23, 0.78);
+  --color-footer: #020617;
+  background: radial-gradient(circle at 25% 15%, rgba(99, 102, 241, 0.18), transparent 55%),
+    radial-gradient(circle at 80% 0%, rgba(14, 165, 233, 0.18), transparent 50%),
+    linear-gradient(180deg, var(--color-bg-start) 0%, var(--color-bg-end) 100%);
+}
+
 main {
   margin-top: 0.75rem;
 }
@@ -44,11 +70,10 @@ main {
   background: linear-gradient(120deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.92));
   backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(148, 163, 184, 0.25);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  position: relative;
+  z-index: 10;
   padding: 0.85rem 0;
-  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.25);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18);
 }
 
 .navbar-container {
@@ -59,6 +84,17 @@ main {
   align-items: center;
   justify-content: space-between;
   position: relative;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.navbar-right .theme-toggle {
+  flex-shrink: 0;
 }
 
 .navbar-logo {
@@ -80,12 +116,82 @@ main {
 .navbar-menu {
   display: flex;
   align-items: center;
+  gap: 0.75rem;
 }
 
 .navbar-nav {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: rgba(148, 163, 184, 0.16);
+  color: rgba(226, 232, 240, 0.92);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-toggle:hover {
+  border-color: rgba(99, 102, 241, 0.45);
+  background: rgba(99, 102, 241, 0.2);
+  box-shadow: 0 10px 22px rgba(99, 102, 241, 0.25);
+}
+
+.theme-toggle-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+
+body.theme-modern.theme-dark .navbar {
+  background: linear-gradient(120deg, rgba(3, 7, 18, 0.95), rgba(15, 23, 42, 0.92));
+  border-bottom: 1px solid rgba(129, 140, 248, 0.25);
+  box-shadow: 0 14px 32px rgba(2, 6, 23, 0.6);
+}
+
+body.theme-modern.theme-dark .nav-item {
+  color: rgba(226, 232, 240, 0.82);
+}
+
+body.theme-modern.theme-dark .nav-item::before {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.5), rgba(14, 165, 233, 0.32));
+}
+
+body.theme-modern.theme-dark .nav-item:hover {
+  color: #f8fafc;
+}
+
+body.theme-modern.theme-dark .nav-item.active {
+  color: #cbd5f5;
+  background: rgba(99, 102, 241, 0.28);
+  border-color: rgba(129, 140, 248, 0.45);
+  box-shadow: 0 16px 34px rgba(99, 102, 241, 0.32);
+}
+
+body.theme-modern.theme-dark .nav-item-special {
+  box-shadow: 0 18px 42px rgba(56, 189, 248, 0.5);
+  border-color: rgba(56, 189, 248, 0.45);
+}
+
+body.theme-modern.theme-dark .theme-toggle {
+  border-color: rgba(129, 140, 248, 0.4);
+  background: rgba(79, 70, 229, 0.32);
+  color: #f8fafc;
+}
+
+body.theme-modern.theme-dark .theme-toggle:hover {
+  background: rgba(14, 165, 233, 0.35);
+  border-color: rgba(129, 140, 248, 0.55);
 }
 
 .nav-item {
@@ -101,6 +207,7 @@ main {
   position: relative;
   overflow: hidden;
   letter-spacing: 0.01em;
+  border: 1px solid transparent;
 }
 
 .nav-item::before {
@@ -123,9 +230,10 @@ main {
 }
 
 .nav-item.active {
-  color: #f8fafc;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-strong));
-  box-shadow: 0 15px 35px rgba(99, 102, 241, 0.35);
+  color: var(--color-primary-strong);
+  background: rgba(99, 102, 241, 0.18);
+  border-color: rgba(99, 102, 241, 0.35);
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.22);
 }
 
 .nav-item.active::before {
@@ -137,6 +245,7 @@ main {
   color: white;
   font-weight: 600;
   box-shadow: 0 12px 30px rgba(56, 189, 248, 0.35);
+  border-color: rgba(56, 189, 248, 0.35);
 }
 
 .nav-item-special:hover {
@@ -304,9 +413,14 @@ main {
 }
 
 .article-header {
-  padding: 2.5rem 2.25rem 2rem;
+  --article-header-padding-x: 2.25rem;
+  padding: 2.5rem var(--article-header-padding-x) 2rem;
   text-align: center;
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(56, 189, 248, 0.08));
+}
+
+body.theme-modern.theme-dark .article-header {
+  background: linear-gradient(135deg, rgba(30, 64, 175, 0.24), rgba(14, 116, 144, 0.18));
 }
 
 .article-title {
@@ -323,8 +437,22 @@ main {
   justify-content: center;
   gap: 1.2rem;
   color: var(--color-muted);
-  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
   padding-bottom: 1.8rem;
+}
+
+.article-cover {
+  margin: 2rem calc(var(--article-header-padding-x) * -1) 0;
+  height: clamp(18rem, 45vh, 26rem);
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.article-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .article-content {
@@ -421,6 +549,12 @@ img.placeholder {
   box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.08);
 }
 
+body.theme-modern.theme-dark .article-content blockquote {
+  background: rgba(79, 70, 229, 0.25);
+  color: #e2e8f0;
+  box-shadow: inset 0 0 0 1px rgba(129, 140, 248, 0.28);
+}
+
 .article-content code {
   background: rgba(15, 23, 42, 0.06);
   color: var(--color-primary-strong);
@@ -472,12 +606,25 @@ img.placeholder {
   color: white;
 }
 
+body.theme-modern.theme-dark .copy-code-btn {
+  background: rgba(15, 23, 42, 0.85);
+  color: rgba(226, 232, 240, 0.9);
+  border: 1px solid rgba(129, 140, 248, 0.35);
+}
+
+body.theme-modern.theme-dark .copy-code-btn:hover {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.85), rgba(99, 102, 241, 0.85));
+  color: white;
+  border-color: transparent;
+}
+
 .code-block pre {
-  background: rgba(15, 23, 42, 0.72);
+  background: linear-gradient(160deg, rgba(11, 18, 32, 0.95), rgba(17, 28, 52, 0.92));
   padding: 1.2rem 1.5rem;
   border-radius: 0.9rem;
   overflow-x: auto;
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  border: 1px solid rgba(99, 102, 241, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.12);
   margin: 0;
 }
 
@@ -486,6 +633,17 @@ img.placeholder {
   display: block;
   padding: 0;
   background: transparent;
+}
+
+body.theme-modern .hljs-comment,
+body.theme-modern .hljs-quote {
+  color: rgba(148, 163, 184, 0.78) !important;
+  font-style: italic;
+}
+
+body.theme-modern.theme-dark .hljs-comment,
+body.theme-modern.theme-dark .hljs-quote {
+  color: rgba(203, 213, 225, 0.68) !important;
 }
 
 /* 表格 */
@@ -605,6 +763,15 @@ img.placeholder {
     display: flex;
   }
 
+  .navbar-right {
+    gap: 0.75rem;
+  }
+
+  .theme-toggle {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
   .navbar-menu {
     position: fixed;
     top: 0;
@@ -669,7 +836,8 @@ img.placeholder {
   }
 
   .article-header {
-    padding: 1.5rem 1rem 1.25rem;
+    --article-header-padding-x: 1rem;
+    padding: 1.5rem var(--article-header-padding-x) 1.25rem;
   }
 
   .article-title {
@@ -678,6 +846,11 @@ img.placeholder {
 
   .article-content {
     padding: 1.4rem 1.1rem;
+  }
+
+  .article-cover {
+    height: 18rem;
+    margin-top: 1.5rem;
   }
 }
 
@@ -696,7 +869,8 @@ img.placeholder {
   }
 
   .article-header {
-    padding: 1.3rem 0.9rem;
+    --article-header-padding-x: 0.9rem;
+    padding: 1.3rem var(--article-header-padding-x);
   }
 
   .article-content {
@@ -705,5 +879,10 @@ img.placeholder {
 
   .article-content h2 {
     font-size: 1.5rem;
+  }
+
+  .article-cover {
+    height: 14rem;
+    margin-top: 1.25rem;
   }
 }

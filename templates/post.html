@@ -22,25 +22,30 @@
       }
     </script>
 </head>
-<body class="theme-modern antialiased">
+<body class="theme-modern theme-light antialiased">
     <header class="navbar">
         <div class="navbar-container">
             <div class="navbar-brand">
                 <a href="/" class="navbar-logo">{{site.title}}</a>
             </div>
-            <nav class="navbar-menu" id="navbar-menu">
-                <div class="navbar-nav">
-                    <a href="/" class="nav-item">
-                        <span class="nav-text">首页</span>
-                    </a>
-                    <a href="/about.html" class="nav-item">
-                        <span class="nav-text">关于</span>
-                    </a>
-                    <a href="/rss.xml" class="nav-item nav-item-special" target="_blank" rel="noopener noreferrer">
-                        <span class="nav-text">RSS</span>
-                    </a>
-                </div>
-            </nav>
+            <div class="navbar-right">
+                <button type="button" class="theme-toggle" data-theme-toggle aria-label="切换为暗色模式">
+                    <span class="theme-toggle-icon" data-theme-icon>🌙</span>
+                </button>
+                <nav class="navbar-menu" id="navbar-menu">
+                    <div class="navbar-nav">
+                        <a href="/" class="nav-item">
+                            <span class="nav-text">首页</span>
+                        </a>
+                        <a href="/about.html" class="nav-item">
+                            <span class="nav-text">关于</span>
+                        </a>
+                        <a href="/rss.xml" class="nav-item nav-item-special" target="_blank" rel="noopener noreferrer">
+                            <span class="nav-text">RSS</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
             <button class="navbar-toggle" id="navbar-toggle" aria-label="切换导航菜单">
                 <span></span>
                 <span></span>
@@ -65,8 +70,8 @@
                     {{/if}}
                 </div>
                 {{#if coverImage}}
-                <div class="w-full h-80 overflow-hidden mt-6">
-                    <img src="{{coverImage}}" alt="{{title}}" class="w-full h-full object-cover rounded-xl" loading="lazy" onerror="this.onerror=null;this.src='/assets/placeholder.svg';this.classList.add('placeholder');">
+                <div class="article-cover">
+                    <img src="{{coverImage}}" alt="{{title}}" class="article-cover-image" loading="lazy" onerror="this.onerror=null;this.src='/assets/placeholder.svg';this.classList.add('placeholder');">
                 </div>
                 {{/if}}
             </div>
@@ -82,26 +87,27 @@
         </div>
     </footer>
     <script>
-        // 移动端导航菜单切换 + 代码复制按钮
+        // 导航菜单、主题切换与代码复制
         document.addEventListener('DOMContentLoaded', function() {
-                // 图片加载失败占位符
-                document.querySelectorAll('img').forEach(img => {
-                    img.addEventListener('error', function() {
-                        if (this.dataset.fallbackApplied) return;
-                        this.dataset.fallbackApplied = '1';
-                        this.src = '/assets/placeholder.png';
-                        this.classList.add('placeholder');
-                    }, { once: true });
-                });
+            // 图片加载失败占位符
+            document.querySelectorAll('img').forEach(img => {
+                img.addEventListener('error', function() {
+                    if (this.dataset.fallbackApplied) return;
+                    this.dataset.fallbackApplied = '1';
+                    this.src = '/assets/placeholder.png';
+                    this.classList.add('placeholder');
+                }, { once: true });
+            });
+
             const navbarToggle = document.getElementById('navbar-toggle');
             const navbarMenu = document.getElementById('navbar-menu');
-            
+
             if (navbarToggle && navbarMenu) {
                 navbarToggle.addEventListener('click', function() {
                     navbarToggle.classList.toggle('open');
                     navbarMenu.classList.toggle('open');
                 });
-                
+
                 // 点击菜单项后关闭菜单
                 const navItems = navbarMenu.querySelectorAll('.nav-item');
                 navItems.forEach(item => {
@@ -110,7 +116,7 @@
                         navbarMenu.classList.remove('open');
                     });
                 });
-                
+
                 // 点击菜单外部关闭菜单
                 document.addEventListener('click', function(e) {
                     if (!navbarToggle.contains(e.target) && !navbarMenu.contains(e.target)) {
@@ -153,6 +159,47 @@
                         btn.textContent = original;
                         btn.classList.remove('copied');
                     }, 1200);
+                }
+            });
+
+            // 主题切换
+            const themeToggleButtons = document.querySelectorAll('[data-theme-toggle]');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+            const applyTheme = (theme, persist = true) => {
+                const isDark = theme === 'dark';
+                document.body.classList.toggle('theme-dark', isDark);
+                document.body.classList.toggle('theme-light', !isDark);
+                document.body.setAttribute('data-theme', theme);
+                themeToggleButtons.forEach(button => {
+                    const icon = button.querySelector('[data-theme-icon]');
+                    if (icon) {
+                        icon.textContent = isDark ? '🌞' : '🌙';
+                    }
+                    button.setAttribute('aria-label', isDark ? '切换为亮色模式' : '切换为暗色模式');
+                });
+                if (persist) {
+                    localStorage.setItem('theme', theme);
+                }
+            };
+
+            const storedTheme = localStorage.getItem('theme');
+            if (storedTheme) {
+                applyTheme(storedTheme, false);
+            } else {
+                applyTheme(prefersDark.matches ? 'dark' : 'light', false);
+            }
+
+            themeToggleButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const nextTheme = document.body.classList.contains('theme-dark') ? 'light' : 'dark';
+                    applyTheme(nextTheme, true);
+                });
+            });
+
+            prefersDark.addEventListener('change', (event) => {
+                if (!localStorage.getItem('theme')) {
+                    applyTheme(event.matches ? 'dark' : 'light', false);
                 }
             });
         });
