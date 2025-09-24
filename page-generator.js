@@ -134,6 +134,7 @@ class PageGenerator {
             slug: this.slugify(name),
             url: this.getCategoryUrl(name),
             backgroundImage: this.categoryBackgroundMap.get(this.slugify(name)) || ''
+
         };
     }
 
@@ -307,6 +308,7 @@ class PageGenerator {
         const navigation = this.buildNavigation(categories, {
             activeCategorySlug: category?.slug || ''
         });
+
         const seoKeywords = this.normalizeSeoKeywords(post.attributes.seo);
         const recommendedPosts = this.getRecommendedPosts(post, allPosts);
         const hasRecommendations = recommendedPosts.length > 0;
@@ -698,7 +700,7 @@ class PageGenerator {
             if (!isSystemPage && !attributes.category) {
                 attributes.category = this.defaultCategoryName;
             }
-
+          
             const pageData = {
                 filePath,
                 attributes,

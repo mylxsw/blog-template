@@ -580,6 +580,17 @@
                     renderResults();
                 });
             }
+
+            if (filterToggle && filterPanel) {
+                filterToggle.addEventListener('click', () => {
+                    const expanded = filterToggle.getAttribute('aria-expanded') === 'true';
+                    filterToggle.setAttribute('aria-expanded', String(!expanded));
+                    filterPanel.hidden = expanded;
+                    filterToggle.classList.toggle('expanded', !expanded);
+                    const icon = filterToggle.querySelector('.filter-toggle-icon');
+                    if (icon) icon.textContent = expanded ? '＋' : '－';
+                });
+            }
         });
     </script>
 </body>
