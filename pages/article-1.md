@@ -3,6 +3,8 @@ title: 深入理解JavaScript闭包
 date: 2023-01-15
 tags: [javascript, programming, frontend]
 coverImage: https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80
+category: 技术洞察
+seo: ["JavaScript 闭包", "前端闭包实践", "闭包应用"]
 ---
 
 # 深入理解JavaScript闭包

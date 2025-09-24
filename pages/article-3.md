@@ -2,6 +2,7 @@
 title: 健康生活指南：如何保持工作与生活的平衡
 date: 2023-03-10
 tags: [health, lifestyle, productivity]
+category: 生活方式
 ---
 
 # 健康生活指南：如何保持工作与生活的平衡

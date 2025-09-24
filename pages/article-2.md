@@ -2,6 +2,7 @@
 title: 我的京都之旅：古都的魅力
 date: 2023-02-20
 tags: [travel, japan, culture]
+category: 生活方式
 ---
 
 # 我的京都之旅：古都的魅力
