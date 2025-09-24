@@ -19,7 +19,18 @@ module.exports = {
             /**
              * 自定义“更多”菜单的文案。
              */
-            moreLabel: '更多'
+            moreLabel: '更多',
+            /**
+             * 未指定分类的文章会被归入的默认分类名称。
+             */
+            defaultCategoryName: '其它',
+            /**
+             * 可选：为分类页配置背景图。
+             * key 可以是分类名称或 slug。
+             */
+            backgrounds: {
+                // '技术洞察': '/assets/categories/tech.jpg'
+            }
         }
     },
     seo: {

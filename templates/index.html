@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="/styles/modern.css">
     <link rel="alternate" type="application/rss+xml" title="{{site.title}} RSS Feed" href="/rss.xml">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/atom-one-dark.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css" data-theme-style="light">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css" data-theme-style="dark" disabled>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -29,9 +30,6 @@
                 <a href="/" class="navbar-logo">{{site.title}}</a>
             </div>
             <div class="navbar-right">
-                <button type="button" class="theme-toggle" data-theme-toggle aria-label="切换为暗色模式">
-                    <span class="theme-toggle-icon" data-theme-icon>🌙</span>
-                </button>
                 <nav class="navbar-menu" id="navbar-menu">
                     <div class="navbar-nav">
                         <a href="/" class="nav-item {{#if (eq navigation.activePage 'home')}}active{{/if}}">
@@ -65,6 +63,17 @@
                         </a>
                     </div>
                 </nav>
+                <div class="navbar-actions">
+                    <button type="button" class="nav-icon-button" id="post-filter-open" aria-haspopup="dialog" aria-expanded="false" aria-controls="post-filter-modal">
+                        <span class="sr-only">筛选文章</span>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d="M10.5 4.5a6 6 0 0 1 4.8 9.6l4.8 4.8a1 1 0 0 1-1.4 1.4l-4.8-4.8a6 6 0 1 1-3.4-10Zm0 2a4 4 0 1 0 0 8a4 4 0 0 0 0-8Z"></path>
+                        </svg>
+                    </button>
+                    <button type="button" class="theme-toggle" data-theme-toggle aria-label="切换为暗色模式">
+                        <span class="theme-toggle-icon" data-theme-icon>🌙</span>
+                    </button>
+                </div>
             </div>
             <button class="navbar-toggle" id="navbar-toggle" aria-label="切换导航菜单">
                 <span></span>
@@ -73,27 +82,37 @@
             </button>
         </div>
     </header>
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div class="filter-toggle-area">
-            <button type="button" class="filter-toggle-btn" id="post-filter-toggle" aria-expanded="false">
-                <span class="filter-toggle-label">筛选文章</span>
-                <span class="filter-toggle-icon" aria-hidden="true">＋</span>
-            </button>
+    <div class="filter-modal" id="post-filter-modal" hidden>
+        <div class="filter-modal-backdrop" data-filter-dismiss></div>
+        <div class="filter-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="post-filter-title">
+            <div class="filter-modal-content">
+                <div class="filter-modal-header">
+                    <h2 id="post-filter-title">筛选文章</h2>
+                    <button type="button" class="filter-modal-close" data-filter-dismiss aria-label="关闭筛选">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="filter-modal-body">
+                    <section class="post-filters" aria-label="文章筛选">
+                        <div class="search-field">
+                            <span class="search-icon" aria-hidden="true">🔍</span>
+                            <input type="search" id="post-search" class="search-input" placeholder="搜索文章..." autocomplete="off" spellcheck="false">
+                        </div>
+                        {{#if hasTagFilters}}
+                        <div class="tag-filter" id="tag-filter" role="list">
+                            <button type="button" class="tag-filter-btn active" data-tag="">全部</button>
+                            {{#each availableTags}}
+                            <button type="button" class="tag-filter-btn" data-tag="{{name}}">{{name}}</button>
+                            {{/each}}
+                        </div>
+                        {{/if}}
+                    </section>
+                    <div class="filter-modal-results" data-modal-results hidden></div>
+                </div>
+            </div>
         </div>
-        <section class="post-filters" aria-label="文章筛选" id="post-filters" hidden>
-            <div class="search-field">
-                <span class="search-icon" aria-hidden="true">🔍</span>
-                <input type="search" id="post-search" class="search-input" placeholder="搜索文章..." autocomplete="off" spellcheck="false">
-            </div>
-            {{#if hasTagFilters}}
-            <div class="tag-filter" id="tag-filter" role="list">
-                <button type="button" class="tag-filter-btn active" data-tag="">全部</button>
-                {{#each availableTags}}
-                <button type="button" class="tag-filter-btn" data-tag="{{name}}">{{name}}</button>
-                {{/each}}
-            </div>
-            {{/if}}
-        </section>
+    </div>
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
 
         <div id="search-results" class="post-list" hidden></div>
 
@@ -112,18 +131,16 @@
                         <div class="post-date">
                             <time datetime="{{dateISO}}">{{dateFormatted}}</time>
                         </div>
-                        {{#if category}}
-                        <div class="post-category">
-                            <a href="{{category.url}}" class="post-category-link">{{category.name}}</a>
-                        </div>
-                        {{/if}}
-                        {{#if tags}}
-                        <div class="post-tags">
+                        <div class="post-chips">
+                            {{#if category}}
+                            <a href="{{category.url}}" class="post-chip post-chip-category">{{category.name}}</a>
+                            {{/if}}
+                            {{#if tags}}
                             {{#each tags}}
-                            <a href="{{url}}" class="post-tag">{{name}}</a>
+                            <a href="{{url}}" class="post-chip">{{name}}</a>
                             {{/each}}
+                            {{/if}}
                         </div>
-                        {{/if}}
                     </div>
                     <div class="post-excerpt">
                         {{{excerpt}}}
@@ -183,6 +200,7 @@
                 navbarToggle.addEventListener('click', function() {
                     navbarToggle.classList.toggle('open');
                     navbarMenu.classList.toggle('open');
+                    document.body.classList.toggle('nav-open', navbarMenu.classList.contains('open'));
                 });
 
                 const navItems = navbarMenu.querySelectorAll('.nav-item');
@@ -190,6 +208,7 @@
                     item.addEventListener('click', function() {
                         navbarToggle.classList.remove('open');
                         navbarMenu.classList.remove('open');
+                        document.body.classList.remove('nav-open');
                     });
                 });
 
@@ -197,6 +216,7 @@
                     if (!navbarToggle.contains(e.target) && !navbarMenu.contains(e.target)) {
                         navbarToggle.classList.remove('open');
                         navbarMenu.classList.remove('open');
+                        document.body.classList.remove('nav-open');
                     }
                 });
             }
@@ -254,7 +274,20 @@
             });
 
             const themeToggleButtons = document.querySelectorAll('[data-theme-toggle]');
+            const highlightThemeLinks = document.querySelectorAll('link[data-theme-style]');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+            const updateHighlightThemes = (isDark) => {
+                highlightThemeLinks.forEach(link => {
+                    const themeStyle = link.getAttribute('data-theme-style');
+                    if (!themeStyle) return;
+                    if (themeStyle === 'dark') {
+                        link.disabled = !isDark;
+                    } else {
+                        link.disabled = isDark;
+                    }
+                });
+            };
 
             const applyTheme = (theme, persist = true) => {
                 const isDark = theme === 'dark';
@@ -268,6 +301,7 @@
                     }
                     button.setAttribute('aria-label', isDark ? '切换为亮色模式' : '切换为暗色模式');
                 });
+                updateHighlightThemes(isDark);
                 if (persist) {
                     localStorage.setItem('theme', theme);
                 }
@@ -296,10 +330,17 @@
             const searchInput = document.getElementById('post-search');
             const tagFilter = document.getElementById('tag-filter');
             const searchResultsContainer = document.getElementById('search-results');
+            const modalResultsContainer = document.querySelector('[data-modal-results]');
             const defaultPostsContainer = document.querySelector('[data-default-posts]');
             const paginationEl = document.querySelector('.pagination');
-            const filterToggle = document.getElementById('post-filter-toggle');
-            const filterPanel = document.getElementById('post-filters');
+            const filterOpenButton = document.getElementById('post-filter-open');
+            const filterModal = document.getElementById('post-filter-modal');
+            const filterDialog = filterModal ? filterModal.querySelector('.filter-modal-dialog') : null;
+            const modalDismissElements = filterModal ? filterModal.querySelectorAll('[data-filter-dismiss]') : [];
+            const resultsContainer = searchResultsContainer || modalResultsContainer;
+            const useModalResults = !searchResultsContainer && !!modalResultsContainer;
+            let lastFocusedElement = null;
+            let modalVisible = false;
 
             const activeTags = new Set();
             let searchTerm = '';
@@ -314,26 +355,118 @@
                     .replace(/'/g, '&#39;');
             };
 
-            const ensureFiltersVisible = () => {
-                if (!filterToggle || !filterPanel) return;
-                filterPanel.hidden = false;
-                filterToggle.setAttribute('aria-expanded', 'true');
-                filterToggle.classList.add('expanded');
-                const icon = filterToggle.querySelector('.filter-toggle-icon');
-                if (icon) icon.textContent = '－';
+            const updateFilterButtonExpanded = (expanded) => {
+                if (!filterOpenButton) return;
+                filterOpenButton.setAttribute('aria-expanded', String(expanded));
+                filterOpenButton.classList.toggle('is-open', expanded);
+            };
+
+            const updateFilterButtonActive = (active) => {
+                if (!filterOpenButton) return;
+                filterOpenButton.classList.toggle('active', active);
+            };
+
+            const ensureSearchIndex = async () => {
+                if (searchIndex.length) return;
+                try {
+                    const response = await fetch('/search.json');
+                    if (!response.ok) throw new Error('Failed to load search index');
+                    const payload = await response.json();
+                    searchIndex = Array.isArray(payload.posts) ? payload.posts : [];
+                } catch (err) {
+                    console.error(err);
+                    if (resultsContainer) {
+                        resultsContainer.hidden = false;
+                        resultsContainer.innerHTML = '<div class="empty-state">搜索索引加载失败，请稍后再试。</div>';
+                    }
+                }
+            };
+
+            const openFilterModal = async () => {
+                if (!filterModal || modalVisible) return;
+                modalVisible = true;
+                lastFocusedElement = document.activeElement;
+                filterModal.hidden = false;
+                requestAnimationFrame(() => filterModal.classList.add('open'));
+                document.body.classList.add('modal-open');
+                updateFilterButtonExpanded(true);
+                await ensureSearchIndex();
+                if (searchInput) {
+                    requestAnimationFrame(() => searchInput.focus());
+                }
+            };
+
+            const closeFilterModal = () => {
+                if (!filterModal || !modalVisible) return;
+                modalVisible = false;
+                filterModal.classList.remove('open');
+                document.body.classList.remove('modal-open');
+                updateFilterButtonExpanded(false);
+                setTimeout(() => {
+                    if (!modalVisible) {
+                        filterModal.hidden = true;
+                    }
+                }, 160);
+                if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+                    requestAnimationFrame(() => lastFocusedElement.focus());
+                }
+            };
+
+            if (filterOpenButton && filterModal) {
+                filterOpenButton.addEventListener('click', async () => {
+                    if (modalVisible) {
+                        closeFilterModal();
+                    } else {
+                        await openFilterModal();
+                    }
+                });
+            }
+
+            if (filterModal) {
+                filterModal.addEventListener('click', (event) => {
+                    if (event.target === filterModal) {
+                        closeFilterModal();
+                    }
+                });
+            }
+
+            if (filterDialog) {
+                filterDialog.addEventListener('click', (event) => event.stopPropagation());
+            }
+
+            modalDismissElements.forEach(element => {
+                element.addEventListener('click', () => closeFilterModal());
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && modalVisible) {
+                    closeFilterModal();
+                }
+            });
+
+            const ensureFiltersOpen = () => {
+                if (useModalResults) {
+                    openFilterModal().catch(() => {});
+                }
             };
 
             const renderResults = () => {
                 const hasActiveFilters = searchTerm.length > 0 || activeTags.size > 0;
                 if (!hasActiveFilters) {
-                    searchResultsContainer.hidden = true;
-                    searchResultsContainer.innerHTML = '';
+                    updateFilterButtonActive(false);
+                    if (resultsContainer) {
+                        resultsContainer.hidden = true;
+                        resultsContainer.innerHTML = '';
+                    }
                     if (defaultPostsContainer) defaultPostsContainer.hidden = false;
                     if (paginationEl) paginationEl.hidden = false;
                     return;
                 }
 
-                ensureFiltersVisible();
+                updateFilterButtonActive(true);
+                if (useModalResults) {
+                    ensureFiltersOpen();
+                }
 
                 const normalizedTerm = searchTerm.toLowerCase();
                 const filtered = searchIndex.filter(item => {
@@ -348,18 +481,27 @@
 
                 if (defaultPostsContainer) defaultPostsContainer.hidden = true;
                 if (paginationEl) paginationEl.hidden = true;
-                searchResultsContainer.hidden = false;
+
+                if (!resultsContainer) return;
+
+                resultsContainer.hidden = false;
 
                 if (!filtered.length) {
-                    searchResultsContainer.innerHTML = '<div class="empty-state">没有找到匹配的文章。</div>';
+                    resultsContainer.innerHTML = '<div class="empty-state">没有找到匹配的文章。</div>';
                     return;
                 }
 
                 const cards = filtered.map(item => {
-                    const tagsHtml = (item.tagLinks || []).map(tag => `<a class="post-tag" href="${escapeHtml(tag.url)}">${escapeHtml(tag.name)}</a>`).join('');
-                    const categoryHtml = item.category && item.category.url
-                        ? `<div class=\"post-category\"><a class=\"post-category-link\" href=\"${escapeHtml(item.category.url)}\">${escapeHtml(item.category.name)}</a></div>`
-                        : '';
+                    const chips = [];
+                    if (item.category && item.category.url) {
+                        chips.push(`<a class="post-chip post-chip-category" href="${escapeHtml(item.category.url)}">${escapeHtml(item.category.name)}</a>`);
+                    }
+                    if (item.tagLinks && item.tagLinks.length) {
+                        item.tagLinks.forEach(tag => {
+                            chips.push(`<a class="post-chip" href="${escapeHtml(tag.url)}">${escapeHtml(tag.name)}</a>`);
+                        });
+                    }
+                    const chipsHtml = chips.length ? `<div class=\"post-chips\">${chips.join('')}</div>` : '';
                     const coverHtml = item.coverImage
                         ? `<div class=\"overflow-hidden\"><img src=\"${escapeHtml(item.coverImage)}\" alt=\"${escapeHtml(item.title)}\" class=\"post-image\" loading=\"lazy\" onerror=\"this.onerror=null;this.src='/assets/placeholder.svg';this.classList.add('placeholder');\"></div>`
                         : '';
@@ -372,15 +514,14 @@
                                     <div class="post-date">
                                         <time datetime="${escapeHtml(item.dateISO)}">${escapeHtml(item.dateFormatted)}</time>
                                     </div>
-                                    ${categoryHtml}
-                                    ${(item.tagLinks && item.tagLinks.length) ? `<div class=\"post-tags\">${tagsHtml}</div>` : ''}
+                                    ${chipsHtml}
                                 </div>
                                 <div class="post-excerpt">${escapeHtml(item.excerpt)}</div>
                             </div>
                         </article>`;
                 }).join('');
 
-                searchResultsContainer.innerHTML = cards;
+                resultsContainer.innerHTML = cards;
             };
 
             const updateTagButtonStates = () => {
@@ -404,24 +545,18 @@
                 });
             };
 
-            const ensureSearchIndex = async () => {
-                if (searchIndex.length) return;
-                try {
-                    const response = await fetch('/search.json');
-                    if (!response.ok) throw new Error('Failed to load search index');
-                    const payload = await response.json();
-                    searchIndex = Array.isArray(payload.posts) ? payload.posts : [];
-                } catch (err) {
-                    console.error(err);
-                    searchResultsContainer.innerHTML = '<div class="empty-state">搜索索引加载失败，请稍后再试。</div>';
-                }
-            };
-
             if (searchInput) {
                 searchInput.addEventListener('input', async (event) => {
                     searchTerm = event.target.value.trim();
                     await ensureSearchIndex();
                     renderResults();
+                });
+
+                searchInput.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape') {
+                        event.stopPropagation();
+                        closeFilterModal();
+                    }
                 });
             }
 

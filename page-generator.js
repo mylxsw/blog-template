@@ -25,6 +25,22 @@ class PageGenerator {
         this.pagesDir = path.join(__dirname, 'pages');
         this.systemPagesDir = path.join(this.pagesDir, 'system');
         this.config = config;
+        this.defaultCategoryName = this.config.navigation?.categories?.defaultCategoryName || '其它';
+        this.categoryBackgroundMap = this.prepareCategoryBackgroundMap();
+    }
+
+    prepareCategoryBackgroundMap() {
+        const backgrounds = this.config.navigation?.categories?.backgrounds || {};
+        const map = new Map();
+        Object.entries(backgrounds).forEach(([key, value]) => {
+            if (typeof value !== 'string') return;
+            const trimmed = value.trim();
+            if (!trimmed) return;
+            const slug = this.slugify(key);
+            if (!slug) return;
+            map.set(slug, trimmed);
+        });
+        return map;
     }
 
     formatDate(dateStr) {
@@ -116,7 +132,9 @@ class PageGenerator {
         return {
             name,
             slug: this.slugify(name),
-            url: this.getCategoryUrl(name)
+            url: this.getCategoryUrl(name),
+            backgroundImage: this.categoryBackgroundMap.get(this.slugify(name)) || ''
+
         };
     }
 
@@ -183,7 +201,8 @@ class PageGenerator {
                     name: categoryName,
                     slug,
                     url: this.getCategoryUrl(categoryName),
-                    count: 0
+                    count: 0,
+                    backgroundImage: this.categoryBackgroundMap.get(slug) || ''
                 });
             }
             categoryMap.get(slug).count += 1;
@@ -282,13 +301,14 @@ class PageGenerator {
         return recommended.slice(0, limit);
     }
 
-    generatePostPage(post, allPosts, categories) {
+    generatePostPage(post, allPosts, categories, availableTags) {
         const template = compile(this.getTemplate('post.html'));
         const { formatted: dateFormatted, iso: dateISO } = this.formatDate(post.attributes.date);
         const category = this.getCategoryForPost(post.attributes.category);
         const navigation = this.buildNavigation(categories, {
             activeCategorySlug: category?.slug || ''
         });
+
         const seoKeywords = this.normalizeSeoKeywords(post.attributes.seo);
         const recommendedPosts = this.getRecommendedPosts(post, allPosts);
         const hasRecommendations = recommendedPosts.length > 0;
@@ -308,7 +328,9 @@ class PageGenerator {
             seoKeywords,
             recommendedPosts,
             hasRecommendations,
-            metaDescription
+            metaDescription,
+            availableTags,
+            hasTagFilters: Array.isArray(availableTags) && availableTags.length > 0
         };
 
         const relativePath = path.relative(this.pagesDir, post.filePath);
@@ -318,7 +340,7 @@ class PageGenerator {
         console.log(`Generated: ${outputPath}`);
     }
 
-    generateSystemPage(page, categories) {
+    generateSystemPage(page, categories, availableTags) {
         const template = compile(this.getTemplate('post.html'));
         const { formatted: dateFormatted, iso: dateISO } = this.formatDate(page.attributes.date);
         const navigation = this.buildNavigation(categories, {
@@ -339,7 +361,9 @@ class PageGenerator {
             seoKeywords: this.normalizeSeoKeywords(page.attributes.seo),
             recommendedPosts: [],
             hasRecommendations: false,
-            metaDescription: this.getExcerpt(page.html, 160)
+            metaDescription: this.getExcerpt(page.html, 160),
+            availableTags,
+            hasTagFilters: Array.isArray(availableTags) && availableTags.length > 0
         };
 
         const relativePath = path.relative(this.systemPagesDir, page.filePath);
@@ -390,7 +414,7 @@ class PageGenerator {
         console.log(`Generated: ${outputPath}`);
     }
 
-    generateListingPage({ title, heading, posts, outputPath, navigation }) {
+    generateListingPage({ title, heading, posts, outputPath, navigation, availableTags }) {
         const template = compile(this.getTemplate('listing.html'));
         const data = {
             title,
@@ -398,14 +422,16 @@ class PageGenerator {
             posts,
             hasPosts: posts.length > 0,
             site: this.config.site,
-            navigation
+            navigation,
+            availableTags,
+            hasTagFilters: Array.isArray(availableTags) && availableTags.length > 0
         };
         fs.ensureDirSync(path.dirname(outputPath));
         fs.writeFileSync(outputPath, template(data));
         console.log(`Generated: ${outputPath}`);
     }
 
-    generateTagPages(tags, posts, categories) {
+    generateTagPages(tags, posts, categories, allTags) {
         tags.forEach(tag => {
             const taggedPosts = posts
                 .filter(post => this.normalizeTags(post.attributes.tags).includes(tag.name))
@@ -426,12 +452,13 @@ class PageGenerator {
                 heading,
                 posts: taggedPosts.map(post => this.buildListingItem(post)),
                 outputPath,
-                navigation
+                navigation,
+                availableTags: Array.isArray(allTags) ? allTags : tags
             });
         });
     }
 
-    generateCategoryPages(categories, posts) {
+    generateCategoryPages(categories, posts, availableTags) {
         categories.forEach(category => {
             const categoryPosts = posts
                 .filter(post => this.normalizeCategory(post.attributes.category) === category.name)
@@ -441,7 +468,8 @@ class PageGenerator {
             const heading = {
                 title: category.name,
                 description: `收录了 ${category.count} 篇文章`,
-                type: 'category'
+                type: 'category',
+                backgroundImage: category.backgroundImage || ''
             };
             const outputDir = path.join(this.publicDir, 'categories', category.slug);
             const outputPath = path.join(outputDir, 'index.html');
@@ -452,7 +480,8 @@ class PageGenerator {
                 heading,
                 posts: categoryPosts.map(post => this.buildListingItem(post)),
                 outputPath,
-                navigation
+                navigation,
+                availableTags
             });
         });
     }
@@ -668,7 +697,10 @@ class PageGenerator {
             attributes.tags = this.normalizeTags(attributes.tags);
             attributes.category = this.normalizeCategory(attributes.category);
             attributes.seo = this.normalizeSeoKeywords(attributes.seo);
-
+            if (!isSystemPage && !attributes.category) {
+                attributes.category = this.defaultCategoryName;
+            }
+          
             const pageData = {
                 filePath,
                 attributes,
@@ -689,19 +721,19 @@ class PageGenerator {
         const totalPages = Math.max(1, Math.ceil(totalPosts / pageSize));
 
         posts.forEach(post => {
-            this.generatePostPage(post, posts, categories);
+            this.generatePostPage(post, posts, categories, availableTags);
         });
 
         systemPages.forEach(page => {
-            this.generateSystemPage(page, categories);
+            this.generateSystemPage(page, categories, availableTags);
         });
 
         for (let page = 1; page <= totalPages; page++) {
             this.generateIndex(posts, page, pageSize, availableTags, categories);
         }
 
-        this.generateTagPages(availableTags, posts, categories);
-        this.generateCategoryPages(categories, posts);
+        this.generateTagPages(availableTags, posts, categories, availableTags);
+        this.generateCategoryPages(categories, posts, availableTags);
         this.generateRSS(posts);
         this.generateSearchIndex(posts);
         this.generateSitemap({ posts, categories, tags: availableTags, totalPages, systemPages });
