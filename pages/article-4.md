@@ -2,6 +2,7 @@
 title: Python数据分析入门：使用Pandas处理CSV文件
 date: 2023-04-05
 tags: [python, data-science, pandas]
+category: 技术洞察
 ---
 
 # Python数据分析入门：使用Pandas处理CSV文件

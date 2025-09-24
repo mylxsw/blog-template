@@ -4,14 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    {{#if seoKeywords.length}}
-    <meta name="keywords" content="{{#each seoKeywords}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}">
-    {{/if}}
-    {{#if metaDescription}}
-    <meta name="description" content="{{metaDescription}}">
-    {{else}}
-    <meta name="description" content="{{site.description}}">
-    {{/if}}
     <link rel="stylesheet" href="/styles/modern.css">
     <link rel="alternate" type="application/rss+xml" title="{{site.title}} RSS Feed" href="/rss.xml">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
@@ -81,59 +73,55 @@
             </button>
         </div>
     </header>
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <article class="article-container{{#if coverImage}} has-cover{{/if}}">
-            <div class="article-header">
-                <h1 class="article-title">{{title}}</h1>
-                <div class="article-meta">
-                    <div class="flex items-center space-x-2">
-                        <time datetime="{{dateISO}}">{{dateFormatted}}</time>
-                    </div>
-                    {{#if category}}
-                    <div class="flex items-center space-x-2">
-                        <a href="{{category.url}}" class="article-category">{{category.name}}</a>
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <section class="listing-hero">
+            <div class="listing-badge" aria-hidden="true">
+                {{#if (eq heading.type 'tag')}}#{{/if}}{{#if (eq heading.type 'category')}}分类{{/if}}
+            </div>
+            <h1 class="listing-title">{{heading.title}}</h1>
+            {{#if heading.description}}
+            <p class="listing-description">{{heading.description}}</p>
+            {{/if}}
+        </section>
+
+        <div class="post-list">
+            {{#if hasPosts}}
+                {{#each posts}}
+                <article class="post-card">
+                    {{#if coverImage}}
+                    <div class="overflow-hidden">
+                        <img src="{{coverImage}}" alt="{{title}}" class="post-image" loading="lazy" onerror="this.onerror=null;this.src='/assets/placeholder.svg';this.classList.add('placeholder');">
                     </div>
                     {{/if}}
-                    {{#if tags}}
-                    <div class="flex flex-wrap gap-2">
-                        {{#each tags}}
-                        <a href="{{url}}" class="post-tag">{{name}}</a>
-                        {{/each}}
-                    </div>
-                    {{/if}}
-                </div>
-                {{#if coverImage}}
-                <div class="article-cover">
-                    <img src="{{coverImage}}" alt="{{title}}" class="article-cover-image" loading="lazy" onerror="this.onerror=null;this.src='/assets/placeholder.svg';this.classList.add('placeholder');">
-                </div>
-                {{/if}}
-            </div>
-            <div class="article-content">
-                {{{content}}}
-            </div>
-            {{#if hasRecommendations}}
-            <aside class="article-recommendations" aria-label="相关推荐">
-                <h2 class="recommendations-title">你可能还会喜欢</h2>
-                <div class="recommendations-grid">
-                    {{#each recommendedPosts}}
-                    <article class="recommendation-card">
-                        {{#if coverImage}}
-                        <a href="{{url}}" class="recommendation-media">
-                            <img src="{{coverImage}}" alt="{{title}}" loading="lazy" onerror="this.onerror=null;this.src='/assets/placeholder.svg';this.classList.add('placeholder');">
-                        </a>
-                        {{/if}}
-                        <div class="recommendation-content">
-                            <h3><a href="{{url}}">{{title}}</a></h3>
-                            <div class="recommendation-meta">
+                    <div class="post-content-area">
+                        <h2><a href="{{url}}" class="post-title">{{title}}</a></h2>
+                        <div class="post-meta">
+                            <div class="post-date">
                                 <time datetime="{{dateISO}}">{{dateFormatted}}</time>
                             </div>
+                            {{#if category}}
+                            <div class="post-category">
+                                <a href="{{category.url}}" class="post-category-link">{{category.name}}</a>
+                            </div>
+                            {{/if}}
+                            {{#if tags}}
+                            <div class="post-tags">
+                                {{#each tags}}
+                                <a href="{{url}}" class="post-tag">{{name}}</a>
+                                {{/each}}
+                            </div>
+                            {{/if}}
                         </div>
-                    </article>
-                    {{/each}}
-                </div>
-            </aside>
+                        <div class="post-excerpt">
+                            {{{excerpt}}}
+                        </div>
+                    </div>
+                </article>
+                {{/each}}
+            {{else}}
+                <div class="empty-state">暂无内容。</div>
             {{/if}}
-        </article>
+        </div>
     </main>
     <footer class="footer">
         <div class="max-w-6xl mx-auto px-4">
@@ -193,40 +181,6 @@
                         menu.hidden = true;
                     }
                 });
-            });
-
-            document.body.addEventListener('click', async (e) => {
-                const btn = e.target.closest('.copy-code-btn');
-                if (!btn) return;
-                const container = btn.closest('.code-block');
-                if (!container) return;
-                const codeEl = container.querySelector('pre code');
-                if (!codeEl) return;
-                const text = codeEl.innerText;
-                try {
-                    await navigator.clipboard.writeText(text);
-                    const original = btn.textContent;
-                    btn.textContent = '已复制';
-                    btn.classList.add('copied');
-                    setTimeout(() => {
-                        btn.textContent = original;
-                        btn.classList.remove('copied');
-                    }, 1200);
-                } catch (err) {
-                    const textarea = document.createElement('textarea');
-                    textarea.value = text;
-                    document.body.appendChild(textarea);
-                    textarea.select();
-                    try { document.execCommand('copy'); } catch {}
-                    document.body.removeChild(textarea);
-                    const original = btn.textContent;
-                    btn.textContent = '已复制';
-                    btn.classList.add('copied');
-                    setTimeout(() => {
-                        btn.textContent = original;
-                        btn.classList.remove('copied');
-                    }, 1200);
-                }
             });
 
             const themeToggleButtons = document.querySelectorAll('[data-theme-toggle]');

@@ -1,15 +1,15 @@
 const fs = require('fs-extra');
 const path = require('path');
 const MarkdownParser = require('./markdown-parser');
+const handlebars = require('handlebars');
 const { compile } = require('handlebars');
 const config = require('./config');
 
-// 注册Handlebars辅助函数
-require('handlebars').registerHelper('eq', function(a, b) {
+handlebars.registerHelper('eq', function(a, b) {
     return a === b;
 });
 
-require('handlebars').registerHelper('range', function(start, end) {
+handlebars.registerHelper('range', function(start, end) {
     const result = [];
     for (let i = start; i <= end; i++) {
         result.push(i);
@@ -37,63 +37,89 @@ class PageGenerator {
         return { formatted, iso: d.toISOString() };
     }
 
-    /**
-     * 读取模板文件
-     * @param {string} templateName - 模板文件名
-     * @returns {string} 模板内容
-     */
     getTemplate(templateName) {
         const templatePath = path.join(this.templatesDir, templateName);
         return fs.readFileSync(templatePath, 'utf-8');
     }
 
-    /**
-     * 生成单个页面
-     * @param {string} filePath - Markdown文件路径
-     */
-    generatePage(filePath, options = {}) {
-        const { baseDir = this.pagesDir, outputSubDir = '' } = options;
-        // 解析Markdown文件
-        const parsed = this.parser.parseFile(filePath);
-        
-        // 计算相对路径和输出路径
-        const relativePath = path.relative(baseDir, filePath);
-        const outputPath = this.getOutputPath(relativePath, outputSubDir);
-        
-        // 确保输出目录存在
-        const outputDir = path.dirname(outputPath);
-        fs.ensureDirSync(outputDir);
-        
-        // 编译模板
-        const template = compile(this.getTemplate('post.html'));
-        
-        // 准备模板数据
-        const { formatted: dateFormatted, iso: dateISO } = this.formatDate(parsed.attributes.date);
-        const data = {
-            title: parsed.attributes.title || '无标题',
-            date: parsed.attributes.date || '',
-            dateFormatted,
-            dateISO,
-            tags: parsed.attributes.tags || [],
-            coverImage: parsed.attributes.coverImage || '', // 添加封面图属性
-            content: parsed.html,
-            site: this.config.site // 添加站点配置信息
-        };
-        
-        // 生成HTML
-        const html = template(data);
-        
-        // 写入文件
-        fs.writeFileSync(outputPath, html);
-        
-        console.log(`Generated: ${outputPath}`);
+    slugify(value) {
+        if (!value) return '';
+        return value
+            .toString()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^\w\u4e00-\u9fa5]+/g, '-')
+            .replace(/-{2,}/g, '-')
+            .replace(/^-+|-+$/g, '')
+            .toLowerCase();
     }
 
-    /**
-     * 根据相对路径计算输出路径
-     * @param {string} relativePath - 相对于pages目录的路径
-     * @returns {string} 输出文件路径
-     */
+    normalizeTags(value) {
+        if (!value) return [];
+        if (Array.isArray(value)) {
+            return value
+                .map(tag => (typeof tag === 'string' ? tag.trim() : ''))
+                .filter(Boolean);
+        }
+        if (typeof value === 'string') {
+            return value
+                .split(',')
+                .map(tag => tag.trim())
+                .filter(Boolean);
+        }
+        return [];
+    }
+
+    normalizeCategory(value) {
+        if (!value) return '';
+        if (typeof value !== 'string') return '';
+        return value.trim();
+    }
+
+    normalizeSeoKeywords(value) {
+        if (!value) return [];
+        if (Array.isArray(value)) {
+            return value
+                .map(keyword => (typeof keyword === 'string' ? keyword.trim() : ''))
+                .filter(Boolean);
+        }
+        if (typeof value === 'string') {
+            return value
+                .split(',')
+                .map(keyword => keyword.trim())
+                .filter(Boolean);
+        }
+        return [];
+    }
+
+    getTagUrl(tagName) {
+        const slug = this.slugify(tagName);
+        return `/tags/${slug}/`;
+    }
+
+    getCategoryUrl(categoryName) {
+        const slug = this.slugify(categoryName);
+        return `/categories/${slug}/`;
+    }
+
+    getTagsWithUrls(tags = []) {
+        return this.normalizeTags(tags).map(name => ({
+            name,
+            slug: this.slugify(name),
+            url: this.getTagUrl(name)
+        }));
+    }
+
+    getCategoryForPost(category) {
+        const name = this.normalizeCategory(category);
+        if (!name) return null;
+        return {
+            name,
+            slug: this.slugify(name),
+            url: this.getCategoryUrl(name)
+        };
+    }
+
     getOutputPath(relativePath, outputSubDir = '') {
         const dir = path.dirname(relativePath);
         const name = path.basename(relativePath, '.md');
@@ -107,58 +133,250 @@ class PageGenerator {
         return path.join(...segments, `${name}.html`);
     }
 
-    /**
-     * 生成首页
-     * @param {Array} posts - 文章信息数组
-     * @param {number} page - 当前页码，默认为1
-     * @param {number} pageSize - 每页文章数量，默认为5
-     */
-    generateIndex(posts, page = 1, pageSize = 5, availableTags = []) {
-        // 按日期排序，最新的在前面
-        const sortedPosts = posts.sort((a, b) => {
-            const dateA = new Date(a.attributes.date || 0);
-            const dateB = new Date(b.attributes.date || 0);
-            return dateB - dateA;
+    getRelativeUrl(filePath, baseDir = this.pagesDir, outputSubDir = '') {
+        const relativePath = path.relative(baseDir, filePath);
+        const dir = path.dirname(relativePath);
+        const name = path.basename(relativePath, '.md');
+        const segments = [];
+        if (outputSubDir) {
+            segments.push(outputSubDir);
+        }
+        if (dir && dir !== '.' && dir !== path.sep) {
+            segments.push(dir);
+        }
+        segments.push(`${name}.html`);
+        return `/${segments.join('/').replace(/\\/g, '/')}`;
+    }
+
+    getExcerpt(html, maxLength = 200) {
+        const text = html.replace(/<[^>]*>/g, '').trim();
+        return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
+    }
+
+    collectTags(posts) {
+        const tagMap = new Map();
+        posts.forEach(post => {
+            const tags = this.normalizeTags(post.attributes.tags);
+            tags.forEach(tag => {
+                if (!tagMap.has(tag)) {
+                    tagMap.set(tag, {
+                        name: tag,
+                        slug: this.slugify(tag),
+                        url: this.getTagUrl(tag),
+                        count: 0
+                    });
+                }
+                tagMap.get(tag).count += 1;
+            });
         });
-        
-        // 计算分页信息
+        return Array.from(tagMap.values()).sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
+    }
+
+    collectCategories(posts) {
+        const categoryMap = new Map();
+        posts.forEach(post => {
+            const categoryName = this.normalizeCategory(post.attributes.category);
+            if (!categoryName) return;
+            const slug = this.slugify(categoryName);
+            if (!categoryMap.has(slug)) {
+                categoryMap.set(slug, {
+                    name: categoryName,
+                    slug,
+                    url: this.getCategoryUrl(categoryName),
+                    count: 0
+                });
+            }
+            categoryMap.get(slug).count += 1;
+        });
+        return Array.from(categoryMap.values()).sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
+    }
+
+    buildNavigation(categories, options = {}) {
+        const topLevel = this.config.navigation?.categories?.topLevel || [];
+        const moreLabel = this.config.navigation?.categories?.moreLabel || '更多';
+        const usedSlugs = new Set();
+        const primary = [];
+        const more = [];
+
+        topLevel.forEach(name => {
+            const category = categories.find(cat => cat.name === name);
+            if (category && !usedSlugs.has(category.slug)) {
+                primary.push(category);
+                usedSlugs.add(category.slug);
+            }
+        });
+
+        categories.forEach(category => {
+            if (usedSlugs.has(category.slug)) return;
+            more.push(category);
+            usedSlugs.add(category.slug);
+        });
+
+        if (primary.length === 0 && more.length > 0) {
+            const fallback = more.splice(0, Math.min(3, more.length));
+            primary.push(...fallback);
+        }
+
+        return {
+            activePage: options.activePage || '',
+            activeCategorySlug: options.activeCategorySlug || '',
+            categories: {
+                primary,
+                more,
+                moreLabel,
+                hasCategories: primary.length > 0 || more.length > 0
+            }
+        };
+    }
+
+    buildListingItem(post, { includeExcerpt = true } = {}) {
+        const { formatted: dateFormatted, iso: dateISO } = this.formatDate(post.attributes.date);
+        const tags = this.getTagsWithUrls(post.attributes.tags);
+        const category = this.getCategoryForPost(post.attributes.category);
+        return {
+            title: post.attributes.title || '无标题',
+            url: this.getRelativeUrl(post.filePath),
+            coverImage: post.attributes.coverImage || '',
+            excerpt: includeExcerpt ? this.getExcerpt(post.html) : '',
+            dateFormatted,
+            dateISO,
+            tags,
+            category
+        };
+    }
+
+    getRecommendedPosts(currentPost, allPosts, limit = 3) {
+        const currentTags = new Set(this.normalizeTags(currentPost.attributes.tags));
+        const candidates = allPosts
+            .filter(post => post.filePath !== currentPost.filePath)
+            .map(post => {
+                const tags = this.normalizeTags(post.attributes.tags);
+                const overlap = tags.reduce((acc, tag) => acc + (currentTags.has(tag) ? 1 : 0), 0);
+                const dateValue = new Date(post.attributes.date || 0).getTime();
+                return { post, overlap, dateValue };
+            })
+            .sort((a, b) => {
+                if (b.overlap !== a.overlap) return b.overlap - a.overlap;
+                return b.dateValue - a.dateValue;
+            });
+
+        const recommended = [];
+        const used = new Set();
+
+        candidates.forEach(candidate => {
+            if (recommended.length >= limit) return;
+            recommended.push(this.buildListingItem(candidate.post, { includeExcerpt: false }));
+            used.add(candidate.post.filePath);
+        });
+
+        if (recommended.length < limit) {
+            const additional = allPosts
+                .filter(post => post.filePath !== currentPost.filePath && !used.has(post.filePath))
+                .sort((a, b) => new Date(b.attributes.date || 0) - new Date(a.attributes.date || 0));
+            additional.forEach(post => {
+                if (recommended.length >= limit) return;
+                recommended.push(this.buildListingItem(post, { includeExcerpt: false }));
+            });
+        }
+
+        return recommended.slice(0, limit);
+    }
+
+    generatePostPage(post, allPosts, categories) {
+        const template = compile(this.getTemplate('post.html'));
+        const { formatted: dateFormatted, iso: dateISO } = this.formatDate(post.attributes.date);
+        const category = this.getCategoryForPost(post.attributes.category);
+        const navigation = this.buildNavigation(categories, {
+            activeCategorySlug: category?.slug || ''
+        });
+        const seoKeywords = this.normalizeSeoKeywords(post.attributes.seo);
+        const recommendedPosts = this.getRecommendedPosts(post, allPosts);
+        const hasRecommendations = recommendedPosts.length > 0;
+        const metaDescription = this.getExcerpt(post.html, 160);
+
+        const data = {
+            title: post.attributes.title || '无标题',
+            date: post.attributes.date || '',
+            dateFormatted,
+            dateISO,
+            tags: this.getTagsWithUrls(post.attributes.tags),
+            coverImage: post.attributes.coverImage || '',
+            content: post.html,
+            site: this.config.site,
+            navigation,
+            category,
+            seoKeywords,
+            recommendedPosts,
+            hasRecommendations,
+            metaDescription
+        };
+
+        const relativePath = path.relative(this.pagesDir, post.filePath);
+        const outputPath = this.getOutputPath(relativePath);
+        fs.ensureDirSync(path.dirname(outputPath));
+        fs.writeFileSync(outputPath, template(data));
+        console.log(`Generated: ${outputPath}`);
+    }
+
+    generateSystemPage(page, categories) {
+        const template = compile(this.getTemplate('post.html'));
+        const { formatted: dateFormatted, iso: dateISO } = this.formatDate(page.attributes.date);
+        const navigation = this.buildNavigation(categories, {
+            activePage: path.basename(page.filePath, '.md')
+        });
+
+        const data = {
+            title: page.attributes.title || '无标题',
+            date: page.attributes.date || '',
+            dateFormatted,
+            dateISO,
+            tags: this.getTagsWithUrls(page.attributes.tags),
+            coverImage: page.attributes.coverImage || '',
+            content: page.html,
+            site: this.config.site,
+            navigation,
+            category: null,
+            seoKeywords: this.normalizeSeoKeywords(page.attributes.seo),
+            recommendedPosts: [],
+            hasRecommendations: false,
+            metaDescription: this.getExcerpt(page.html, 160)
+        };
+
+        const relativePath = path.relative(this.systemPagesDir, page.filePath);
+        const outputPath = this.getOutputPath(relativePath);
+        fs.ensureDirSync(path.dirname(outputPath));
+        fs.writeFileSync(outputPath, template(data));
+        console.log(`Generated: ${outputPath}`);
+    }
+
+    generateIndex(posts, page = 1, pageSize = 5, availableTags = [], categories = []) {
+        const sortedPosts = [...posts].sort((a, b) => new Date(b.attributes.date || 0) - new Date(a.attributes.date || 0));
         const totalPosts = sortedPosts.length;
-        const totalPages = Math.ceil(totalPosts / pageSize);
+        const totalPages = Math.max(1, Math.ceil(totalPosts / pageSize));
         const startIndex = (page - 1) * pageSize;
         const endIndex = Math.min(startIndex + pageSize, totalPosts);
         const pagePosts = sortedPosts.slice(startIndex, endIndex);
-        
+
         const template = compile(this.getTemplate('index.html'));
-        
-        // 准备模板数据
+        const navigation = this.buildNavigation(categories, { activePage: page === 1 ? 'home' : '' });
+
         const data = {
             title: this.config.site.title,
-            posts: pagePosts.map(post => ({
-                title: post.attributes.title || '无标题',
-                date: post.attributes.date || '',
-                dateFormatted: this.formatDate(post.attributes.date).formatted,
-                dateISO: this.formatDate(post.attributes.date).iso,
-                tags: post.attributes.tags || [],
-                coverImage: post.attributes.coverImage || '', // 添加封面图属性
-                url: this.getRelativeUrl(post.filePath),
-                excerpt: this.getExcerpt(post.html)
-            })),
+            posts: pagePosts.map(post => this.buildListingItem(post)),
             pagination: {
                 currentPage: page,
-                totalPages: totalPages,
+                totalPages,
                 hasNext: page < totalPages,
                 hasPrev: page > 1,
                 nextPage: page + 1,
                 prevPage: page - 1
             },
             availableTags,
-            site: this.config.site // 添加站点配置信息
+            hasTagFilters: availableTags.length > 0,
+            site: this.config.site,
+            navigation
         };
-        
-        // 生成HTML
-        const html = template(data);
-        
-        // 确定输出路径
+
         let outputPath;
         if (page === 1) {
             outputPath = path.join(this.publicDir, 'index.html');
@@ -167,147 +385,86 @@ class PageGenerator {
             fs.ensureDirSync(pageDir);
             outputPath = path.join(pageDir, 'index.html');
         }
-        
-        // 写入文件
-        fs.writeFileSync(outputPath, html);
-        
+
+        fs.writeFileSync(outputPath, template(data));
         console.log(`Generated: ${outputPath}`);
     }
 
-    /**
-     * 获取文章摘要
-     * @param {string} html - HTML内容
-     * @param {number} maxLength - 最大长度，默认200字符
-     * @returns {string} 摘要文本
-     */
-    getExcerpt(html, maxLength = 200) {
-        // 移除HTML标签并截取指定长度的字符
-        const text = html.replace(/<[^>]*>/g, '').trim();
-        return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+    generateListingPage({ title, heading, posts, outputPath, navigation }) {
+        const template = compile(this.getTemplate('listing.html'));
+        const data = {
+            title,
+            heading,
+            posts,
+            hasPosts: posts.length > 0,
+            site: this.config.site,
+            navigation
+        };
+        fs.ensureDirSync(path.dirname(outputPath));
+        fs.writeFileSync(outputPath, template(data));
+        console.log(`Generated: ${outputPath}`);
     }
 
-    /**
-     * 获取相对于public目录的URL
-     * @param {string} filePath - 文件路径
-     * @returns {string} 相对URL
-     */
-    getRelativeUrl(filePath) {
-        const relativePath = path.relative(this.pagesDir, filePath);
-        const dir = path.dirname(relativePath);
-        const name = path.basename(relativePath, '.md');
-        return path.join('/', dir, `${name}.html`).replace(/\\/g, '/');
-    }
+    generateTagPages(tags, posts, categories) {
+        tags.forEach(tag => {
+            const taggedPosts = posts
+                .filter(post => this.normalizeTags(post.attributes.tags).includes(tag.name))
+                .sort((a, b) => new Date(b.attributes.date || 0) - new Date(a.attributes.date || 0));
+            if (!taggedPosts.length) return;
 
-    collectTags(posts) {
-        const tagSet = new Set();
-        posts.forEach(post => {
-            const tags = Array.isArray(post.attributes.tags) ? post.attributes.tags : [];
-            tags.forEach(tag => {
-                if (typeof tag === 'string' && tag.trim()) {
-                    tagSet.add(tag.trim());
-                }
-            });
-        });
-        return Array.from(tagSet).sort((a, b) => a.localeCompare(b, 'zh-CN'));
-    }
-
-    generateSearchIndex(posts) {
-        const indexItems = posts.map(post => {
-            const { formatted: dateFormatted, iso: dateISO } = this.formatDate(post.attributes.date);
-            const tags = Array.isArray(post.attributes.tags) ? post.attributes.tags : [];
-            const plainText = post.html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-            return {
-                title: post.attributes.title || '无标题',
-                url: this.getRelativeUrl(post.filePath),
-                excerpt: this.getExcerpt(post.html, 220),
-                tags,
-                date: post.attributes.date || '',
-                dateFormatted,
-                dateISO,
-                coverImage: post.attributes.coverImage || '',
-                content: plainText
+            const heading = {
+                title: `#${tag.name}`,
+                description: `共 ${tag.count} 篇与该标签相关的文章`,
+                type: 'tag'
             };
-        });
+            const outputDir = path.join(this.publicDir, 'tags', tag.slug);
+            const outputPath = path.join(outputDir, 'index.html');
+            const navigation = this.buildNavigation(categories, {});
 
-        const searchPath = path.join(this.publicDir, 'search.json');
-        fs.writeFileSync(searchPath, JSON.stringify({ generatedAt: new Date().toISOString(), posts: indexItems }, null, 2));
-        console.log(`Generated search index: ${searchPath}`);
-    }
-
-    /**
-     * 生成所有页面
-     */
-    generateAll() {
-        // 确保public目录存在
-        fs.ensureDirSync(this.publicDir);
-        
-        // 获取所有Markdown文件
-        const markdownFiles = this.parser.getMarkdownFiles(this.pagesDir);
-
-        const systemDirExists = fs.existsSync(this.systemPagesDir) && fs.statSync(this.systemPagesDir).isDirectory();
-        const posts = [];
-        const systemPages = [];
-
-        markdownFiles.forEach(filePath => {
-            const isSystemPage = systemDirExists && !path.relative(this.systemPagesDir, filePath).startsWith('..');
-            if (isSystemPage) {
-                systemPages.push(filePath);
-                return;
-            }
-
-            const parsed = this.parser.parseFile(filePath);
-            posts.push({
-                filePath: filePath,
-                attributes: parsed.attributes,
-                html: parsed.html
+            this.generateListingPage({
+                title: `${tag.name} · 标签 · ${this.config.site.title}`,
+                heading,
+                posts: taggedPosts.map(post => this.buildListingItem(post)),
+                outputPath,
+                navigation
             });
-            this.generatePage(filePath, { baseDir: this.pagesDir });
         });
-
-        systemPages.forEach(filePath => {
-            this.generatePage(filePath, { baseDir: this.systemPagesDir });
-        });
-        
-        // 设置每页文章数量
-        const pageSize = this.config.pagination.pageSize || 5;
-        const totalPosts = posts.length;
-        const totalPages = Math.ceil(totalPosts / pageSize);
-        
-        // 生成所有分页页面
-        const availableTags = this.collectTags(posts);
-
-        for (let page = 1; page <= totalPages; page++) {
-            this.generateIndex(posts, page, pageSize, availableTags);
-        }
-        
-        // 生成RSS文件
-        this.generateRSS(posts);
-
-        // 生成搜索索引
-        this.generateSearchIndex(posts);
-        
-        // 复制静态资源
-        this.copyAssets();
-        
-        console.log('All pages generated successfully!');
     }
 
-    /**
-     * 生成RSS文件
-     * @param {Array} posts - 文章信息数组
-     */
-    generateRSS(posts) {
-        // 按日期排序，最新的在前面，只取最新的20篇文章
-        const sortedPosts = posts.sort((a, b) => {
-            const dateA = new Date(a.attributes.date || 0);
-            const dateB = new Date(b.attributes.date || 0);
-            return dateB - dateA;
-        }).slice(0, 20);
+    generateCategoryPages(categories, posts) {
+        categories.forEach(category => {
+            const categoryPosts = posts
+                .filter(post => this.normalizeCategory(post.attributes.category) === category.name)
+                .sort((a, b) => new Date(b.attributes.date || 0) - new Date(a.attributes.date || 0));
+            if (!categoryPosts.length) return;
 
-        // 准备RSS数据
+            const heading = {
+                title: category.name,
+                description: `收录了 ${category.count} 篇文章`,
+                type: 'category'
+            };
+            const outputDir = path.join(this.publicDir, 'categories', category.slug);
+            const outputPath = path.join(outputDir, 'index.html');
+            const navigation = this.buildNavigation(categories, { activeCategorySlug: category.slug });
+
+            this.generateListingPage({
+                title: `${category.name} · 分类 · ${this.config.site.title}`,
+                heading,
+                posts: categoryPosts.map(post => this.buildListingItem(post)),
+                outputPath,
+                navigation
+            });
+        });
+    }
+
+    generateRSS(posts) {
+        const sortedPosts = [...posts]
+            .sort((a, b) => new Date(b.attributes.date || 0) - new Date(a.attributes.date || 0))
+            .slice(0, 20);
+
         const rssData = {
             title: this.config.site.title,
-            description: this.config.site.description || '一个基于Markdown的静态博客',
+            description: this.config.site.description || '一基于Markdown的静态博客',
             link: this.config.site.url || 'http://localhost:8080',
             language: 'zh-cn',
             lastBuildDate: new Date().toUTCString(),
@@ -325,22 +482,15 @@ class PageGenerator {
             })
         };
 
-        // 生成RSS XML
         const rssTemplate = this.getRSSTemplate();
         const template = compile(rssTemplate);
         const rssXml = template(rssData);
 
-        // 写入RSS文件
         const rssPath = path.join(this.publicDir, 'rss.xml');
         fs.writeFileSync(rssPath, rssXml);
-        
         console.log(`Generated RSS: ${rssPath}`);
     }
 
-    /**
-     * 获取RSS模板
-     * @returns {string} RSS模板内容
-     */
     getRSSTemplate() {
         return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -367,20 +517,133 @@ class PageGenerator {
 </rss>`;
     }
 
-    /**
-     * 复制静态资源
-     */
+    generateSearchIndex(posts) {
+        const indexItems = posts.map(post => {
+            const { formatted: dateFormatted, iso: dateISO } = this.formatDate(post.attributes.date);
+            const tags = this.normalizeTags(post.attributes.tags);
+            const plainText = post.html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+            return {
+                title: post.attributes.title || '无标题',
+                url: this.getRelativeUrl(post.filePath),
+                excerpt: this.getExcerpt(post.html, 220),
+                tags,
+                tagLinks: tags.map(name => ({
+                    name,
+                    slug: this.slugify(name),
+                    url: this.getTagUrl(name)
+                })),
+                date: post.attributes.date || '',
+                dateFormatted,
+                dateISO,
+                coverImage: post.attributes.coverImage || '',
+                category: this.getCategoryForPost(post.attributes.category),
+                content: plainText
+            };
+        });
+
+        const searchPath = path.join(this.publicDir, 'search.json');
+        fs.writeFileSync(searchPath, JSON.stringify({ generatedAt: new Date().toISOString(), posts: indexItems }, null, 2));
+        console.log(`Generated search index: ${searchPath}`);
+    }
+
+    generateSitemap({ posts, categories, tags, totalPages, systemPages }) {
+        const urls = [];
+        const siteUrl = (this.config.site.url || 'http://localhost:8080').replace(/\/$/, '');
+        const changefreq = this.config.seo?.changeFrequency || 'weekly';
+        const homePriority = this.config.seo?.homePriority || 1.0;
+        const defaultPriority = this.config.seo?.defaultPriority || 0.6;
+
+        const today = new Date().toISOString().split('T')[0];
+        urls.push({
+            loc: `${siteUrl}/`,
+            lastmod: today,
+            changefreq,
+            priority: homePriority
+        });
+
+        for (let page = 2; page <= totalPages; page++) {
+            urls.push({
+                loc: `${siteUrl}/page/${page}/`,
+                lastmod: today,
+                changefreq,
+                priority: defaultPriority
+            });
+        }
+
+        posts.forEach(post => {
+            const loc = `${siteUrl}${this.getRelativeUrl(post.filePath)}`;
+            const lastmod = post.attributes.date ? new Date(post.attributes.date).toISOString().split('T')[0] : today;
+            urls.push({
+                loc,
+                lastmod,
+                changefreq,
+                priority: defaultPriority
+            });
+        });
+
+        categories.forEach(category => {
+            urls.push({
+                loc: `${siteUrl}${category.url}`,
+                lastmod: today,
+                changefreq,
+                priority: defaultPriority
+            });
+        });
+
+        tags.forEach(tag => {
+            urls.push({
+                loc: `${siteUrl}${tag.url}`,
+                lastmod: today,
+                changefreq,
+                priority: defaultPriority
+            });
+        });
+
+        systemPages.forEach(page => {
+            const loc = `${siteUrl}${this.getRelativeUrl(page.filePath, this.systemPagesDir)}`;
+            urls.push({
+                loc,
+                lastmod: today,
+                changefreq,
+                priority: defaultPriority
+            });
+        });
+
+        const sitemapEntries = urls
+            .map(entry => `  <url>\n    <loc>${entry.loc}</loc>\n    <lastmod>${entry.lastmod}</lastmod>\n    <changefreq>${entry.changefreq}</changefreq>\n    <priority>${entry.priority}</priority>\n  </url>`)
+            .join('\n');
+
+        const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries}\n</urlset>`;
+        const sitemapPath = path.join(this.publicDir, 'sitemap.xml');
+        fs.writeFileSync(sitemapPath, sitemap);
+        console.log(`Generated sitemap: ${sitemapPath}`);
+    }
+
+    generateRobots() {
+        const siteUrl = (this.config.site.url || 'http://localhost:8080').replace(/\/$/, '');
+        const robotsContent = `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`;
+        const robotsPath = path.join(this.publicDir, 'robots.txt');
+        fs.writeFileSync(robotsPath, robotsContent);
+        console.log(`Generated robots.txt: ${robotsPath}`);
+    }
+
+    generateAdsTxt() {
+        const publisherId = this.config.advertising?.publisherId || 'pub-0000000000000000';
+        const content = `# Google AdSense verification\ngoogle.com, ${publisherId}, DIRECT, f08c47fec0942fa0\n`;
+        const adsPath = path.join(this.publicDir, 'ads.txt');
+        fs.writeFileSync(adsPath, content);
+        console.log(`Generated ads.txt: ${adsPath}`);
+    }
+
     copyAssets() {
-        // 复制样式文件
         const stylesSourceDir = path.join(__dirname, 'styles');
         const stylesTargetDir = path.join(this.publicDir, 'styles');
-        
+
         if (fs.existsSync(stylesSourceDir)) {
             fs.copySync(stylesSourceDir, stylesTargetDir);
             console.log('Styles copied successfully!');
         }
-        
-        // 复制其他静态资源（如果存在public/assets目录）
+
         const assetsSourceDir = path.join(__dirname, 'public');
         if (fs.existsSync(assetsSourceDir) && assetsSourceDir !== this.publicDir) {
             fs.copySync(assetsSourceDir, this.publicDir);
@@ -388,6 +651,65 @@ class PageGenerator {
         } else if (assetsSourceDir === this.publicDir) {
             console.log('Assets directory is the same as target directory, skipping copy.');
         }
+    }
+
+    generateAll() {
+        fs.ensureDirSync(this.publicDir);
+
+        const markdownFiles = this.parser.getMarkdownFiles(this.pagesDir);
+        const systemDirExists = fs.existsSync(this.systemPagesDir) && fs.statSync(this.systemPagesDir).isDirectory();
+        const posts = [];
+        const systemPages = [];
+
+        markdownFiles.forEach(filePath => {
+            const isSystemPage = systemDirExists && !path.relative(this.systemPagesDir, filePath).startsWith('..');
+            const parsed = this.parser.parseFile(filePath);
+            const attributes = { ...parsed.attributes };
+            attributes.tags = this.normalizeTags(attributes.tags);
+            attributes.category = this.normalizeCategory(attributes.category);
+            attributes.seo = this.normalizeSeoKeywords(attributes.seo);
+
+            const pageData = {
+                filePath,
+                attributes,
+                html: parsed.html
+            };
+
+            if (isSystemPage) {
+                systemPages.push(pageData);
+            } else {
+                posts.push(pageData);
+            }
+        });
+
+        const categories = this.collectCategories(posts);
+        const availableTags = this.collectTags(posts);
+        const pageSize = this.config.pagination.pageSize || 5;
+        const totalPosts = posts.length;
+        const totalPages = Math.max(1, Math.ceil(totalPosts / pageSize));
+
+        posts.forEach(post => {
+            this.generatePostPage(post, posts, categories);
+        });
+
+        systemPages.forEach(page => {
+            this.generateSystemPage(page, categories);
+        });
+
+        for (let page = 1; page <= totalPages; page++) {
+            this.generateIndex(posts, page, pageSize, availableTags, categories);
+        }
+
+        this.generateTagPages(availableTags, posts, categories);
+        this.generateCategoryPages(categories, posts);
+        this.generateRSS(posts);
+        this.generateSearchIndex(posts);
+        this.generateSitemap({ posts, categories, tags: availableTags, totalPages, systemPages });
+        this.generateRobots();
+        this.generateAdsTxt();
+        this.copyAssets();
+
+        console.log('All pages generated successfully!');
     }
 }
 

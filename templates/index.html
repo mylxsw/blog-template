@@ -6,7 +6,7 @@
     <title>{{title}}</title>
     <link rel="stylesheet" href="/styles/modern.css">
     <link rel="alternate" type="application/rss+xml" title="{{site.title}} RSS Feed" href="/rss.xml">
-    <!-- Highlight.js theme -->
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/atom-one-dark.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -34,10 +34,30 @@
                 </button>
                 <nav class="navbar-menu" id="navbar-menu">
                     <div class="navbar-nav">
-                        <a href="/" class="nav-item active">
+                        <a href="/" class="nav-item {{#if (eq navigation.activePage 'home')}}active{{/if}}">
                             <span class="nav-text">首页</span>
                         </a>
-                        <a href="/about.html" class="nav-item">
+                        {{#if navigation.categories.hasCategories}}
+                            {{#each navigation.categories.primary}}
+                                <a href="{{url}}" class="nav-item {{#if (eq slug ../navigation.activeCategorySlug)}}active{{/if}}">
+                                    <span class="nav-text">{{name}}</span>
+                                </a>
+                            {{/each}}
+                            {{#if navigation.categories.more.length}}
+                                <div class="nav-item nav-dropdown">
+                                    <button type="button" class="nav-dropdown-toggle" aria-expanded="false">
+                                        <span class="nav-text">{{navigation.categories.moreLabel}}</span>
+                                        <span class="nav-dropdown-icon">▾</span>
+                                    </button>
+                                    <div class="nav-dropdown-menu" hidden>
+                                        {{#each navigation.categories.more}}
+                                            <a href="{{url}}" class="nav-dropdown-item {{#if (eq slug ../../navigation.activeCategorySlug)}}active{{/if}}">{{name}}</a>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                            {{/if}}
+                        {{/if}}
+                        <a href="/about.html" class="nav-item {{#if (eq navigation.activePage 'about')}}active{{/if}}">
                             <span class="nav-text">关于</span>
                         </a>
                         <a href="/rss.xml" class="nav-item nav-item-special" target="_blank" rel="noopener noreferrer">
@@ -54,16 +74,22 @@
         </div>
     </header>
     <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <section class="post-filters" aria-label="文章筛选">
+        <div class="filter-toggle-area">
+            <button type="button" class="filter-toggle-btn" id="post-filter-toggle" aria-expanded="false">
+                <span class="filter-toggle-label">筛选文章</span>
+                <span class="filter-toggle-icon" aria-hidden="true">＋</span>
+            </button>
+        </div>
+        <section class="post-filters" aria-label="文章筛选" id="post-filters" hidden>
             <div class="search-field">
                 <span class="search-icon" aria-hidden="true">🔍</span>
                 <input type="search" id="post-search" class="search-input" placeholder="搜索文章..." autocomplete="off" spellcheck="false">
             </div>
-            {{#if availableTags}}
+            {{#if hasTagFilters}}
             <div class="tag-filter" id="tag-filter" role="list">
                 <button type="button" class="tag-filter-btn active" data-tag="">全部</button>
                 {{#each availableTags}}
-                <button type="button" class="tag-filter-btn" data-tag="{{this}}">{{this}}</button>
+                <button type="button" class="tag-filter-btn" data-tag="{{name}}">{{name}}</button>
                 {{/each}}
             </div>
             {{/if}}
@@ -83,14 +109,19 @@
                 <div class="post-content-area">
                     <h2><a href="{{url}}" class="post-title">{{title}}</a></h2>
                     <div class="post-meta">
-                <div class="post-date">
-                    <time datetime="{{dateISO}}">{{dateFormatted}}</time>
+                        <div class="post-date">
+                            <time datetime="{{dateISO}}">{{dateFormatted}}</time>
                         </div>
+                        {{#if category}}
+                        <div class="post-category">
+                            <a href="{{category.url}}" class="post-category-link">{{category.name}}</a>
+                        </div>
+                        {{/if}}
                         {{#if tags}}
                         <div class="post-tags">
-                            {{#tags}}
-                            <span class="post-tag">{{.}}</span>
-                            {{/tags}}
+                            {{#each tags}}
+                            <a href="{{url}}" class="post-tag">{{name}}</a>
+                            {{/each}}
                         </div>
                         {{/if}}
                     </div>
@@ -101,8 +132,7 @@
             </article>
             {{/posts}}
         </div>
-        
-        <!-- 分页导航 -->
+
         <div class="pagination">
             {{#if pagination.hasPrev}}
                 {{#if (eq pagination.prevPage 1)}}
@@ -111,7 +141,7 @@
                     <a href="/page/{{pagination.prevPage}}/" class="pagination-item">&laquo; 上一页</a>
                 {{/if}}
             {{/if}}
-            
+
             {{#each (range 1 pagination.totalPages)}}
                 {{#if (eq this ../pagination.currentPage)}}
                     <span class="pagination-current">{{this}}</span>
@@ -123,7 +153,7 @@
                     {{/if}}
                 {{/if}}
             {{/each}}
-            
+
             {{#if pagination.hasNext}}
                 <a href="/page/{{pagination.nextPage}}/" class="pagination-item">下一页 &raquo;</a>
             {{/if}}
@@ -137,27 +167,24 @@
         </div>
     </footer>
     <script>
-        // 导航菜单、主题切换与代码复制
         document.addEventListener('DOMContentLoaded', function() {
-                // 图片加载失败占位符
-                document.querySelectorAll('img').forEach(img => {
-                    img.addEventListener('error', function() {
-                        if (this.dataset.fallbackApplied) return;
-                        this.dataset.fallbackApplied = '1';
-                        this.src = '/assets/placeholder.png';
-                        this.classList.add('placeholder');
-                    }, { once: true });
-                });
+            document.querySelectorAll('img').forEach(img => {
+                img.addEventListener('error', function() {
+                    if (this.dataset.fallbackApplied) return;
+                    this.dataset.fallbackApplied = '1';
+                    this.src = '/assets/placeholder.png';
+                    this.classList.add('placeholder');
+                }, { once: true });
+            });
             const navbarToggle = document.getElementById('navbar-toggle');
             const navbarMenu = document.getElementById('navbar-menu');
-            
+
             if (navbarToggle && navbarMenu) {
                 navbarToggle.addEventListener('click', function() {
                     navbarToggle.classList.toggle('open');
                     navbarMenu.classList.toggle('open');
                 });
-                
-                // 点击菜单项后关闭菜单
+
                 const navItems = navbarMenu.querySelectorAll('.nav-item');
                 navItems.forEach(item => {
                     item.addEventListener('click', function() {
@@ -165,8 +192,7 @@
                         navbarMenu.classList.remove('open');
                     });
                 });
-                
-                // 点击菜单外部关闭菜单
+
                 document.addEventListener('click', function(e) {
                     if (!navbarToggle.contains(e.target) && !navbarMenu.contains(e.target)) {
                         navbarToggle.classList.remove('open');
@@ -175,7 +201,24 @@
                 });
             }
 
-            // 复制代码：事件委托
+            const dropdowns = document.querySelectorAll('.nav-dropdown');
+            dropdowns.forEach(dropdown => {
+                const toggle = dropdown.querySelector('.nav-dropdown-toggle');
+                const menu = dropdown.querySelector('.nav-dropdown-menu');
+                if (!toggle || !menu) return;
+                toggle.addEventListener('click', () => {
+                    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+                    toggle.setAttribute('aria-expanded', String(!expanded));
+                    menu.hidden = expanded;
+                });
+                document.addEventListener('click', (event) => {
+                    if (!dropdown.contains(event.target)) {
+                        toggle.setAttribute('aria-expanded', 'false');
+                        menu.hidden = true;
+                    }
+                });
+            });
+
             document.body.addEventListener('click', async (e) => {
                 const btn = e.target.closest('.copy-code-btn');
                 if (!btn) return;
@@ -210,9 +253,7 @@
                 }
             });
 
-            // 主题切换
             const themeToggleButtons = document.querySelectorAll('[data-theme-toggle]');
-
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
             const applyTheme = (theme, persist = true) => {
@@ -252,12 +293,13 @@
                 }
             });
 
-            // 搜索与标签过滤
             const searchInput = document.getElementById('post-search');
             const tagFilter = document.getElementById('tag-filter');
             const searchResultsContainer = document.getElementById('search-results');
             const defaultPostsContainer = document.querySelector('[data-default-posts]');
             const paginationEl = document.querySelector('.pagination');
+            const filterToggle = document.getElementById('post-filter-toggle');
+            const filterPanel = document.getElementById('post-filters');
 
             const activeTags = new Set();
             let searchTerm = '';
@@ -272,6 +314,15 @@
                     .replace(/'/g, '&#39;');
             };
 
+            const ensureFiltersVisible = () => {
+                if (!filterToggle || !filterPanel) return;
+                filterPanel.hidden = false;
+                filterToggle.setAttribute('aria-expanded', 'true');
+                filterToggle.classList.add('expanded');
+                const icon = filterToggle.querySelector('.filter-toggle-icon');
+                if (icon) icon.textContent = '－';
+            };
+
             const renderResults = () => {
                 const hasActiveFilters = searchTerm.length > 0 || activeTags.size > 0;
                 if (!hasActiveFilters) {
@@ -281,6 +332,8 @@
                     if (paginationEl) paginationEl.hidden = false;
                     return;
                 }
+
+                ensureFiltersVisible();
 
                 const normalizedTerm = searchTerm.toLowerCase();
                 const filtered = searchIndex.filter(item => {
@@ -303,9 +356,12 @@
                 }
 
                 const cards = filtered.map(item => {
-                    const tagsHtml = item.tags.map(tag => `<span class="post-tag">${escapeHtml(tag)}</span>`).join('');
+                    const tagsHtml = (item.tagLinks || []).map(tag => `<a class="post-tag" href="${escapeHtml(tag.url)}">${escapeHtml(tag.name)}</a>`).join('');
+                    const categoryHtml = item.category && item.category.url
+                        ? `<div class=\"post-category\"><a class=\"post-category-link\" href=\"${escapeHtml(item.category.url)}\">${escapeHtml(item.category.name)}</a></div>`
+                        : '';
                     const coverHtml = item.coverImage
-                        ? `<div class="overflow-hidden"><img src="${escapeHtml(item.coverImage)}" alt="${escapeHtml(item.title)}" class="post-image" loading="lazy" onerror="this.onerror=null;this.src='/assets/placeholder.svg';this.classList.add('placeholder');"></div>`
+                        ? `<div class=\"overflow-hidden\"><img src=\"${escapeHtml(item.coverImage)}\" alt=\"${escapeHtml(item.title)}\" class=\"post-image\" loading=\"lazy\" onerror=\"this.onerror=null;this.src='/assets/placeholder.svg';this.classList.add('placeholder');\"></div>`
                         : '';
                     return `
                         <article class="post-card">
@@ -316,7 +372,8 @@
                                     <div class="post-date">
                                         <time datetime="${escapeHtml(item.dateISO)}">${escapeHtml(item.dateFormatted)}</time>
                                     </div>
-                                    ${item.tags.length ? `<div class="post-tags">${tagsHtml}</div>` : ''}
+                                    ${categoryHtml}
+                                    ${(item.tagLinks && item.tagLinks.length) ? `<div class=\"post-tags\">${tagsHtml}</div>` : ''}
                                 </div>
                                 <div class="post-excerpt">${escapeHtml(item.excerpt)}</div>
                             </div>
@@ -386,6 +443,17 @@
 
                     updateTagButtonStates();
                     renderResults();
+                });
+            }
+
+            if (filterToggle && filterPanel) {
+                filterToggle.addEventListener('click', () => {
+                    const expanded = filterToggle.getAttribute('aria-expanded') === 'true';
+                    filterToggle.setAttribute('aria-expanded', String(!expanded));
+                    filterPanel.hidden = expanded;
+                    filterToggle.classList.toggle('expanded', !expanded);
+                    const icon = filterToggle.querySelector('.filter-toggle-icon');
+                    if (icon) icon.textContent = expanded ? '＋' : '－';
                 });
             }
         });
