@@ -29,7 +29,7 @@
             <div class="navbar-brand">
                 <a href="/" class="navbar-logo">{{site.title}}</a>
             </div>
-            <div class="navbar-right">=======
+            <div class="navbar-right">
                 <nav class="navbar-menu" id="navbar-menu">
                     <div class="navbar-nav">
                         <a href="/" class="nav-item {{#if (eq navigation.activePage 'home')}}active{{/if}}">
@@ -49,7 +49,14 @@
                                     </button>
                                     <div class="nav-dropdown-menu" hidden>
                                         {{#each navigation.categories.more}}
-                                            <a href="{{url}}" class="nav-dropdown-item {{#if (eq slug ../../navigation.activeCategorySlug)}}active{{/if}}">{{name}}</a>
+                                            {{#unless (eq name '其它')}}
+                                                <a href="{{url}}" class="nav-dropdown-item {{#if (eq slug ../../navigation.activeCategorySlug)}}active{{/if}}">{{name}}</a>
+                                            {{/unless}}
+                                        {{/each}}
+                                        {{#each navigation.categories.more}}
+                                            {{#if (eq name '其它')}}
+                                                <a href="{{url}}" class="nav-dropdown-item {{#if (eq slug ../../navigation.activeCategorySlug)}}active{{/if}}">{{name}}</a>
+                                            {{/if}}
                                         {{/each}}
                                     </div>
                                 </div>
@@ -112,12 +119,9 @@
             </div>
         </div>
     </div>
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <section class="listing-hero{{#if heading.backgroundImage}} listing-hero-with-image{{/if}}" {{#if heading.backgroundImage}}style="--listing-hero-bg: url('{{heading.backgroundImage}}');"{{/if}}>
-            <div class="listing-badge" aria-hidden="true">
-                {{#if (eq heading.type 'tag')}}#{{/if}}{{#if (eq heading.type 'category')}}📂{{/if}}
-            </div>
-            <h1 class="listing-title">{{heading.title}}</h1>
+    <main class="mx-0 px-4 sm:px-6 lg:px-8 py-6">
+        <section style="border: none;" class="listing-hero{{#if heading.backgroundImage}} listing-hero-with-image{{/if}}" {{#if heading.backgroundImage}}style="--listing-hero-bg: url('{{heading.backgroundImage}}');"{{/if}}>
+            <h1 class="listing-title" >{{heading.title}}</h1>
             {{#if heading.description}}
             <p class="listing-description">{{heading.description}}</p>
             {{/if}}

@@ -57,7 +57,14 @@
                                     </button>
                                     <div class="nav-dropdown-menu" hidden>
                                         {{#each navigation.categories.more}}
-                                            <a href="{{url}}" class="nav-dropdown-item {{#if (eq slug ../../navigation.activeCategorySlug)}}active{{/if}}">{{name}}</a>
+                                            {{#unless (eq name '其它')}}
+                                                <a href="{{url}}" class="nav-dropdown-item {{#if (eq slug ../../navigation.activeCategorySlug)}}active{{/if}}">{{name}}</a>
+                                            {{/unless}}
+                                        {{/each}}
+                                        {{#each navigation.categories.more}}
+                                            {{#if (eq name '其它')}}
+                                                <a href="{{url}}" class="nav-dropdown-item {{#if (eq slug ../../navigation.activeCategorySlug)}}active{{/if}}">{{name}}</a>
+                                            {{/if}}
                                         {{/each}}
                                     </div>
                                 </div>
@@ -120,7 +127,7 @@
             </div>
         </div>
     </div>
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <main class="mx-0 px-4 sm:px-6 lg:px-8 py-4">
         <article class="article-container{{#if coverImage}} has-cover{{/if}}">
             <div class="article-header">
                 <h1 class="article-title">{{title}}</h1>
