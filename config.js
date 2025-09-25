@@ -81,7 +81,7 @@ module.exports = {
          * 页脚外部链接列表，例如 [{ label: '项目仓库', url: 'https://github.com/...', description: 'GitHub' }]
          */
         externalLinks: [
-            { label: '开源仓库', url: 'https://github.com/mylxsw/markdown-blog', description: 'GitHub' },
+            { label: 'AIdea', url: 'https://aidea.aicode.cc', description: 'GitHub' },
         ],
         /**
          * 社交平台链接配置，示例：
