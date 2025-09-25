@@ -6,10 +6,20 @@ module.exports = {
         url: 'http://localhost:8080', // RSS需要的站点URL
         copyrightYear: new Date().getFullYear()
     },
+    theme: {
+        /**
+         * 可选配色方案：modern（蓝紫）、sunrise（暖橙粉）、midnight（冷色蓝紫）、forest（森系绿）、ocean（碧海蓝）、latte（奶咖米）
+         */
+        palette: 'latte'
+    },
     pagination: {
         pageSize: 10,
     },
     navigation: {
+        /**
+         * 导航栏是否固定在页面顶部（true 固定，false 随页面滚动）
+         */
+        sticky: true,
         categories: {
             /**
              * 指定导航栏中直接展示的分类名称，按照数组顺序显示。

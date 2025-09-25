@@ -11,16 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css" data-theme-style="dark" disabled>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: { 500: '#6366F1', 600: '#4F46E5', 700: '#4338CA' },
-              accent: { 400: '#38BDF8', 500: '#0EA5E9' }
-            }
-          }
-        }
-      }
+      tailwind.config = {{{json theme.tailwind}}};
     </script>
     <script>
       window.__I18N__ = {{{json clientTranslations}}};
@@ -30,8 +21,8 @@
     {{{analytics.head}}}
     {{/if}}
 </head>
-<body class="theme-modern theme-light antialiased">
-    <header class="navbar">
+<body class="{{theme.bodyClass}} theme-light antialiased">
+    <header class="navbar {{#if navigation.isSticky}}navbar-sticky{{else}}navbar-static{{/if}}">
         <div class="navbar-container">
             <div class="navbar-brand">
                 <a href="{{navigation.homeUrl}}" class="navbar-logo">{{site.title}}</a>

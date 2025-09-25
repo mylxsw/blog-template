@@ -5,17 +5,17 @@ const handlebars = require('handlebars');
 const { compile } = require('handlebars');
 const config = require('./config');
 
-const X_ICON_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 2h4.96l4.38 5.72L17.88 2H22l-7.41 8.45L22 22h-4.96l-4.64-6.06L6.12 22H2l7.73-8.88L3 2Z"/></svg>';
+const X_ICON_SVG = '<?xml version="1.0" encoding="UTF-8"?><svg id="icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><defs><style>      .cls-1 {        fill: none;      }</style></defs><path d="m18.2342,14.1624l8.7424-10.1624h-2.0717l-7.591,8.8238-6.0629-8.8238h-6.9929l9.1684,13.3432-9.1684,10.6568h2.0718l8.0163-9.3183,6.4029,9.3183h6.9929l-9.5083-13.8376h.0005Zm-2.8376,3.2984l-.9289-1.3287L7.0763,5.5596h3.1822l5.9649,8.5323.9289,1.3287,7.7536,11.0907h-3.1822l-6.3272-9.05v-.0005Z"/><rect id="_Transparent_Rectangle_" data-name="&amp;lt;Transparent Rectangle&amp;gt;" class="cls-1" width="32" height="32"/></svg>';
 
 const SOCIAL_ICON_SVGS = {
     github: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.865 10.934c.575.106.785-.25.785-.555c0-.274-.01-1.182-.016-2.146c-3.2.695-3.875-1.541-3.875-1.541c-.523-1.33-1.278-1.685-1.278-1.685c-1.046-.714.08-.699.08-.699c1.158.082 1.768 1.188 1.768 1.188c1.03 1.765 2.705 1.255 3.366.96c.104-.757.402-1.256.732-1.545c-2.555-.291-5.238-1.277-5.238-5.686c0-1.256.448-2.284 1.183-3.09c-.118-.29-.512-1.46.112-3.046c0 0 .965-.309 3.164 1.182a10.9 10.9 0 0 1 2.879-.388c.979.004 1.964.133 2.879.388c2.198-1.491 3.162-1.182 3.162-1.182c.626 1.586.232 2.756.114 3.046c.736.806 1.182 1.834 1.182 3.09c0 4.42-2.687 5.392-5.252 5.679c.414.357.782 1.062.782 2.14c0 1.546-.014 2.793-.014 3.173c0 .308.208.667.79.553A11.503 11.503 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z"/></svg>',
     x: X_ICON_SVG,
     twitter: X_ICON_SVG,
-    telegram: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.447 2.104a1.5 1.5 0 0 0-1.566-.197L2.65 9.32c-1.265.55-1.2 2.39.093 2.839l4.79 1.66l1.848 5.92a1.5 1.5 0 0 0 2.5.6l2.67-2.68l4.21 3.084c.996.73 2.402.168 2.65-1.059l3.07-15.52a1.5 1.5 0 0 0-.033-.86ZM9.23 12.46l9.01-5.52c.207-.127.425.158.24.325l-7.4 6.73a1 1 0 0 0-.311.6l-.29 2.33c-.03.24-.356.264-.43.032L9.23 12.46Z"/></svg>',
-    wechat: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9.5 3.5c-3.59 0-6.5 2.6-6.5 5.8c0 1.85 1.06 3.49 2.72 4.51l-.44 2.4l2.58-1.43c.49.1 1 .15 1.54.15c3.59 0 6.5-2.6 6.5-5.81c0-3.2-2.91-5.82-6.4-5.82Zm-2.4 5.12a1.02 1.02 0 1 1 0-2.04a1.02 1.02 0 0 1 0 2.04Zm4.8 0a1.02 1.02 0 1 1 0-2.04a1.02 1.02 0 0 1 0 2.04Z"/><path d="M22 14.4c0-3.01-2.82-5.45-6.2-5.45c-.27 0-.54.01-.8.04c.81 1.02 1.3 2.27 1.3 3.61c0 3.72-3.35 6.75-7.5 6.75c-.2 0-.39-.01-.58-.02C9.4 20.63 11.6 22 14.2 22c.48 0 .94-.04 1.39-.11l2.4 1.34l-.38-2.21C19.84 20.04 22 17.47 22 14.4Zm-7.65.57a.9.9 0 1 1 0-1.8a.9.9 0 0 1 0 1.8Zm3.85 0a.9.9 0 1 1 0-1.8a.9.9 0 0 1 0 1.8Z"/></svg>',
+    telegram: '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="m10,1.09C5.08,1.09,1.09,5.08,1.09,10s3.99,8.91,8.91,8.91,8.91-3.99,8.91-8.91S14.92,1.09,10,1.09Zm4.25,5.8c-.03.36-.23,1.62-.44,2.99-.31,1.93-.64,4.04-.64,4.04,0,0-.05.59-.49.7s-1.16-.36-1.29-.46c-.1-.08-1.93-1.24-2.6-1.8-.18-.15-.39-.46.03-.82.93-.85,2.04-1.91,2.7-2.58.31-.31.62-1.03-.67-.15-1.83,1.26-3.63,2.45-3.63,2.45,0,0-.41.26-1.19.03-.77-.23-1.67-.54-1.67-.54,0,0-.62-.39.44-.8h0s4.46-1.83,6-2.47c.59-.26,2.6-1.08,2.6-1.08,0,0,.93-.36.85.52Z" /></svg>',
+    wechat: '<svg xmlns="http://www.w3.org/2000/svg" id="mdi-wechat" viewBox="0 0 24 24"><path d="M9.5,4C5.36,4 2,6.69 2,10C2,11.89 3.08,13.56 4.78,14.66L4,17L6.5,15.5C7.39,15.81 8.37,16 9.41,16C9.15,15.37 9,14.7 9,14C9,10.69 12.13,8 16,8C16.19,8 16.38,8 16.56,8.03C15.54,5.69 12.78,4 9.5,4M6.5,6.5A1,1 0 0,1 7.5,7.5A1,1 0 0,1 6.5,8.5A1,1 0 0,1 5.5,7.5A1,1 0 0,1 6.5,6.5M11.5,6.5A1,1 0 0,1 12.5,7.5A1,1 0 0,1 11.5,8.5A1,1 0 0,1 10.5,7.5A1,1 0 0,1 11.5,6.5M16,9C12.69,9 10,11.24 10,14C10,16.76 12.69,19 16,19C16.67,19 17.31,18.92 17.91,18.75L20,20L19.38,18.13C20.95,17.22 22,15.71 22,14C22,11.24 19.31,9 16,9M14,11.5A1,1 0 0,1 15,12.5A1,1 0 0,1 14,13.5A1,1 0 0,1 13,12.5A1,1 0 0,1 14,11.5M18,11.5A1,1 0 0,1 19,12.5A1,1 0 0,1 18,13.5A1,1 0 0,1 17,12.5A1,1 0 0,1 18,11.5Z" /></svg>',
     email: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 4.75A2.75 2.75 0 0 1 5.75 2h12.5A2.75 2.75 0 0 1 21 4.75v14.5A2.75 2.75 0 0 1 18.25 22H5.75A2.75 2.75 0 0 1 3 19.25V4.75Zm2.387.75l6.173 4.254L17.733 5.5H5.387Zm13.863 1.383l-6.934 4.773a1.25 1.25 0 0 1-1.432 0L3.95 6.883V19.25c0 .69.56 1.25 1.25 1.25h12.5c.69 0 1.25-.56 1.25-1.25V6.883Z"/></svg>',
-    linkedin: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5a2.5 2.5 0 0 1 0-5ZM3 8.75h3.96v11.5H3V8.75Zm6.04 0H13v1.58h.05c.55-1 1.88-2.05 3.87-2.05c4.14 0 4.9 2.72 4.9 6.26v5.71h-3.96v-5.07c0-1.21-.02-2.77-1.69-2.77c-1.69 0-1.95 1.32-1.95 2.68v5.16H9.04V8.75Z"/></svg>',
-    rss: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.75 17a2.25 2.25 0 1 1-4.5 0a2.25 2.25 0 0 1 4.5 0Zm-4.5-6.375c6.206 0 11.25 5.044 11.25 11.25h-2.625c0-4.75-3.875-8.625-8.625-8.625v-2.625Zm0-6.375C13.807 4.25 20.5 10.943 20.5 19.5h-2.625c0-7.222-5.878-13.125-13.125-13.125V4.25Z"/></svg>'
+    linkedin: '<?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16"><path fill="#000000" d="M6 6h2.767v1.418h0.040c0.385-0.691 1.327-1.418 2.732-1.418 2.921 0 3.461 1.818 3.461 4.183v4.817h-2.885v-4.27c0-1.018-0.021-2.329-1.5-2.329-1.502 0-1.732 1.109-1.732 2.255v4.344h-2.883v-9z"></path><path fill="#000000" d="M1 6h3v9h-3v-9z"></path><path fill="#000000" d="M4 3.5c0 0.828-0.672 1.5-1.5 1.5s-1.5-0.672-1.5-1.5c0-0.828 0.672-1.5 1.5-1.5s1.5 0.672 1.5 1.5z"></path></svg>',
+    rss: '<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="24" width="24" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><g transform="translate(0 -1028.4)"><g><path d="m4 1031.4c-1.1046 0-2 0.9-2 2v16c0 1.1 0.8954 2 2 2h16c1.105 0 2-0.9 2-2v-16c0-1.1-0.895-2-2-2h-16z" fill="#d35400"/><path d="m4 2c-1.1046 0-2 0.8954-2 2v16c0 1.105 0.8954 2 2 2h16c1.105 0 2-0.895 2-2v-16c0-1.1046-0.895-2-2-2h-16z" transform="translate(0 1028.4)" fill="#e67e22"/><path d="m5 1034.4v2.3c6.443 0 11.667 5.2 11.667 11.7h2.333c0-7.8-6.268-14-14-14zm0 4.6v2.4c3.866 0 7 3.1 7 7h2.333c0-5.2-4.178-9.4-9.333-9.4zm2.0417 5.3c-1.1276 0-2.0417 0.9-2.0417 2s0.9141 2.1 2.0417 2.1c1.1275 0 2.0416-1 2.0416-2.1s-0.9141-2-2.0416-2z" fill="#d35400"/><path d="m5 1033.4v2.3c6.443 0 11.667 5.2 11.667 11.7h2.333c0-7.8-6.268-14-14-14zm0 4.6v2.4c3.866 0 7 3.1 7 7h2.333c0-5.2-4.178-9.4-9.333-9.4zm2.0417 5.3c-1.1276 0-2.0417 0.9-2.0417 2s0.9141 2.1 2.0417 2.1c1.1275 0 2.0416-1 2.0416-2.1s-0.9141-2-2.0416-2z" fill="#ecf0f1"/></g></g></svg>'
 };
 
 handlebars.registerHelper('eq', function(a, b) {
@@ -56,6 +56,70 @@ class PageGenerator {
         this.languages = this.prepareLanguages();
         this.languageMap = new Map(this.languages.map(lang => [lang.code, lang]));
         this.defaultLanguage = this.languages.find(lang => lang.isDefault) || this.languages[0];
+        this.themeContext = this.createThemeContext();
+    }
+
+    createThemeContext() {
+        const paletteMap = {
+            modern: {
+                bodyClass: 'theme-modern',
+                tailwindColors: {
+                    primary: { 500: '#6366F1', 600: '#4F46E5', 700: '#4338CA' },
+                    accent: { 400: '#38BDF8', 500: '#0EA5E9' }
+                }
+            },
+            sunrise: {
+                bodyClass: 'theme-sunrise',
+                tailwindColors: {
+                    primary: { 500: '#F97316', 600: '#EA580C', 700: '#C2410C' },
+                    accent: { 400: '#FB7185', 500: '#F43F5E' }
+                }
+            },
+            midnight: {
+                bodyClass: 'theme-midnight',
+                tailwindColors: {
+                    primary: { 500: '#0EA5E9', 600: '#0284C7', 700: '#0369A1' },
+                    accent: { 400: '#A855F7', 500: '#7C3AED' }
+                }
+            },
+            forest: {
+                bodyClass: 'theme-forest',
+                tailwindColors: {
+                    primary: { 500: '#059669', 600: '#047857', 700: '#065F46' },
+                    accent: { 400: '#22C55E', 500: '#16A34A' }
+                }
+            },
+            ocean: {
+                bodyClass: 'theme-ocean',
+                tailwindColors: {
+                    primary: { 500: '#2563EB', 600: '#1D4ED8', 700: '#1E40AF' },
+                    accent: { 400: '#0EA5E9', 500: '#0284C7' }
+                }
+            },
+            latte: {
+                bodyClass: 'theme-latte',
+                tailwindColors: {
+                    primary: { 500: '#B45309', 600: '#92400E', 700: '#78350F' },
+                    accent: { 400: '#D97706', 500: '#F59E0B' }
+                }
+            }
+        };
+
+        const requested = (this.config.theme?.palette || 'modern').toString().trim().toLowerCase();
+        const paletteKey = Object.prototype.hasOwnProperty.call(paletteMap, requested) ? requested : 'modern';
+        const palette = paletteMap[paletteKey];
+
+        return {
+            palette: paletteKey,
+            bodyClass: palette.bodyClass,
+            tailwind: {
+                theme: {
+                    extend: {
+                        colors: palette.tailwindColors
+                    }
+                }
+            }
+        };
     }
 
     prepareCategoryBackgroundMap() {
@@ -319,6 +383,8 @@ class PageGenerator {
                 };
             })
             .filter(Boolean);
+        const theme = this.themeContext;
+
         return {
             site: this.config.site,
             navigation,
@@ -347,7 +413,8 @@ class PageGenerator {
             analytics: {
                 head: analyticsHead,
                 bodyEnd: analyticsBodyEnd
-            }
+            },
+            theme
         };
     }
 
@@ -633,6 +700,7 @@ class PageGenerator {
         return {
             activePage: options.activePage || '',
             activeCategorySlug: options.activeCategorySlug || '',
+            isSticky: this.config.navigation?.sticky !== false,
             categories: {
                 primary,
                 more,
