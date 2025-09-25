@@ -10,7 +10,7 @@ module.exports = {
         /**
          * 可选配色方案：modern（蓝紫）、sunrise（暖橙粉）、midnight（冷色蓝紫）、forest（森系绿）、ocean（碧海蓝）、latte（奶咖米）
          */
-        palette: 'latte'
+        palette: 'forest'
     },
     pagination: {
         pageSize: 10,
@@ -19,7 +19,7 @@ module.exports = {
         /**
          * 导航栏是否固定在页面顶部（true 固定，false 随页面滚动）
          */
-        sticky: true,
+        sticky: false,
         categories: {
             /**
              * 指定导航栏中直接展示的分类名称，按照数组顺序显示。
@@ -58,7 +58,7 @@ module.exports = {
         defaultPriority: 0.6
     },
     advertising: {
-        disabled: false,
+        disabled: true,
         /**
          * Google AdSense 等广告联盟要求的 ads.txt 中的发布者 ID。
          * 请替换为真实 ID。
