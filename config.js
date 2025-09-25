@@ -48,10 +48,143 @@ module.exports = {
         defaultPriority: 0.6
     },
     advertising: {
+        disabled: true,
         /**
          * Google AdSense 等广告联盟要求的 ads.txt 中的发布者 ID。
          * 请替换为真实 ID。
          */
         publisherId: 'pub-0000000000000000'
+    },
+    i18n: {
+        showLanguageSwitcher: false,
+        defaultLanguage: 'en',
+        languages: {
+            zh: {
+                label: '简体中文',
+                locale: 'zh-CN',
+                routePrefix: '',
+                navigation: {
+                    moreLabel: '更多',
+                    defaultCategoryName: '其它',
+                    topLevel: ['技术洞察', '产品观察']
+                },
+                translations: {
+                    nav: {
+                        home: '首页',
+                        about: '关于',
+                        rss: 'RSS',
+                        more: '更多',
+                        filter: '筛选文章',
+                        toggleMenu: '切换导航菜单',
+                        language: '语言'
+                    },
+                    filters: {
+                        title: '筛选文章',
+                        searchPlaceholder: '搜索文章...',
+                        sectionLabel: '文章筛选',
+                        allTags: '全部'
+                    },
+                    buttons: {
+                        closeFilter: '关闭筛选',
+                        copy: '复制',
+                        copyCode: '复制代码',
+                        copySuccess: '已复制'
+                    },
+                    theme: {
+                        toggleDark: '切换为暗色模式',
+                        toggleLight: '切换为亮色模式'
+                    },
+                    pagination: {
+                        previous: '上一页',
+                        next: '下一页'
+                    },
+                    messages: {
+                        empty: '暂无内容。',
+                        rssCta: '📡 订阅 RSS',
+                        searchError: '搜索索引加载失败，请稍后再试。',
+                        searchNoResults: '没有找到匹配的文章。',
+                        rssDescription: '一基于Markdown的静态博客'
+                    },
+                    recommendations: {
+                        aria: '相关推荐',
+                        title: '你可能还会喜欢'
+                    },
+                    content: {
+                        untitled: '无标题'
+                    },
+                    categories: {
+                        description: '收录了 {{count}} 篇文章',
+                        pageTitleSuffix: '分类'
+                    },
+                    tags: {
+                        description: '共 {{count}} 篇与该标签相关的文章',
+                        pageTitleSuffix: '标签'
+                    }
+                }
+            },
+            en: {
+                label: 'English',
+                locale: 'en-US',
+                routePrefix: 'en',
+                navigation: {
+                    moreLabel: 'More',
+                    defaultCategoryName: 'Others',
+                    topLevel: ['Updates']
+                },
+                translations: {
+                    nav: {
+                        home: 'Home',
+                        about: 'About',
+                        rss: 'RSS',
+                        more: 'More',
+                        filter: 'Filter Posts',
+                        toggleMenu: 'Toggle navigation menu',
+                        language: 'Language'
+                    },
+                    filters: {
+                        title: 'Filter Posts',
+                        searchPlaceholder: 'Search posts...',
+                        sectionLabel: 'Post filters',
+                        allTags: 'All'
+                    },
+                    buttons: {
+                        closeFilter: 'Close filters',
+                        copy: 'Copy',
+                        copyCode: 'Copy code',
+                        copySuccess: 'Copied'
+                    },
+                    theme: {
+                        toggleDark: 'Switch to dark mode',
+                        toggleLight: 'Switch to light mode'
+                    },
+                    pagination: {
+                        previous: 'Previous',
+                        next: 'Next'
+                    },
+                    messages: {
+                        empty: 'No content yet.',
+                        rssCta: '📡 Subscribe to RSS',
+                        searchError: 'Failed to load search index, please try again later.',
+                        searchNoResults: 'No posts matched your search.',
+                        rssDescription: 'A static blog powered by Markdown'
+                    },
+                    recommendations: {
+                        aria: 'Recommended posts',
+                        title: 'You may also enjoy'
+                    },
+                    content: {
+                        untitled: 'Untitled'
+                    },
+                    categories: {
+                        description: '{{count}} posts collected here',
+                        pageTitleSuffix: 'Categories'
+                    },
+                    tags: {
+                        description: '{{count}} posts tagged with this topic',
+                        pageTitleSuffix: 'Tags'
+                    }
+                }
+            }
+        }
     }
 };

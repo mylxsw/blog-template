@@ -146,6 +146,13 @@ main {
   margin-left: 1rem;
 }
 
+.navbar-languages {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 1rem;
+}
+
 .nav-icon-button {
   display: inline-flex;
   align-items: center;
@@ -1555,6 +1562,11 @@ body.theme-modern.theme-dark .hljs-quote {
   .navbar-actions {
     gap: 0.6rem;
     margin-left: 0.5rem;
+  }
+
+  .navbar-languages {
+    margin-left: 0.5rem;
+    gap: 0.4rem;
   }
 
   .theme-toggle,
