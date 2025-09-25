@@ -383,6 +383,17 @@ class PageGenerator {
                 };
             })
             .filter(Boolean);
+        const rawExternalLinks = Array.isArray(this.config.footer?.externalLinks) ? this.config.footer.externalLinks : [];
+        const externalLinks = rawExternalLinks
+            .map(item => {
+                if (!item || typeof item !== 'object') return null;
+                const url = typeof item.url === 'string' ? item.url.trim() : '';
+                const label = typeof item.label === 'string' ? item.label.trim() : '';
+                if (!url || !label) return null;
+                const description = typeof item.description === 'string' ? item.description.trim() : '';
+                return { label, url, description };
+            })
+            .filter(Boolean);
         const theme = this.themeContext;
 
         return {
@@ -408,7 +419,8 @@ class PageGenerator {
                     link: icpLink
                 },
                 note: footerNote,
-                social: socialLinks
+                social: socialLinks,
+                external: externalLinks
             },
             analytics: {
                 head: analyticsHead,
