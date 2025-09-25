@@ -81,7 +81,8 @@ module.exports = {
          * 页脚外部链接列表，例如 [{ label: '项目仓库', url: 'https://github.com/...', description: 'GitHub' }]
          */
         externalLinks: [
-            { label: 'AIdea', url: 'https://aidea.aicode.cc', description: 'GitHub' },
+            { label: 'AIdea', url: 'https://aidea.aicode.cc', description: 'AI Chat' },
+            { label: '微信公众号', url: 'https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzA3NTU1NDk4Mg==&action=getalbum&album_id=4168897503414140947&scene=126&sessionid=1758786267888#wechat_redirect', description: '' },
         ],
         /**
          * 社交平台链接配置，示例：
