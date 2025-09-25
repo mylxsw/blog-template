@@ -48,16 +48,51 @@ module.exports = {
         defaultPriority: 0.6
     },
     advertising: {
-        disabled: true,
+        disabled: false,
         /**
          * Google AdSense 等广告联盟要求的 ads.txt 中的发布者 ID。
          * 请替换为真实 ID。
          */
         publisherId: 'pub-0000000000000000'
     },
+    footer: {
+        /**
+         * 备案信息设置。例如 { text: '京ICP备00000000号-1', link: 'https://beian.miit.gov.cn/' }
+         */
+        icp: {
+            text: '京ICP备00000000号-1',
+            link: 'https://beian.miit.gov.cn/'
+        },
+        /**
+         * 额外的版权说明，如 "Made with ❤ by XXX"
+         */
+        note: 'Make with ❤ by mylxsw & codex',
+        /**
+         * 社交平台链接配置，示例：
+         * [
+         *   { label: 'GitHub', url: 'https://github.com/yourname', icon: 'github' }
+         * ]
+         * 支持的 icon: github, x, telegram, wechat, email, linkedin, rss
+         */
+        social: [
+            { label: 'GitHub', url: 'https://github.com/mylxsw', icon: 'github' },
+            { label: 'X', url: 'https://x.com/mylxsw', icon: 'x' },
+            { label: 'LinkedIn', url: 'https://www.linkedin.com/in/mylxsw/', icon: 'linkedin' }
+        ],
+    },
+    analytics: {
+        /**
+         * 自定义统计脚本，将插入到 <head> 标签内（支持HTML片段）
+         */
+        head: '',
+        /**
+         * 自定义统计脚本，将插入到 </body> 前（支持HTML片段）
+         */
+        bodyEnd: ''
+    },
     i18n: {
         showLanguageSwitcher: false,
-        defaultLanguage: 'en',
+        defaultLanguage: 'zh',
         languages: {
             zh: {
                 label: '简体中文',

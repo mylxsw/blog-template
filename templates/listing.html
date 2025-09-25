@@ -26,12 +26,15 @@
       window.__I18N__ = {{{json clientTranslations}}};
       window.__ASSETS__ = {{{json assets}}};
     </script>
+    {{#if analytics.head}}
+    {{{analytics.head}}}
+    {{/if}}
 </head>
 <body class="theme-modern theme-light antialiased">
     <header class="navbar">
         <div class="navbar-container">
             <div class="navbar-brand">
-                <a href="/" class="navbar-logo">{{site.title}}</a>
+                <a href="{{navigation.homeUrl}}" class="navbar-logo">{{site.title}}</a>
             </div>
             <div class="navbar-right">
                 <nav class="navbar-menu" id="navbar-menu">
@@ -169,9 +172,36 @@
         </div>
     </main>
     <footer class="footer">
-        <div class="max-w-6xl mx-auto px-4">
-            <p>&copy; {{site.copyrightYear}} {{site.title}}. All rights reserved.</p>
-            <p class="mt-2"><a href="{{assets.rss}}" class="text-accent-400 hover:text-accent-500">{{t 'messages.rssCta'}}</a></p>
+        <div class="footer-inner {{#unless footer.social.length}}footer-centered{{/unless}}">
+            {{#if footer.social.length}}
+            <div class="footer-social" aria-label="Social links">
+                {{#each footer.social}}
+                <a href="{{url}}" class="footer-social-link" target="_blank" rel="noopener noreferrer" aria-label="{{#if label}}{{label}}{{else}}{{url}}{{/if}}">
+                    {{#if icon}}
+                    <span class="footer-social-icon">{{{icon}}}</span>
+                    {{else}}
+                    <span class="footer-social-fallback">{{fallback}}</span>
+                    {{/if}}
+                    {{#if label}}<span class="sr-only">{{label}}</span>{{/if}}
+                </a>
+                {{/each}}
+            </div>
+            {{/if}}
+            <div class="footer-meta">
+                <p class="footer-copy">&copy; {{site.copyrightYear}} {{site.title}}. All rights reserved.</p>
+                {{#if footer.icp.text}}
+                <p class="footer-icp">
+                    {{#if footer.icp.link}}
+                    <a href="{{footer.icp.link}}" target="_blank" rel="noopener noreferrer">{{footer.icp.text}}</a>
+                    {{else}}
+                    {{footer.icp.text}}
+                    {{/if}}
+                </p>
+                {{/if}}
+                {{#if footer.note}}
+                <p class="footer-note">{{footer.note}}</p>
+                {{/if}}
+            </div>
         </div>
     </footer>
     <script>
@@ -603,5 +633,8 @@
             }
         });
     </script>
+    {{#if analytics.bodyEnd}}
+    {{{analytics.bodyEnd}}}
+    {{/if}}
 </body>
 </html>

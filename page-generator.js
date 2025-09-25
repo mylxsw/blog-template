@@ -5,6 +5,19 @@ const handlebars = require('handlebars');
 const { compile } = require('handlebars');
 const config = require('./config');
 
+const X_ICON_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 2h4.96l4.38 5.72L17.88 2H22l-7.41 8.45L22 22h-4.96l-4.64-6.06L6.12 22H2l7.73-8.88L3 2Z"/></svg>';
+
+const SOCIAL_ICON_SVGS = {
+    github: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.865 10.934c.575.106.785-.25.785-.555c0-.274-.01-1.182-.016-2.146c-3.2.695-3.875-1.541-3.875-1.541c-.523-1.33-1.278-1.685-1.278-1.685c-1.046-.714.08-.699.08-.699c1.158.082 1.768 1.188 1.768 1.188c1.03 1.765 2.705 1.255 3.366.96c.104-.757.402-1.256.732-1.545c-2.555-.291-5.238-1.277-5.238-5.686c0-1.256.448-2.284 1.183-3.09c-.118-.29-.512-1.46.112-3.046c0 0 .965-.309 3.164 1.182a10.9 10.9 0 0 1 2.879-.388c.979.004 1.964.133 2.879.388c2.198-1.491 3.162-1.182 3.162-1.182c.626 1.586.232 2.756.114 3.046c.736.806 1.182 1.834 1.182 3.09c0 4.42-2.687 5.392-5.252 5.679c.414.357.782 1.062.782 2.14c0 1.546-.014 2.793-.014 3.173c0 .308.208.667.79.553A11.503 11.503 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z"/></svg>',
+    x: X_ICON_SVG,
+    twitter: X_ICON_SVG,
+    telegram: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.447 2.104a1.5 1.5 0 0 0-1.566-.197L2.65 9.32c-1.265.55-1.2 2.39.093 2.839l4.79 1.66l1.848 5.92a1.5 1.5 0 0 0 2.5.6l2.67-2.68l4.21 3.084c.996.73 2.402.168 2.65-1.059l3.07-15.52a1.5 1.5 0 0 0-.033-.86ZM9.23 12.46l9.01-5.52c.207-.127.425.158.24.325l-7.4 6.73a1 1 0 0 0-.311.6l-.29 2.33c-.03.24-.356.264-.43.032L9.23 12.46Z"/></svg>',
+    wechat: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9.5 3.5c-3.59 0-6.5 2.6-6.5 5.8c0 1.85 1.06 3.49 2.72 4.51l-.44 2.4l2.58-1.43c.49.1 1 .15 1.54.15c3.59 0 6.5-2.6 6.5-5.81c0-3.2-2.91-5.82-6.4-5.82Zm-2.4 5.12a1.02 1.02 0 1 1 0-2.04a1.02 1.02 0 0 1 0 2.04Zm4.8 0a1.02 1.02 0 1 1 0-2.04a1.02 1.02 0 0 1 0 2.04Z"/><path d="M22 14.4c0-3.01-2.82-5.45-6.2-5.45c-.27 0-.54.01-.8.04c.81 1.02 1.3 2.27 1.3 3.61c0 3.72-3.35 6.75-7.5 6.75c-.2 0-.39-.01-.58-.02C9.4 20.63 11.6 22 14.2 22c.48 0 .94-.04 1.39-.11l2.4 1.34l-.38-2.21C19.84 20.04 22 17.47 22 14.4Zm-7.65.57a.9.9 0 1 1 0-1.8a.9.9 0 0 1 0 1.8Zm3.85 0a.9.9 0 1 1 0-1.8a.9.9 0 0 1 0 1.8Z"/></svg>',
+    email: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 4.75A2.75 2.75 0 0 1 5.75 2h12.5A2.75 2.75 0 0 1 21 4.75v14.5A2.75 2.75 0 0 1 18.25 22H5.75A2.75 2.75 0 0 1 3 19.25V4.75Zm2.387.75l6.173 4.254L17.733 5.5H5.387Zm13.863 1.383l-6.934 4.773a1.25 1.25 0 0 1-1.432 0L3.95 6.883V19.25c0 .69.56 1.25 1.25 1.25h12.5c.69 0 1.25-.56 1.25-1.25V6.883Z"/></svg>',
+    linkedin: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5a2.5 2.5 0 0 1 0-5ZM3 8.75h3.96v11.5H3V8.75Zm6.04 0H13v1.58h.05c.55-1 1.88-2.05 3.87-2.05c4.14 0 4.9 2.72 4.9 6.26v5.71h-3.96v-5.07c0-1.21-.02-2.77-1.69-2.77c-1.69 0-1.95 1.32-1.95 2.68v5.16H9.04V8.75Z"/></svg>',
+    rss: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.75 17a2.25 2.25 0 1 1-4.5 0a2.25 2.25 0 0 1 4.5 0Zm-4.5-6.375c6.206 0 11.25 5.044 11.25 11.25h-2.625c0-4.75-3.875-8.625-8.625-8.625v-2.625Zm0-6.375C13.807 4.25 20.5 10.943 20.5 19.5h-2.625c0-7.222-5.878-13.125-13.125-13.125V4.25Z"/></svg>'
+};
+
 handlebars.registerHelper('eq', function(a, b) {
     return a === b;
 });
@@ -271,8 +284,41 @@ class PageGenerator {
         }));
     }
 
+    getSocialIconMarkup(iconKey) {
+        if (!iconKey) return '';
+        const normalized = String(iconKey).toLowerCase();
+        if (Object.prototype.hasOwnProperty.call(SOCIAL_ICON_SVGS, normalized)) {
+            return SOCIAL_ICON_SVGS[normalized];
+        }
+        return '';
+    }
+
     createBaseTemplateData(language, navigation, availableTags = []) {
         const tags = Array.isArray(availableTags) ? availableTags : [];
+        const icpText = (this.config.footer?.icp?.text || '').trim();
+        const icpLink = (this.config.footer?.icp?.link || '').trim();
+        const analyticsHead = typeof this.config.analytics?.head === 'string' ? this.config.analytics.head : '';
+        const analyticsBodyEnd = typeof this.config.analytics?.bodyEnd === 'string' ? this.config.analytics.bodyEnd : '';
+        const footerNote = (this.config.footer?.note || '').trim();
+        const rawSocial = Array.isArray(this.config.footer?.social) ? this.config.footer.social : [];
+        const socialLinks = rawSocial
+            .map(item => {
+                if (!item || typeof item !== 'object') return null;
+                const url = typeof item.url === 'string' ? item.url.trim() : '';
+                if (!url) return null;
+                const label = typeof item.label === 'string' ? item.label.trim() : '';
+                const iconKey = typeof item.icon === 'string' ? item.icon.trim().toLowerCase() : '';
+                const icon = this.getSocialIconMarkup(iconKey);
+                const fallback = label ? label.charAt(0).toUpperCase() : (url.replace(/https?:\/\//i, '').charAt(0).toUpperCase() || '');
+                return {
+                    label,
+                    url,
+                    icon,
+                    fallback,
+                    iconKey
+                };
+            })
+            .filter(Boolean);
         return {
             site: this.config.site,
             navigation,
@@ -289,7 +335,19 @@ class PageGenerator {
                 sitemap: this.buildLanguageUrl(language, 'sitemap.xml'),
                 search: this.buildLanguageUrl(language, 'search.json')
             },
-            clientTranslations: language.translations
+            clientTranslations: language.translations,
+            footer: {
+                icp: {
+                    text: icpText,
+                    link: icpLink
+                },
+                note: footerNote,
+                social: socialLinks
+            },
+            analytics: {
+                head: analyticsHead,
+                bodyEnd: analyticsBodyEnd
+            }
         };
     }
 
@@ -326,6 +384,40 @@ class PageGenerator {
             nextUrl,
             pages
         };
+    }
+
+    minifyHtml(html) {
+        if (typeof html !== 'string' || !html.length) {
+            return '';
+        }
+        const placeholders = [];
+        const preservePattern = /<(pre|code|textarea|script)([\s\S]*?)<\/\1>/gi;
+        let minified = html.replace(preservePattern, (match) => {
+            const token = `___HTML_PLACEHOLDER_${placeholders.length}___`;
+            placeholders.push({ token, content: match });
+            return token;
+        });
+
+        minified = minified
+            .replace(/\r?\n+/g, '\n')
+            .replace(/>\s+</g, '><')
+            .replace(/\s*\n\s*/g, '')
+            .replace(/\s{2,}/g, ' ')
+            .trim();
+
+        placeholders.forEach(({ token, content }) => {
+            const tokenRegex = new RegExp(token, 'g');
+            minified = minified.replace(tokenRegex, content);
+        });
+
+        return minified;
+    }
+
+    writeHtml(outputPath, html) {
+        const finalHtml = this.minifyHtml(html);
+        fs.ensureDirSync(path.dirname(outputPath));
+        fs.writeFileSync(outputPath, finalHtml);
+        console.log(`Generated: ${outputPath}`);
     }
 
     formatDate(dateStr, language) {
@@ -534,6 +626,10 @@ class PageGenerator {
         }
 
         const languages = this.buildLanguageSwitcher(language);
+        const showLanguageSwitcher = this.config.i18n?.showLanguageSwitcher !== false
+            && Array.isArray(languages)
+            && languages.length > 1;
+
         return {
             activePage: options.activePage || '',
             activeCategorySlug: options.activeCategorySlug || '',
@@ -548,8 +644,8 @@ class PageGenerator {
             aboutUrl: this.buildLanguageUrl(language, 'about.html'),
             filterLabel: this.translate(language, 'nav.filter', 'Filter'),
             toggleMenuLabel: this.translate(language, 'nav.toggleMenu', 'Toggle menu'),
-            languages,
-            hasLanguageSwitcher: Array.isArray(languages) && languages.length > 0 && this.config.i18n.showLanguageSwitcher !== false
+            languages: showLanguageSwitcher ? languages : languages.slice(0, 1),
+            hasLanguageSwitcher: showLanguageSwitcher
         };
     }
 
@@ -636,9 +732,7 @@ class PageGenerator {
         };
 
         const outputPath = this.getOutputPath(post.relativePath, language);
-        fs.ensureDirSync(path.dirname(outputPath));
-        fs.writeFileSync(outputPath, template(data));
-        console.log(`Generated: ${outputPath}`);
+        this.writeHtml(outputPath, template(data));
     }
 
     generateSystemPage(page, categories, availableTags, language) {
@@ -666,9 +760,7 @@ class PageGenerator {
         };
 
         const outputPath = this.getOutputPath(page.relativePath, language);
-        fs.ensureDirSync(path.dirname(outputPath));
-        fs.writeFileSync(outputPath, template(data));
-        console.log(`Generated: ${outputPath}`);
+        this.writeHtml(outputPath, template(data));
     }
 
     generateIndex(posts, page = 1, pageSize = 5, availableTags = [], categories = [], language) {
@@ -695,9 +787,7 @@ class PageGenerator {
             ? this.buildLanguageOutputPath(language, 'index.html')
             : this.buildLanguageOutputPath(language, ['page', String(page), 'index.html']);
 
-        fs.ensureDirSync(path.dirname(outputPath));
-        fs.writeFileSync(outputPath, template(data));
-        console.log(`Generated: ${outputPath}`);
+        this.writeHtml(outputPath, template(data));
     }
 
     generateListingPage({ title, heading, posts, outputPath, navigation, availableTags, language }) {
@@ -710,9 +800,7 @@ class PageGenerator {
             posts,
             hasPosts: Array.isArray(posts) && posts.length > 0
         };
-        fs.ensureDirSync(path.dirname(outputPath));
-        fs.writeFileSync(outputPath, template(data));
-        console.log(`Generated: ${outputPath}`);
+        this.writeHtml(outputPath, template(data));
     }
 
     generateTagPages(tags, posts, categories, allTags, language) {
@@ -958,9 +1046,30 @@ class PageGenerator {
     }
 
     generateAdsTxt() {
-        const publisherId = this.config.advertising?.publisherId || 'pub-0000000000000000';
-        const content = `# Google AdSense verification\ngoogle.com, ${publisherId}, DIRECT, f08c47fec0942fa0\n`;
+        const adsConfig = this.config.advertising || {};
         const adsPath = path.join(this.publicDir, 'ads.txt');
+        if (adsConfig.disabled) {
+            if (fs.existsSync(adsPath)) {
+                fs.removeSync(adsPath);
+                console.log('Advertising disabled; existing ads.txt removed.');
+            } else {
+                console.log('Advertising disabled; ads.txt generation skipped.');
+            }
+            return;
+        }
+
+        const publisherId = typeof adsConfig.publisherId === 'string' ? adsConfig.publisherId.trim() : '';
+        if (!publisherId) {
+            if (fs.existsSync(adsPath)) {
+                fs.removeSync(adsPath);
+                console.log('No publisher ID configured; existing ads.txt removed.');
+            } else {
+                console.log('No publisher ID configured; ads.txt not generated.');
+            }
+            return;
+        }
+
+        const content = `# Google AdSense verification\ngoogle.com, ${publisherId}, DIRECT, f08c47fec0942fa0\n`;
         fs.writeFileSync(adsPath, content);
         console.log(`Generated ads.txt: ${adsPath}`);
     }
